@@ -1,0 +1,29 @@
+{
+  "name": "pocx",
+  "version": "0.1.0",
+  "description": "POCX client SDK — protect a proof-of-concept app with a hosted gate (email OTP allowlist, e-signed Terms of Access, revocable sessions). One zero-dependency TypeScript file that runs in Node and edge runtimes.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "keywords": [
+    "pocx",
+    "proof-of-concept",
+    "gate",
+    "auth",
+    "middleware",
+    "nextjs",
+    "express",
+    "edge"
+  ],
+  "license": "MIT",
+  "author": "Saad Kamal <saad@haxo.com.au>",
+  "homepage": "https://pocx.dev",
+  "peerDependencies": {}
+}
