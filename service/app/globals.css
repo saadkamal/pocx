@@ -116,3 +116,201 @@ body {
 .rule {
   border-top: 1px solid var(--color-ink-200);
 }
+
+/* ------------------------------------------------------------
+   Scroll-reveal: gentle fade-up applied to section headers and
+   cards via the <Reveal> client component (IntersectionObserver
+   toggles .is-visible). Reduced-motion drops the transform.
+   ------------------------------------------------------------ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Hero gate mock — a subtle one-shot fade/translate on load. No
+   rotation, perspective or glow: it just settles into place. */
+@keyframes hero-visual-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-visual-in {
+  animation: hero-visual-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-visual-in {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------
+   Problem demo — the animated centrepiece.
+
+   A tiny JS state machine (problem-demo.tsx) advances a
+   data-phase attribute on .demo-anim through the story; every
+   element below transitions purely in CSS off that phase, so
+   motion stays smooth and the loop is deterministic.
+
+   Phases:
+     type     prompt types out in the agent terminal
+     cloning  progress shimmer runs ("cloning…")
+     cloned   a duplicate thumbnail stamps in — the scary beat
+     arm      label swaps to "with POCX"; same prompt re-runs
+     gate     an ink gate panel slides down over the app
+     blocked  "Access denied — signature required" stamps in
+
+   Ink palette throughout; one danger accent for the stamp.
+   ------------------------------------------------------------ */
+
+.demo-anim {
+  /* Caret blink is the only free-running animation. */
+}
+
+/* Typed prompt: width is driven in JS (--typed 0→1) so the
+   caret rides the real end of the revealed text. */
+.demo-anim .demo-typed {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  width: calc(var(--typed, 0) * 1%);
+}
+
+.demo-anim .demo-caret {
+  display: inline-block;
+  width: 0.5ch;
+  animation: demo-blink 0.9s step-end infinite;
+}
+.demo-anim[data-phase="cloning"] .demo-caret,
+.demo-anim[data-phase="cloned"] .demo-caret,
+.demo-anim[data-phase="gate"] .demo-caret,
+.demo-anim[data-phase="blocked"] .demo-caret {
+  opacity: 0;
+}
+@keyframes demo-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* "cloning…" shimmer: a bar that fills left→right. */
+.demo-anim .demo-shimmer-track {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.demo-anim[data-phase="cloning"] .demo-shimmer-track {
+  opacity: 1;
+}
+.demo-anim .demo-shimmer {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.demo-anim[data-phase="cloning"] .demo-shimmer,
+.demo-anim[data-phase="cloned"] .demo-shimmer {
+  transform: scaleX(1);
+}
+
+/* Clone thumbnail stamps in on the "cloned" phase. */
+.demo-anim .demo-clone {
+  opacity: 0;
+  transform: translateY(10px) scale(0.96);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.demo-anim[data-phase="cloned"] .demo-clone {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Terminal label swap: "coding agent" ⇄ "with POCX". */
+.demo-anim .demo-label-after {
+  display: none;
+}
+.demo-anim[data-phase="arm"] .demo-label-before,
+.demo-anim[data-phase="gate"] .demo-label-before,
+.demo-anim[data-phase="blocked"] .demo-label-before {
+  display: none;
+}
+.demo-anim[data-phase="arm"] .demo-label-after,
+.demo-anim[data-phase="gate"] .demo-label-after,
+.demo-anim[data-phase="blocked"] .demo-label-after {
+  display: inline;
+}
+
+/* The POCX gate: an ink panel that slides down over the app. */
+.demo-anim .demo-gate {
+  transform: translateY(-101%);
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.demo-anim[data-phase="gate"] .demo-gate,
+.demo-anim[data-phase="blocked"] .demo-gate {
+  transform: translateY(0);
+}
+
+/* Lock icon pulses in as the gate seals. */
+.demo-anim .demo-lock {
+  opacity: 0;
+  transform: scale(0.7);
+  transition:
+    opacity 0.4s ease 0.25s,
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s;
+}
+.demo-anim[data-phase="gate"] .demo-lock,
+.demo-anim[data-phase="blocked"] .demo-lock {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* "Access denied" stamp punches in on the "blocked" phase. */
+.demo-anim .demo-stamp {
+  opacity: 0;
+  transform: scale(1.4) rotate(-4deg);
+  transition:
+    opacity 0.35s ease,
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.demo-anim[data-phase="blocked"] .demo-stamp {
+  opacity: 1;
+  transform: scale(1) rotate(-4deg);
+}
+
+/* Reduced motion: the component renders the static split
+   comparison (cloned vs blocked) and hides the live stage. */
+@media (prefers-reduced-motion: reduce) {
+  .demo-anim .demo-caret,
+  .demo-anim .demo-shimmer,
+  .demo-anim .demo-clone,
+  .demo-anim .demo-gate,
+  .demo-anim .demo-lock,
+  .demo-anim .demo-stamp {
+    transition: none;
+    animation: none;
+  }
+}

@@ -10,20 +10,24 @@ import {
   Paintbrush,
   ScrollText,
   ShieldCheck,
+  Star,
   TimerReset,
 } from "lucide-react";
-import { buttonCn } from "@/components/ui";
+import { buttonCn, GithubMark } from "@/components/ui";
 import { localePath, type Locale } from "@/lib/i18n/locales";
 import { marketingDict, type MarketingStrings } from "@/lib/i18n/marketing";
 import { PRO_PRICE_USD } from "@/lib/plans";
 import { CopyButton } from "./copy-button";
+import { ProblemDemo } from "./problem-demo";
+import { Reveal } from "./reveal";
 
-const AGENT_PROMPT =
-  "Add POCX protection to this app. Follow the instructions at https://pocx.dev/llms.txt exactly.";
+const GITHUB_URL = "https://github.com/saadkamal/pocx";
 
 const PROXY_SNIPPET = `import { createPocxGate } from "./lib/pocx";
 const gate = createPocxGate();
 export const proxy = gate.nextProxy();`;
+
+const CLONE_LINE = "git clone https://github.com/saadkamal/pocx";
 
 export async function generateMetadata({
   params,
@@ -48,11 +52,12 @@ export default async function LandingPage({
   return (
     <>
       <Hero locale={locale} t={t} />
-      <TrustStrip t={t} />
+      <ProblemSection t={t} />
+      <SolutionSection t={t} />
       <HowItWorks t={t} />
       <FeaturesGrid t={t} />
-      <AgentSection t={t} />
       <WhySection t={t} />
+      <OpenSourceSection locale={locale} t={t} />
       <PricingTeaser locale={locale} t={t} />
       <FinalCta locale={locale} t={t} />
     </>
@@ -60,7 +65,7 @@ export default async function LandingPage({
 }
 
 /* ------------------------------------------------------------------ */
-/* Hero                                                                */
+/* 1 — Hero                                                            */
 /* ------------------------------------------------------------------ */
 
 function Hero({ locale, t }: { locale: Locale; t: MarketingStrings }) {
@@ -79,7 +84,7 @@ function Hero({ locale, t }: { locale: Locale; t: MarketingStrings }) {
             {t.hero.subtitle}
           </p>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <Link
               href={localePath(locale, "/signup")}
               className={buttonCn("primary", "lg")}
@@ -87,11 +92,21 @@ function Hero({ locale, t }: { locale: Locale; t: MarketingStrings }) {
               {t.hero.startFree}
               <ArrowRight className="size-4" aria-hidden />
             </Link>
-            <Link
-              href={localePath(locale, "/docs")}
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noreferrer"
               className={buttonCn("secondary", "lg")}
             >
+              <GithubMark className="size-4" />
+              {t.hero.selfHost}
+            </a>
+            <Link
+              href={localePath(locale, "/docs")}
+              className="inline-flex items-center gap-1.5 px-2 text-sm font-semibold text-ink-600 transition-colors hover:text-ink-900"
+            >
               {t.hero.readDocs}
+              <ArrowRight className="size-4" aria-hidden />
             </Link>
           </div>
           <p className="mt-5 font-mono text-xs text-ink-500">
@@ -108,61 +123,63 @@ function Hero({ locale, t }: { locale: Locale; t: MarketingStrings }) {
 function HeroVisual({ t }: { t: MarketingStrings }) {
   return (
     <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-      {/* Terms card — peeks out behind the gate, straight and subtle */}
-      <div
-        aria-hidden
-        className="absolute -top-6 -right-4 z-0 hidden w-64 rounded-xl border border-ink-200 bg-white p-5 shadow-card md:block xl:-right-8"
-      >
-        <div className="flex items-center justify-between">
-          <p className="text-xs font-semibold text-ink-900">
-            {t.heroVisual.termsTitle}
-          </p>
-          <span className="rounded-full border border-ink-200 bg-ink-50 px-2 py-0.5 font-mono text-[10px] text-ink-500">
-            v1.2
-          </span>
-        </div>
-        <div className="mt-4 space-y-2">
-          <div className="h-1.5 w-full rounded-full bg-ink-100" />
-          <div className="h-1.5 w-11/12 rounded-full bg-ink-100" />
-          <div className="h-1.5 w-full rounded-full bg-ink-100" />
-          <div className="h-1.5 w-4/5 rounded-full bg-ink-100" />
-          <div className="h-1.5 w-2/3 rounded-full bg-ink-100" />
-        </div>
-        <div className="mt-5 rounded-lg bg-ink-900 px-4 py-2 text-center text-xs font-semibold text-paper">
-          {t.heroVisual.agreeContinue}
-        </div>
-      </div>
-
-      {/* Browser-chrome frame around the hosted gate */}
-      <div className="relative z-10 rounded-xl border border-ink-200 bg-white shadow-pop">
-        <div className="flex items-center gap-3 rounded-t-xl border-b border-ink-200 bg-ink-50 px-4 py-3">
-          <div className="flex gap-1.5" aria-hidden>
-            <span className="size-2.5 rounded-full bg-ink-300" />
-            <span className="size-2.5 rounded-full bg-ink-300" />
-            <span className="size-2.5 rounded-full bg-ink-300" />
-          </div>
-          <div className="flex-1 rounded-md border border-ink-200 bg-white px-3 py-1.5 text-center font-mono text-xs text-ink-500">
-            pocx.dev/gate/project-falcon
-          </div>
-        </div>
-
-        <div className="px-8 py-10 sm:px-12">
-          <div className="mx-auto max-w-sm text-center">
-            <p className="eyebrow">ACME PTE LTD · Proof of Concept</p>
-            <p className="mt-2 text-xl font-bold text-ink-900">
-              Project Falcon
+      <div className="hero-visual-in">
+        {/* Terms card — peeks out behind the gate, straight and subtle */}
+        <div
+          aria-hidden
+          className="absolute -top-6 -right-4 z-0 hidden w-64 rounded-xl border border-ink-200 bg-white p-5 shadow-card md:block xl:-right-8"
+        >
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold text-ink-900">
+              {t.heroVisual.termsTitle}
             </p>
-            <div className="mt-6 rounded-lg border border-ink-300 bg-white px-3.5 py-2.5 text-left text-sm text-ink-400">
-              you@company.com
+            <span className="rounded-full border border-ink-200 bg-ink-50 px-2 py-0.5 font-mono text-[10px] text-ink-500">
+              v1.2
+            </span>
+          </div>
+          <div className="mt-4 space-y-2">
+            <div className="h-1.5 w-full rounded-full bg-ink-100" />
+            <div className="h-1.5 w-11/12 rounded-full bg-ink-100" />
+            <div className="h-1.5 w-full rounded-full bg-ink-100" />
+            <div className="h-1.5 w-4/5 rounded-full bg-ink-100" />
+            <div className="h-1.5 w-2/3 rounded-full bg-ink-100" />
+          </div>
+          <div className="mt-5 rounded-lg bg-ink-900 px-4 py-2 text-center text-xs font-semibold text-paper">
+            {t.heroVisual.agreeContinue}
+          </div>
+        </div>
+
+        {/* Browser-chrome frame around the hosted gate */}
+        <div className="relative z-10 rounded-xl border border-ink-200 bg-white shadow-pop">
+          <div className="flex items-center gap-3 rounded-t-xl border-b border-ink-200 bg-ink-50 px-4 py-3">
+            <div className="flex gap-1.5" aria-hidden>
+              <span className="size-2.5 rounded-full bg-ink-300" />
+              <span className="size-2.5 rounded-full bg-ink-300" />
+              <span className="size-2.5 rounded-full bg-ink-300" />
             </div>
-            <div className="mt-3 rounded-lg bg-ink-900 px-4 py-2.5 text-sm font-semibold text-paper">
-              {t.heroVisual.emailCode}
+            <div className="flex-1 rounded-md border border-ink-200 bg-white px-3 py-1.5 text-center font-mono text-xs text-ink-500">
+              pocx.dev/gate/project-falcon
             </div>
-            <div className="rule mt-8 pt-4">
-              <p className="flex items-center justify-center gap-1.5 text-xs text-ink-400">
-                <ShieldCheck className="size-3" aria-hidden />
-                {t.heroVisual.protectedLine}
+          </div>
+
+          <div className="px-8 py-10 sm:px-12">
+            <div className="mx-auto max-w-sm text-center">
+              <p className="eyebrow">ACME PTE LTD · Proof of Concept</p>
+              <p className="mt-2 text-xl font-bold text-ink-900">
+                Project Falcon
               </p>
+              <div className="mt-6 rounded-lg border border-ink-300 bg-white px-3.5 py-2.5 text-left text-sm text-ink-400">
+                you@company.com
+              </div>
+              <div className="mt-3 rounded-lg bg-ink-900 px-4 py-2.5 text-sm font-semibold text-paper">
+                {t.heroVisual.emailCode}
+              </div>
+              <div className="rule mt-8 pt-4">
+                <p className="flex items-center justify-center gap-1.5 text-xs text-ink-400">
+                  <ShieldCheck className="size-3" aria-hidden />
+                  {t.heroVisual.protectedLine}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -172,34 +189,104 @@ function HeroVisual({ t }: { t: MarketingStrings }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Trust strip                                                         */
+/* 2 — Problem (emotional core + animated demo)                        */
 /* ------------------------------------------------------------------ */
 
-const TRUST_ICONS = [KeyRound, FileSignature, ListChecks] as const;
-
-function TrustStrip({ t }: { t: MarketingStrings }) {
+function ProblemSection({ t }: { t: MarketingStrings }) {
   return (
-    <section className="border-y border-ink-200">
-      <div className="mx-auto flex max-w-6xl flex-col items-start px-6 py-6 sm:flex-row sm:items-center sm:justify-center sm:divide-x sm:divide-ink-200">
-        {t.trustChips.map((label, i) => {
-          const Icon = TRUST_ICONS[i] ?? KeyRound;
-          return (
-            <span
-              key={label}
-              className="inline-flex items-center gap-2 py-1.5 font-mono text-xs text-ink-500 sm:px-8 sm:py-0"
-            >
-              <Icon className="size-3.5 text-ink-400" aria-hidden />
-              {label}
-            </span>
-          );
-        })}
+    <section className="rule bg-grid">
+      <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
+        <Reveal className="max-w-2xl">
+          <p className="eyebrow">{t.problem.eyebrow}</p>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-balance text-ink-900 sm:text-4xl">
+            {t.problem.title}
+          </h2>
+          <p className="mt-4 text-lg leading-relaxed text-ink-600">
+            {t.problem.lead}
+          </p>
+        </Reveal>
+
+        <Reveal className="mt-14 rounded-2xl border border-ink-200 bg-paper/70 p-5 shadow-card sm:p-8">
+          <ProblemDemo demo={t.problem.demo} />
+        </Reveal>
+
+        {/* Three beats as a numbered horizontal flow. */}
+        <div className="mt-16 grid gap-8 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-start sm:gap-4">
+          {t.problem.beats.map((beat, i) => (
+            <ProblemBeat
+              key={beat.n}
+              beat={beat}
+              last={i === t.problem.beats.length - 1}
+              delay={i * 90}
+            />
+          ))}
+        </div>
+
+        <Reveal className="mt-16 max-w-3xl">
+          <p className="text-2xl leading-snug font-medium text-balance text-ink-900 sm:text-3xl">
+            {t.problem.punch}
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function ProblemBeat({
+  beat,
+  last,
+  delay,
+}: {
+  beat: { n: string; text: string };
+  last: boolean;
+  delay: number;
+}) {
+  return (
+    <>
+      <Reveal delay={delay}>
+        <span className="inline-flex size-9 items-center justify-center rounded-full border border-ink-300 font-mono text-xs font-semibold text-ink-500">
+          {beat.n}
+        </span>
+        <p className="mt-4 text-base leading-relaxed text-ink-800">
+          {beat.text}
+        </p>
+      </Reveal>
+      {!last ? (
+        <div
+          aria-hidden
+          className="hidden items-center pt-4 text-ink-300 sm:flex"
+        >
+          <ArrowRight className="size-5" />
+        </div>
+      ) : null}
+    </>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 3 — Solution                                                        */
+/* ------------------------------------------------------------------ */
+
+function SolutionSection({ t }: { t: MarketingStrings }) {
+  return (
+    <section className="rule bg-ink-950">
+      <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
+        <Reveal className="max-w-2xl">
+          <p className="eyebrow text-ink-400">{t.solution.eyebrow}</p>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-balance text-paper sm:text-4xl">
+            {t.solution.title}
+          </h2>
+          <p className="mt-6 text-lg leading-relaxed text-ink-300">
+            {t.solution.body}
+          </p>
+        </Reveal>
       </div>
     </section>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/* How it works                                                        */
+/* 4 — How it works                                                    */
 /* ------------------------------------------------------------------ */
 
 function StepBlock({
@@ -224,14 +311,14 @@ function StepBlock({
 
 function HowItWorks({ t }: { t: MarketingStrings }) {
   return (
-    <section id="how" className="scroll-mt-24">
+    <section id="how" className="rule scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
-        <div className="max-w-2xl">
+        <Reveal className="max-w-2xl">
           <p className="eyebrow">{t.how.eyebrow}</p>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
             {t.how.title}
           </h2>
-        </div>
+        </Reveal>
 
         <div className="rule mt-12 grid gap-10 pt-12 lg:grid-cols-3 lg:gap-0 lg:divide-x lg:divide-ink-200">
           <StepBlock eyebrow={t.how.step1.eyebrow} title={t.how.step1.title}>
@@ -269,7 +356,7 @@ function HowItWorks({ t }: { t: MarketingStrings }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Features                                                            */
+/* 5 — Features                                                        */
 /* ------------------------------------------------------------------ */
 
 const FEATURE_ICONS = [
@@ -285,13 +372,13 @@ function FeaturesGrid({ t }: { t: MarketingStrings }) {
   return (
     <section id="features" className="rule scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
-        <div className="max-w-2xl">
+        <Reveal className="max-w-2xl">
           <p className="eyebrow">{t.features.eyebrow}</p>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
             {t.features.title}
           </h2>
           <p className="mt-4 text-lg text-ink-600">{t.features.subtitle}</p>
-        </div>
+        </Reveal>
 
         <div className="mt-14 grid gap-px overflow-hidden rounded-xl border border-ink-200 bg-ink-200 sm:grid-cols-2 lg:grid-cols-3">
           {t.features.items.map((f, i) => {
@@ -315,40 +402,7 @@ function FeaturesGrid({ t }: { t: MarketingStrings }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Agent section                                                       */
-/* ------------------------------------------------------------------ */
-
-function AgentSection({ t }: { t: MarketingStrings }) {
-  return (
-    <section className="rule">
-      <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
-        <div className="mx-auto max-w-3xl">
-          <p className="eyebrow">{t.agent.eyebrow}</p>
-          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
-            {t.agent.title}
-          </h2>
-
-          <div className="mt-10 flex items-center gap-3 rounded-lg bg-ink-950 p-4 sm:p-5">
-            <p className="flex-1 overflow-x-auto font-mono text-sm leading-relaxed whitespace-nowrap text-ink-100 sm:whitespace-normal">
-              <span className="text-brand" aria-hidden>
-                &gt;{" "}
-              </span>
-              {AGENT_PROMPT}
-            </p>
-            <CopyButton text={AGENT_PROMPT} />
-          </div>
-
-          <p className="mt-5 text-sm leading-relaxed text-ink-500">
-            {t.agent.caption}
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Why / terms                                                         */
+/* 6 — Why / signature                                                 */
 /* ------------------------------------------------------------------ */
 
 function CertRow({ label, value }: { label: string; value: string }) {
@@ -364,7 +418,7 @@ function WhySection({ t }: { t: MarketingStrings }) {
   return (
     <section className="rule">
       <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 py-24 sm:py-28 lg:grid-cols-2">
-        <div>
+        <Reveal>
           <p className="eyebrow">{t.why.eyebrow}</p>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-balance text-ink-900 sm:text-4xl">
             {t.why.title}
@@ -373,14 +427,19 @@ function WhySection({ t }: { t: MarketingStrings }) {
             <p>{t.why.p1}</p>
             <p>
               {t.why.p2Before}
-              <em className="text-ink-900">{t.why.p2Em}</em>
+              <em className="rounded bg-brand-subtle px-1 py-0.5 font-medium text-brand-active not-italic">
+                {t.why.p2Em}
+              </em>
               {t.why.p2After}
             </p>
             <p>{t.why.p3}</p>
           </div>
-        </div>
+        </Reveal>
 
-        <div className="rounded-xl border border-ink-200 bg-white p-7 shadow-card">
+        <Reveal
+          delay={120}
+          className="rounded-xl border border-ink-200 bg-white p-7 shadow-card"
+        >
           <div className="flex items-center justify-between">
             <p className="text-sm font-semibold text-ink-900">
               {t.why.cert.title}
@@ -405,6 +464,98 @@ function WhySection({ t }: { t: MarketingStrings }) {
             <ScrollText className="size-3.5" aria-hidden />
             {t.why.cert.footnote}
           </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 7 — Open source                                                     */
+/* ------------------------------------------------------------------ */
+
+function OpenSourceSection({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: MarketingStrings;
+}) {
+  return (
+    <section className="rule">
+      <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
+        <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+          <Reveal>
+            <p className="eyebrow">{t.openSource.eyebrow}</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-balance text-ink-900 sm:text-4xl">
+              {t.openSource.title}
+            </h2>
+            <div className="mt-6 space-y-4 text-base leading-relaxed text-ink-700">
+              <p>{t.openSource.body1}</p>
+              <p>{t.openSource.body2}</p>
+            </div>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Link
+                href={localePath(locale, "/signup")}
+                className={buttonCn("primary", "lg")}
+              >
+                {t.openSource.ctaCloud}
+                <ArrowRight className="size-4" aria-hidden />
+              </Link>
+              <a
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noreferrer"
+                className={buttonCn("secondary", "lg")}
+              >
+                <GithubMark className="size-4" />
+                {t.openSource.ctaGithub}
+              </a>
+            </div>
+            <p className="mt-5 font-mono text-xs text-ink-500">
+              {t.openSource.note}
+            </p>
+          </Reveal>
+
+          <Reveal delay={120}>
+            {/* A git-clone terminal + an open-source chip row. */}
+            <div className="overflow-hidden rounded-xl border border-ink-200 bg-ink-950 shadow-card">
+              <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2.5">
+                <span className="font-mono text-xs text-ink-400">
+                  ~/your-project
+                </span>
+                <CopyButton text={CLONE_LINE} />
+              </div>
+              <pre className="overflow-x-auto p-4 font-mono text-xs leading-relaxed text-ink-100">
+                <code>
+                  <span className="text-brand" aria-hidden>
+                    ${" "}
+                  </span>
+                  {CLONE_LINE}
+                  {"\n"}
+                  <span className="text-ink-500">
+                    {"# every feature. no seat limits. your server."}
+                  </span>
+                </code>
+              </pre>
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-ink-200 bg-white px-3 py-1 font-mono text-[11px] text-ink-600">
+                <Star className="size-3 text-brand" aria-hidden />
+                open source
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-ink-200 bg-white px-3 py-1 font-mono text-[11px] text-ink-600">
+                <GithubMark className="size-3" />
+                AGPL-3.0
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-ink-200 bg-white px-3 py-1 font-mono text-[11px] text-ink-600">
+                <ShieldCheck className="size-3 text-ink-400" aria-hidden />
+                self-host free
+              </span>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -412,14 +563,14 @@ function WhySection({ t }: { t: MarketingStrings }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Pricing teaser                                                      */
+/* 8 — Pricing teaser                                                  */
 /* ------------------------------------------------------------------ */
 
 function PricingTeaser({ locale, t }: { locale: Locale; t: MarketingStrings }) {
   return (
     <section className="rule">
       <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
-        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+        <Reveal className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="eyebrow">{t.teaser.eyebrow}</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
@@ -433,7 +584,7 @@ function PricingTeaser({ locale, t }: { locale: Locale; t: MarketingStrings }) {
             {t.teaser.seePricing}
             <ArrowRight className="size-4" aria-hidden />
           </Link>
-        </div>
+        </Reveal>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           <div className="rounded-xl border border-ink-200 bg-white p-8">
@@ -498,13 +649,26 @@ function PricingTeaser({ locale, t }: { locale: Locale; t: MarketingStrings }) {
             </Link>
           </div>
         </div>
+
+        <p className="mt-8 text-center text-sm text-ink-500">
+          {t.teaser.selfHostNote}{" "}
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 font-semibold text-brand hover:underline"
+          >
+            <GithubMark className="size-3.5" />
+            {t.footer.github}
+          </a>
+        </p>
       </div>
     </section>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/* Final CTA                                                           */
+/* 9 — Final CTA                                                        */
 /* ------------------------------------------------------------------ */
 
 function FinalCta({ locale, t }: { locale: Locale; t: MarketingStrings }) {
@@ -516,24 +680,28 @@ function FinalCta({ locale, t }: { locale: Locale; t: MarketingStrings }) {
             {t.finalCta.titleMain}
             <span className="text-brand">{t.finalCta.titleAccent}</span>
           </h2>
-          <p className="mt-6 font-mono text-sm text-ink-400">
-            {t.finalCta.agentBefore}
-            <Link
-              href="/llms.txt"
-              className="text-brand underline decoration-brand/40 underline-offset-4 hover:decoration-brand"
-            >
-              /llms.txt
-            </Link>
-            {t.finalCta.agentAfter}
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-300">
+            {t.finalCta.subtitle}
           </p>
         </div>
-        <Link
-          href={localePath(locale, "/signup")}
-          className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-paper px-7 py-3.5 text-base font-semibold text-ink-900 transition-colors hover:bg-ink-100"
-        >
-          {t.finalCta.cta}
-          <ArrowRight className="size-4" aria-hidden />
-        </Link>
+        <div className="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+          <Link
+            href={localePath(locale, "/signup")}
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-paper px-7 py-3.5 text-base font-semibold text-ink-900 transition-colors hover:bg-ink-100"
+          >
+            {t.finalCta.cta}
+            <ArrowRight className="size-4" aria-hidden />
+          </Link>
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/25 px-7 py-3.5 text-base font-semibold text-paper transition-colors hover:border-white/50 hover:bg-white/5"
+          >
+            <GithubMark className="size-4" />
+            {t.finalCta.ctaGithub}
+          </a>
+        </div>
       </div>
     </section>
   );

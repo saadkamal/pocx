@@ -48,6 +48,11 @@ export default async function MarketingLayout({
       links: [
         { href: "/llms.txt", label: "/llms.txt" },
         { href: "/sdk/pocx.ts", label: "/sdk/pocx.ts" },
+        {
+          href: "https://github.com/saadkamal/pocx",
+          label: t.footer.github,
+          external: true,
+        },
       ],
     },
     {
@@ -107,12 +112,23 @@ export default async function MarketingLayout({
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-ink-500 transition-colors hover:text-ink-900"
-                    >
-                      {link.label}
-                    </Link>
+                    {"external" in link && link.external ? (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-sm text-ink-500 transition-colors hover:text-ink-900"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="text-sm text-ink-500 transition-colors hover:text-ink-900"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

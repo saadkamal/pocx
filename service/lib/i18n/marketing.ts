@@ -17,12 +17,12 @@ import {
 
 const en = {
   meta: {
-    landingTitle: "POCX — Protect your proof of concept",
+    landingTitle: "POCX — Protect your ideas in the age of AI",
     landingDescription:
-      "POCX puts an access gate in front of your proof of concept: email OTP login, enforceable Terms of Access with electronic signatures, session control and a full audit trail. Add it to any app in minutes.",
+      "AI can rebuild your proof of concept from a screenshot. POCX gates your PoC behind verified identity and e-signed terms, so showing your work no longer means giving it away. Open source — self-host free, or start on the cloud.",
     pricingTitle: "Pricing",
     pricingDescription:
-      "POCX pricing — protect proofs of concept free with up to 3 evaluator seats per PoC, or go Pro for unlimited seats and a full audit trail.",
+      "POCX pricing — protect proofs of concept free with up to 3 evaluator seats per PoC, go Pro for unlimited seats and a full audit trail, or self-host the open-source version for free.",
   },
 
   nav: {
@@ -38,7 +38,7 @@ const en = {
 
   footer: {
     tagline:
-      "The access layer for your proof of concept — identity-verified entry, e-signed terms, every access on the record.",
+      "IP protection for builders in the age of AI. Show your proof of concept without giving it away — verified entry, e-signed terms, every view on the record.",
     product: "Product",
     forAgents: "For agents",
     account: "Account",
@@ -48,18 +48,21 @@ const en = {
     faq: "FAQ",
     login: "Log in",
     signup: "Sign up",
+    github: "GitHub",
     copyright: "© 2026 POCX. Built to protect the people who build.",
   },
 
   hero: {
-    eyebrow: "Access gate · e-signed terms · audit trail",
-    titleMain: "Your PoC is your IP. ",
-    titleAccent: "Gate it.",
+    eyebrow: "IP protection for builders in the age of AI",
+    titleMain: "Anyone can rebuild your PoC from a screenshot now. ",
+    titleAccent: "Make them sign for it first.",
     subtitle:
-      "POCX puts an identity-verified gate, enforceable Terms of Access and a complete audit trail in front of any proof of concept — in one file and three env vars.",
+      "AI turned copying into a weekend project — a screenshot and a prompt is all it takes to clone what took you months to design. POCX puts a gate in front of your proof of concept: every viewer verifies who they are and e-signs terms that make building on your work a binding commitment. Show it. Don’t give it away.",
     startFree: "Start free",
+    selfHost: "Self-host it — free",
     readDocs: "Read the docs",
-    finePrint: "Free for up to 3 evaluators per PoC · no card required",
+    finePrint:
+      "Free on the cloud for 3 evaluators · or self-host free forever · no card required",
   },
 
   heroVisual: {
@@ -70,14 +73,51 @@ const en = {
   },
 
   trustChips: [
-    "6-digit OTP — hashed & single-use",
-    "SHA-256 signed terms",
-    "Every access on the record",
+    "Every viewer verified by email OTP",
+    "Terms e-signed before the first screen",
+    "Open source — self-host free",
   ],
+
+  problem: {
+    eyebrow: "The new reality",
+    title: "Building used to be the moat. Now it’s the easy part.",
+    lead: "For years a demo was safe to show — rebuilding it was too much work to bother. That changed overnight.",
+    beats: [
+      {
+        n: "01",
+        text: "You show a prospect your proof of concept.",
+      },
+      {
+        n: "02",
+        text: "They screenshot it and paste it into Claude, Codex or Cursor: “build me this.”",
+      },
+      {
+        n: "03",
+        text: "By morning they have a working copy — and never needed you.",
+      },
+    ],
+    punch:
+      "Your ideas are more valuable than ever, and more exposed than ever. The asset is the concept — but you can’t sell it without showing it.",
+    // Animated demo strings (screenshot → prompt → clone → POCX blocks it)
+    demo: {
+      promptLabel: "coding agent",
+      prompt: "Rebuild this app from the screenshot →",
+      cloning: "cloning…",
+      cloned: "your-idea, cloned",
+      blockedLabel: "with POCX",
+      blocked: "Access denied — signature required",
+    },
+  },
+
+  solution: {
+    eyebrow: "What POCX does",
+    title: "Show the work. Keep the idea.",
+    body: "POCX doesn’t hide your PoC — it makes seeing it accountable. Before anyone reaches a single screen, they prove their identity and sign your Terms of Access. A screenshot is no longer anonymous: it’s tied to a named person who agreed, in writing, not to build on your work without you.",
+  },
 
   how: {
     eyebrow: "How it works",
-    title: "Protected in three steps. Minutes, not sprints.",
+    title: "From unprotected to protected in three steps.",
     step1: {
       eyebrow: "01 — Create",
       title: "Create your PoC",
@@ -136,7 +176,7 @@ const en = {
   },
 
   why: {
-    eyebrow: "Why POCX exists",
+    eyebrow: "Why it holds up",
     title: "A login wall is not protection. A signature is.",
     p1: "Your PoC embodies your IP — the designs, the workflows, the ideas your client is evaluating. A password keeps strangers out. It does nothing when the people you invited take what they saw and build it without you.",
     p2Before: "POCX’s standard Terms of Access include the clause that matters: ",
@@ -156,10 +196,23 @@ const en = {
     },
   },
 
+  openSource: {
+    eyebrow: "Open source",
+    title: "Don’t want to pay? Run it yourself.",
+    body1:
+      "POCX is fully open source — like n8n or Supabase. Not a stripped-down “community edition”: the entire product — the gate, the dashboard, the audit trail, the ops console — all of it. Self-host and every feature is free, forever.",
+    body2:
+      "The cloud at pocx.dev is for people who’d rather not run infrastructure. You pay for the convenience of not hosting it, not for the software. Either way, your ideas are protected.",
+    ctaCloud: "Start on the cloud",
+    ctaGithub: "Get it on GitHub",
+    note: "AGPL-3.0 · your data, your server, your rules.",
+  },
+
   teaser: {
     eyebrow: "Pricing",
     title: "Start free. Stay protected.",
     seePricing: "See pricing",
+    selfHostNote: "Or run the open-source version yourself — free, forever.",
     free: {
       name: "Free",
       priceSuffix: " forever",
@@ -186,17 +239,18 @@ const en = {
 
   finalCta: {
     titleMain: "Ship the demo. ",
-    titleAccent: "Keep the IP.",
-    agentBefore: "or read ",
-    agentAfter: " — your agent can have this done before the kettle boils.",
+    titleAccent: "Keep the idea.",
+    subtitle:
+      "Free on the cloud for three evaluators, or self-host the whole thing for free. Your ideas, protected either way.",
     cta: "Start free",
+    ctaGithub: "Get it on GitHub",
   },
 
   pricing: {
     eyebrow: "Pricing",
     title: "Simple pricing for protected PoCs",
     subtitle:
-      "Start free, no card required. Upgrade when your evaluation grows beyond three people.",
+      "Start free, no card required. Upgrade when your evaluation grows beyond three people — or self-host the open-source version for free.",
     free: {
       name: "Free",
       priceSuffix: " forever",
@@ -225,6 +279,20 @@ const en = {
       ],
       cta: "Start free, upgrade anytime",
     },
+    selfHost: {
+      name: "Self-hosted",
+      price: "Free",
+      priceSuffix: " forever",
+      tagline: "Run the open-source version on your own infrastructure.",
+      features: [
+        "The entire product — every feature",
+        "No seat limits, no plan gates",
+        "Your data stays on your server",
+        "AGPL-3.0 — yours to modify",
+        "Community support on GitHub",
+      ],
+      cta: "Get it on GitHub",
+    },
     faqTitle: "Frequently asked questions",
     faq: [
       {
@@ -233,11 +301,15 @@ const en = {
       },
       {
         q: "Do you see my PoC’s code or data?",
-        a: "No. POCX only handles the front door: identity, terms and sessions. Once an evaluator is through the gate, traffic goes straight to your app — nothing passes through us.",
+        a: "No. POCX only handles the front door: identity, terms and sessions. Once an evaluator is through the gate, traffic goes straight to your app — nothing passes through us. And if you self-host, nothing leaves your servers at all.",
+      },
+      {
+        q: "It’s open source — why would I pay?",
+        a: "You wouldn’t, for the software — it’s free to self-host with every feature. The Pro plan pays for the managed cloud: we run it, keep email deliverability healthy, and handle upgrades, so you don’t stand up a server for a proof of concept.",
       },
       {
         q: "What happens when I hit 3 seats on Free?",
-        a: "Adding a fourth evaluator prompts an upgrade to Pro. Existing evaluators keep their access — nothing breaks, nothing is revoked.",
+        a: "Adding a fourth evaluator prompts an upgrade to Pro. Existing evaluators keep their access — nothing breaks, nothing is revoked. (Self-hosting has no seat limit.)",
       },
       {
         q: "Are the signatures legally meaningful?",
@@ -266,12 +338,12 @@ export type MarketingStrings = typeof en;
 
 const ja: MarketingStrings = {
   meta: {
-    landingTitle: "POCX — PoCを守るアクセスゲート",
+    landingTitle: "POCX — AI時代に、あなたのアイデアを守る",
     landingDescription:
-      "POCXは、あなたのPoCの前にアクセスゲートを設置します。メールOTPログイン、電子署名付きで法的効力のある利用規約、セッション制御、そして完全な監査ログ。どんなアプリにも数分で導入できます。",
+      "AIはスクリーンショット1枚からあなたのPoCを再現できます。POCXは、本人確認と電子署名付き規約でPoCをゲートし、「見せること」が「渡すこと」にならないようにします。オープンソース — 自分で無料ホスト、またはクラウドで開始。",
     pricingTitle: "料金プラン",
     pricingDescription:
-      "POCXの料金プラン — PoCごとに評価者3名まで無料で保護。評価者数無制限と完全な監査ログが必要になったらProへ。",
+      "POCXの料金 — PoCごとに評価者3名まで無料で保護。無制限のシートと完全な監査ログが必要ならPro、あるいはオープンソース版を自分で無料ホスト。",
   },
 
   nav: {
@@ -287,7 +359,7 @@ const ja: MarketingStrings = {
 
   footer: {
     tagline:
-      "PoCのためのアクセスレイヤー — 本人確認済みの入場、電子署名付き利用規約、そしてすべてのアクセスを記録します。",
+      "AI時代の、つくる人のための知財保護。PoCを渡すことなく見せる — 本人確認済みの入場、電子署名付き規約、すべての閲覧を記録。",
     product: "プロダクト",
     forAgents: "エージェント向け",
     account: "アカウント",
@@ -297,18 +369,21 @@ const ja: MarketingStrings = {
     faq: "FAQ",
     login: "ログイン",
     signup: "新規登録",
+    github: "GitHub",
     copyright: "© 2026 POCX. つくる人を守るために。",
   },
 
   hero: {
-    eyebrow: "アクセスゲート · 電子署名付き規約 · 監査ログ",
-    titleMain: "PoCはあなたの知的財産。",
-    titleAccent: "ゲートで守る。",
+    eyebrow: "AI時代の、つくる人のための知財保護",
+    titleMain: "あなたのPoCは、スクショ1枚で再現される時代。",
+    titleAccent: "まず署名させよう。",
     subtitle:
-      "POCXは、本人確認付きのゲート、法的効力のある利用規約(Terms of Access)、そして完全な監査ログを、あらゆるPoCの前に配置します。必要なのはファイル1つと環境変数3つだけ。",
+      "AIは複製を週末仕事に変えました。スクリーンショットとプロンプトさえあれば、何ヶ月もかけて設計したものが再現できてしまいます。POCXは、あなたのPoCの前にゲートを設けます。閲覧する人は全員、本人確認を行い、あなたの成果物を無断で流用しないという法的効力のある利用規約に電子署名します。見せても、渡さない。",
     startFree: "無料で始める",
+    selfHost: "自分でホストする（無料）",
     readDocs: "ドキュメントを読む",
-    finePrint: "PoCごとに評価者3名まで無料 · クレジットカード不要",
+    finePrint:
+      "クラウドは評価者3名まで無料 · または自分でホストすればずっと無料 · カード不要",
   },
 
   heroVisual: {
@@ -320,14 +395,50 @@ const ja: MarketingStrings = {
   },
 
   trustChips: [
-    "6桁OTP — ハッシュ化・使い捨て",
-    "SHA-256で署名された規約",
-    "すべてのアクセスを記録",
+    "閲覧者は全員メールOTPで本人確認",
+    "最初の画面の前に規約へ電子署名",
+    "オープンソース — 自分でホストすれば無料",
   ],
+
+  problem: {
+    eyebrow: "新しい現実",
+    title: "かつては「作れること」が堀だった。今、それは一番簡単な部分です。",
+    lead: "長い間、デモは安全に見せられました — 再現するのは手間がかかりすぎて、誰もやらなかったからです。それが一晩で変わりました。",
+    beats: [
+      {
+        n: "01",
+        text: "見込み客にPoCを見せる。",
+      },
+      {
+        n: "02",
+        text: "相手はスクショを撮り、Claude・Codex・Cursorに貼り付けて「これを作って」と頼む。",
+      },
+      {
+        n: "03",
+        text: "翌朝には動くコピーが完成 — あなたはもう必要ない。",
+      },
+    ],
+    punch:
+      "アイデアの価値はかつてなく高まり、かつてなくむき出しになっています。資産は「概念」そのもの — けれど、見せなければ売れません。",
+    demo: {
+      promptLabel: "コーディングエージェント",
+      prompt: "このスクショからアプリを再現して →",
+      cloning: "複製中…",
+      cloned: "あなたのアイデア、複製完了",
+      blockedLabel: "POCXがあれば",
+      blocked: "アクセス拒否 — 署名が必要です",
+    },
+  },
+
+  solution: {
+    eyebrow: "POCXの役割",
+    title: "見せる。でも、渡さない。",
+    body: "POCXはPoCを隠しません — 見ることに責任を持たせます。誰かが最初の画面にたどり着く前に、本人確認を行い、あなたの利用規約に署名します。スクリーンショットはもう匿名ではありません。それは、あなたの成果物を無断で流用しないと書面で同意した、名前のある人物に紐づきます。",
+  },
 
   how: {
     eyebrow: "仕組み",
-    title: "3ステップで保護完了。スプリントではなく、数分で。",
+    title: "無防備な状態から、3ステップで保護へ。",
     step1: {
       eyebrow: "01 — 作成",
       title: "PoCを作成する",
@@ -386,7 +497,7 @@ const ja: MarketingStrings = {
   },
 
   why: {
-    eyebrow: "POCXが存在する理由",
+    eyebrow: "なぜ効くのか",
     title: "ログイン画面は保護ではありません。署名こそが保護です。",
     p1: "PoCには、あなたの知的財産が詰まっています — デザイン、ワークフロー、そしてクライアントが評価しているアイデアそのもの。パスワードは部外者を締め出せても、招待した相手が見たものを持ち帰り、あなた抜きで作ってしまうことは防げません。",
     p2Before: "POCXの標準利用規約には、核心となる条項が含まれています — ",
@@ -406,10 +517,23 @@ const ja: MarketingStrings = {
     },
   },
 
+  openSource: {
+    eyebrow: "オープンソース",
+    title: "払いたくない？ 自分で動かせばいい。",
+    body1:
+      "POCXは完全なオープンソースです — n8nやSupabaseと同じように。機能を削った「コミュニティ版」ではありません。ゲートも、ダッシュボードも、監査ログも、運用コンソールも — 製品まるごと。自分でホストすれば、あらゆる機能がずっと無料です。",
+    body2:
+      "pocx.devのクラウドは、インフラを自分で運用したくない人のためのもの。あなたが支払うのはソフトウェアではなく「ホストしない」という便利さに対してです。どちらを選んでも、あなたのアイデアは守られます。",
+    ctaCloud: "クラウドで始める",
+    ctaGithub: "GitHubで入手",
+    note: "AGPL-3.0 · あなたのデータ、あなたのサーバー、あなたのルール。",
+  },
+
   teaser: {
     eyebrow: "料金",
     title: "無料で始めて、守り続ける。",
     seePricing: "料金を見る",
+    selfHostNote: "または、オープンソース版を自分で動かす — 無料で、ずっと。",
     free: {
       name: "Free",
       priceSuffix: " ずっと無料",
@@ -436,18 +560,18 @@ const ja: MarketingStrings = {
 
   finalCta: {
     titleMain: "デモは届ける。",
-    titleAccent: "IPは守る。",
-    agentBefore: "または ",
-    agentAfter:
-      " をエージェントに渡してください — お湯が沸く前に導入は完了します。",
+    titleAccent: "アイデアは守る。",
+    subtitle:
+      "クラウドなら評価者3名まで無料、あるいは製品まるごと自分で無料ホスト。どちらでも、あなたのアイデアは守られます。",
     cta: "無料で始める",
+    ctaGithub: "GitHubで入手",
   },
 
   pricing: {
     eyebrow: "料金",
     title: "PoCを守るための、シンプルな料金",
     subtitle:
-      "クレジットカード不要で、無料で始められます。評価者が3名を超えたらアップグレードしてください。",
+      "クレジットカード不要で、無料で始められます。評価者が3名を超えたらアップグレード — または、オープンソース版を自分で無料ホスト。",
     free: {
       name: "Free",
       priceSuffix: " ずっと無料",
@@ -476,6 +600,20 @@ const ja: MarketingStrings = {
       ],
       cta: "無料で始めて、いつでもアップグレード",
     },
+    selfHost: {
+      name: "セルフホスト",
+      price: "無料",
+      priceSuffix: " ずっと",
+      tagline: "オープンソース版を、自分のインフラで動かす。",
+      features: [
+        "製品まるごと — すべての機能",
+        "シート上限なし、プラン制限なし",
+        "データはあなたのサーバーに",
+        "AGPL-3.0 — 自由に改変可能",
+        "GitHubでのコミュニティサポート",
+      ],
+      cta: "GitHubで入手",
+    },
     faqTitle: "よくある質問",
     faq: [
       {
@@ -484,11 +622,15 @@ const ja: MarketingStrings = {
       },
       {
         q: "POCXは私のPoCのコードやデータにアクセスしますか?",
-        a: "いいえ。POCXが扱うのは入口だけです — 本人確認、規約、セッションのみ。評価者がゲートを通過した後のトラフィックはあなたのアプリへ直接流れ、POCXを経由することはありません。",
+        a: "いいえ。POCXが扱うのは入口だけです — 本人確認、規約、セッションのみ。評価者がゲートを通過した後のトラフィックはあなたのアプリへ直接流れ、POCXを経由することはありません。セルフホストなら、何一つあなたのサーバーの外には出ません。",
+      },
+      {
+        q: "オープンソースなら、なぜ払うのですか?",
+        a: "ソフトウェアには払いません — 全機能付きで、セルフホストは無料です。Proプランは、マネージドクラウドへの対価です。運用、メール到達性の維持、アップグレードを私たちが担うので、PoCのためにサーバーを立てる必要がありません。",
       },
       {
         q: "Freeプランで3シートに達するとどうなりますか?",
-        a: "4人目の評価者を追加しようとすると、Proへのアップグレードが案内されます。既存の評価者のアクセスはそのまま維持され、何も停止・取り消しされません。",
+        a: "4人目の評価者を追加しようとすると、Proへのアップグレードが案内されます。既存の評価者のアクセスはそのまま維持され、何も停止・取り消しされません。(セルフホストにシート上限はありません。)",
       },
       {
         q: "署名には法的な意味がありますか?",

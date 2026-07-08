@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
-import { buttonCn } from "@/components/ui";
+import { buttonCn, GithubMark } from "@/components/ui";
 import { localePath, type Locale } from "@/lib/i18n/locales";
 import { marketingDict } from "@/lib/i18n/marketing";
 import { PRO_PRICE_USD } from "@/lib/plans";
@@ -37,7 +37,7 @@ export default async function PricingPage({
         <p className="mt-5 text-lg text-ink-600">{t.subtitle}</p>
       </div>
 
-      <div className="mx-auto mt-16 grid max-w-4xl gap-6 md:grid-cols-2">
+      <div className="mx-auto mt-16 grid max-w-5xl gap-6 md:grid-cols-2 lg:grid-cols-3">
         {/* Free */}
         <div className="flex flex-col rounded-xl border border-ink-200 bg-white p-8">
           <h2 className="text-lg font-semibold text-ink-900">{t.free.name}</h2>
@@ -101,6 +101,43 @@ export default async function PricingPage({
             {t.pro.cta}
             <ArrowRight className="size-4" aria-hidden />
           </Link>
+        </div>
+
+        {/* Self-hosted — open source, free forever */}
+        <div className="flex flex-col rounded-xl border border-ink-200 bg-white p-8">
+          <div className="flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-ink-900">
+              {t.selfHost.name}
+            </h2>
+            <GithubMark className="size-4 text-ink-400" />
+          </div>
+          <p className="mt-3 text-5xl font-semibold tracking-tight text-ink-900">
+            {t.selfHost.price}
+            <span className="text-base font-medium text-ink-500">
+              {t.selfHost.priceSuffix}
+            </span>
+          </p>
+          <p className="mt-2 text-sm text-ink-500">{t.selfHost.tagline}</p>
+          <ul className="mt-7 flex-1 space-y-3 text-sm text-ink-600">
+            {t.selfHost.features.map((f) => (
+              <li key={f} className="flex items-start gap-2.5">
+                <Check
+                  className="mt-0.5 size-4 shrink-0 text-ink-400"
+                  aria-hidden
+                />
+                {f}
+              </li>
+            ))}
+          </ul>
+          <a
+            href="https://github.com/saadkamal/pocx"
+            target="_blank"
+            rel="noreferrer"
+            className={`${buttonCn("secondary", "lg")} mt-9 w-full`}
+          >
+            <GithubMark className="size-4" />
+            {t.selfHost.cta}
+          </a>
         </div>
       </div>
 
