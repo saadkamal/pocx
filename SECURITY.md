@@ -7,7 +7,7 @@ highest-priority work.
 
 - **Do not** open a public issue for security problems.
 - Use GitHub's private vulnerability reporting on this repository, or
-  email **security@pocx.dev**.
+  email **saad@haxo.com.au**.
 - You'll get a first response within **48 hours**.
 
 ## Scope
