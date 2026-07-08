@@ -15,6 +15,7 @@ import {
 import { buttonCn } from "@/components/ui";
 import { localePath, type Locale } from "@/lib/i18n/locales";
 import { marketingDict, type MarketingStrings } from "@/lib/i18n/marketing";
+import { PRO_PRICE_USD } from "@/lib/plans";
 import { CopyButton } from "./copy-button";
 
 const AGENT_PROMPT =
@@ -472,11 +473,12 @@ function PricingTeaser({ locale, t }: { locale: Locale; t: MarketingStrings }) {
               {t.teaser.pro.name}
             </h3>
             <p className="mt-2 text-4xl font-semibold tracking-tight text-ink-900">
-              US$39
+              US${PRO_PRICE_USD}
               <span className="text-base font-medium text-ink-500">
                 {t.teaser.pro.priceSuffix}
               </span>
             </p>
+            <p className="mt-2 text-sm text-ink-500">{t.teaser.pro.yearlyLine}</p>
             <ul className="mt-6 space-y-2.5 text-sm text-ink-600">
               {t.teaser.pro.bullets.map((item) => (
                 <li key={item} className="flex items-start gap-2.5">

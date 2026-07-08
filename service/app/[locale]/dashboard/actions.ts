@@ -24,6 +24,7 @@ import {
   setEvaluatorDisabled,
   setOperatorDisabled,
   updatePoc,
+  updateWorkspaceBilling,
 } from "@/lib/db/repo";
 import {
   newEvaluatorId,
@@ -34,12 +35,19 @@ import {
 } from "@/lib/ids";
 import { sendEvaluatorInvite, sendOperatorInvite } from "@/lib/mail/invites";
 import { normalizeEmail } from "@/lib/auth/otp";
-import { canAddEvaluator } from "@/lib/plans";
+import { canAddEvaluator, PRO_PRICE_YEARLY_USD } from "@/lib/plans";
 import {
+  applyRetentionCoupon,
+  cancelAtPeriodEnd,
   createCheckoutUrl,
+  createPortalUrl,
   demoDowngrade,
   demoUpgrade,
+  resumeSubscription,
+  retentionOfferAvailable,
   stripeEnabled,
+  switchToYearly,
+  syncSubscriptionToWorkspace,
 } from "@/lib/billing";
 import { slugify } from "@/lib/utils";
 
@@ -595,28 +603,177 @@ export async function renameWorkspaceAction(
   return { ok: true, message: "Saved." };
 }
 
-export async function upgradeAction(): Promise<ActionResult> {
+/** Free → Pro via Stripe Checkout (or instantly in demo mode). */
+export async function upgradeAction(
+  interval: "month" | "year" = "month",
+): Promise<ActionResult> {
   const ctx = await ctxOrNull();
   if (!ctx) return err("Not signed in.");
   if (ctx.workspace.plan === "pro") return err("Already on Pro.");
+  if (interval !== "month" && interval !== "year") return err("Invalid plan.");
 
   if (stripeEnabled()) {
-    const url = await createCheckoutUrl(ctx.workspace.id, ctx.operator.email);
+    const url = await createCheckoutUrl(
+      ctx.workspace.id,
+      ctx.operator.email,
+      interval,
+    );
     redirect(url);
   }
-  demoUpgrade(ctx.workspace.id, ctx.operator.email);
+  demoUpgrade(ctx.workspace.id, ctx.operator.email, interval);
   revalidatePath("/dashboard");
   return {
     ok: true,
-    message: "Workspace upgraded to Pro (demo mode — Stripe not configured).",
+    message: `Workspace upgraded to Pro (${interval === "year" ? "yearly" : "monthly"}, demo mode — Stripe not configured).`,
   };
 }
 
-export async function downgradeAction(): Promise<ActionResult> {
+/**
+ * Cancel the subscription. Stripe mode: cancels at period end — Pro access
+ * runs until the paid period expires (the webhook downgrades then). Demo
+ * mode: downgrades immediately.
+ */
+export async function cancelSubscriptionAction(): Promise<ActionResult> {
   const ctx = await ctxOrNull();
   if (!ctx) return err("Not signed in.");
   if (ctx.workspace.plan === "free") return err("Already on Free.");
+
+  if (stripeEnabled() && ctx.workspace.stripeSubscriptionId) {
+    try {
+      const snap = await cancelAtPeriodEnd(ctx.workspace.stripeSubscriptionId);
+      syncSubscriptionToWorkspace(ctx.workspace.id, snap);
+    } catch (e) {
+      console.warn("[pocx] cancel failed:", e);
+      return err("Couldn't reach Stripe — try again in a moment.");
+    }
+    insertAudit({
+      workspaceId: ctx.workspace.id,
+      email: ctx.operator.email,
+      event: "subscription_cancel_scheduled",
+      detail: "cancels at period end",
+      source: "dashboard",
+    });
+    revalidatePath("/dashboard/billing");
+    return {
+      ok: true,
+      message:
+        "Cancellation scheduled — Pro stays active until the end of the period you've paid for.",
+    };
+  }
+
   demoDowngrade(ctx.workspace.id, ctx.operator.email);
   revalidatePath("/dashboard");
   return { ok: true, message: "Workspace downgraded to Free." };
+}
+
+/** Undo a scheduled cancellation before the period ends. */
+export async function resumeSubscriptionAction(): Promise<ActionResult> {
+  const ctx = await ctxOrNull();
+  if (!ctx) return err("Not signed in.");
+  if (!ctx.workspace.cancelAtPeriodEnd) return err("Nothing to resume.");
+
+  if (stripeEnabled() && ctx.workspace.stripeSubscriptionId) {
+    try {
+      const snap = await resumeSubscription(ctx.workspace.stripeSubscriptionId);
+      syncSubscriptionToWorkspace(ctx.workspace.id, snap);
+    } catch {
+      return err("Couldn't reach Stripe — try again in a moment.");
+    }
+  } else {
+    updateWorkspaceBilling(ctx.workspace.id, { cancelAtPeriodEnd: false });
+  }
+  insertAudit({
+    workspaceId: ctx.workspace.id,
+    email: ctx.operator.email,
+    event: "subscription_resumed",
+    source: "dashboard",
+  });
+  revalidatePath("/dashboard/billing");
+  return { ok: true, message: "Welcome back — your subscription will renew as usual." };
+}
+
+/** Monthly → yearly, prorated and invoiced immediately. */
+export async function switchToYearlyAction(): Promise<ActionResult> {
+  const ctx = await ctxOrNull();
+  if (!ctx) return err("Not signed in.");
+  if (ctx.workspace.plan !== "pro") return err("Upgrade to Pro first.");
+  if (ctx.workspace.billingInterval === "year") return err("Already on yearly.");
+
+  if (stripeEnabled() && ctx.workspace.stripeSubscriptionId) {
+    try {
+      const snap = await switchToYearly(ctx.workspace.stripeSubscriptionId);
+      syncSubscriptionToWorkspace(ctx.workspace.id, snap);
+    } catch (e) {
+      console.warn("[pocx] switch failed:", e);
+      return err("Couldn't switch the plan — try again in a moment.");
+    }
+  } else {
+    updateWorkspaceBilling(ctx.workspace.id, {
+      billingInterval: "year",
+      currentPeriodEnd: new Date(Date.now() + 365 * 86_400_000),
+    });
+  }
+  insertAudit({
+    workspaceId: ctx.workspace.id,
+    email: ctx.operator.email,
+    event: "subscription_switched_yearly",
+    detail: `US$${PRO_PRICE_YEARLY_USD}/yr`,
+    source: "dashboard",
+  });
+  revalidatePath("/dashboard/billing");
+  return {
+    ok: true,
+    message: `Switched to yearly (US$${PRO_PRICE_YEARLY_USD}/yr). The difference is prorated on today's invoice.`,
+  };
+}
+
+/**
+ * Accept the save-offer shown during monthly cancellation: 50% off for the
+ * next 3 months, once per workspace. Applying it keeps the subscription.
+ */
+export async function acceptRetentionOfferAction(): Promise<ActionResult> {
+  const ctx = await ctxOrNull();
+  if (!ctx) return err("Not signed in.");
+  if (!retentionOfferAvailable(ctx.workspace)) {
+    return err("This offer isn't available for your workspace.");
+  }
+
+  if (stripeEnabled() && ctx.workspace.stripeSubscriptionId) {
+    try {
+      await applyRetentionCoupon(ctx.workspace.stripeSubscriptionId);
+    } catch (e) {
+      console.warn("[pocx] retention coupon failed:", e);
+      return err("Couldn't apply the discount — try again in a moment.");
+    }
+  }
+  updateWorkspaceBilling(ctx.workspace.id, {
+    retentionOfferRedeemedAt: new Date(),
+  });
+  insertAudit({
+    workspaceId: ctx.workspace.id,
+    email: ctx.operator.email,
+    event: "retention_offer_accepted",
+    detail: "50% off for 3 months",
+    source: "dashboard",
+  });
+  revalidatePath("/dashboard/billing");
+  return {
+    ok: true,
+    message:
+      "Done — your next 3 monthly invoices are 50% off. Thanks for staying.",
+  };
+}
+
+/** Stripe Billing Portal: invoices, receipts, payment methods. */
+export async function openBillingPortalAction(): Promise<ActionResult> {
+  const ctx = await ctxOrNull();
+  if (!ctx) return err("Not signed in.");
+  if (!stripeEnabled()) {
+    return err("Billing portal is unavailable in demo mode.");
+  }
+  if (!ctx.workspace.stripeCustomerId) {
+    return err("No billing profile yet — upgrade to Pro first.");
+  }
+  const url = await createPortalUrl(ctx.workspace.stripeCustomerId);
+  redirect(url);
 }

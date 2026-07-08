@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
 import { pocForWorkspace, requireOperator } from "@/lib/auth/operator";
 import { Badge, Mono } from "@/components/ui";
+import { hasAuditTrail } from "@/lib/plans";
 import { pocxOrigin } from "@/lib/utils";
 import { dashboardDict, resolveLocale } from "@/lib/i18n/dashboard";
 import { PocTabs } from "./tabs";
@@ -52,7 +53,7 @@ export default async function PocLayout({
         </span>
       </div>
 
-      <PocTabs pocId={poc.id} />
+      <PocTabs pocId={poc.id} showAuditLock={!hasAuditTrail(ctx.workspace.plan)} />
 
       <div className="mt-6">{children}</div>
     </div>

@@ -1,4 +1,9 @@
 import type { Locale } from "./locales";
+import {
+  PRO_PRICE_USD,
+  PRO_PRICE_YEARLY_USD,
+  YEARLY_SAVINGS_PCT,
+} from "../plans";
 
 /**
  * Marketing-core strings (nav/footer layout, landing page, pricing page).
@@ -169,6 +174,7 @@ const en = {
       badge: "MOST PROTECTIVE",
       name: "Pro",
       priceSuffix: " /workspace/month",
+      yearlyLine: `US$${PRO_PRICE_USD}/mo · or US$${PRO_PRICE_YEARLY_USD}/yr (save ${YEARLY_SAVINGS_PCT}%)`,
       bullets: [
         "Unlimited evaluator seats",
         "Full audit trail with CSV export",
@@ -208,6 +214,7 @@ const en = {
       badge: "MOST PROTECTIVE",
       name: "Pro",
       priceSuffix: " /workspace/month",
+      yearlyLine: `or US$${PRO_PRICE_YEARLY_USD}/year (save ${YEARLY_SAVINGS_PCT}% — 2+ months free)`,
       tagline: "For teams running real evaluations at scale.",
       features: [
         "Everything in Free",
@@ -242,7 +249,7 @@ const en = {
       },
       {
         q: "How do I cancel?",
-        a: "Downgrade anytime from the dashboard. Your gates keep working within Free limits — evaluators aren’t locked out.",
+        a: "Cancel anytime from the dashboard — access continues until the end of the period you’ve paid for. After that, your gates keep working within Free limits — evaluators aren’t locked out.",
       },
     ],
     still: {
@@ -417,6 +424,7 @@ const ja: MarketingStrings = {
       badge: "最も強力な保護",
       name: "Pro",
       priceSuffix: " /ワークスペース/月",
+      yearlyLine: `US$${PRO_PRICE_USD}/月 · または US$${PRO_PRICE_YEARLY_USD}/年（${YEARLY_SAVINGS_PCT}%オフ）`,
       bullets: [
         "評価者数は無制限",
         "CSVエクスポート付きの完全な監査ログ",
@@ -457,6 +465,7 @@ const ja: MarketingStrings = {
       badge: "最も強力な保護",
       name: "Pro",
       priceSuffix: " /ワークスペース/月",
+      yearlyLine: `または US$${PRO_PRICE_YEARLY_USD}/年（${YEARLY_SAVINGS_PCT}%オフ — 2か月分以上お得）`,
       tagline: "本格的な評価を大規模に進めるチームへ。",
       features: [
         "Freeの全機能",
@@ -491,7 +500,7 @@ const ja: MarketingStrings = {
       },
       {
         q: "解約するにはどうすればよいですか?",
-        a: "ダッシュボードからいつでもダウングレードできます。ゲートはFreeプランの範囲内で動き続け、評価者が締め出されることはありません。",
+        a: "ダッシュボードからいつでも解約できます。支払い済み期間の終わりまではそのまま利用でき、その後もゲートはFreeプランの範囲内で動き続けます。評価者が締め出されることはありません。",
       },
     ],
     still: {

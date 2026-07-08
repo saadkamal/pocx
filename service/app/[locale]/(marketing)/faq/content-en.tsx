@@ -119,7 +119,11 @@ const SECTIONS: Section[] = [
       },
       {
         q: "What does Pro add?",
-        a: "US$39 per workspace per month: unlimited evaluator seats and the full audit trail — every OTP request, login, signature and revocation, plus optional in-app page-view events, with CSV export.",
+        a: "US$39 per workspace per month — or US$320 per year (about 32% off): unlimited evaluator seats and the full audit trail — every OTP request, login, signature and revocation, plus optional in-app page-view events, with CSV export.",
+      },
+      {
+        q: "Can I pay yearly?",
+        a: "Yes — Pro is US$39/month or US$320/year (about 32% off). You can switch from monthly to yearly anytime from Billing; the difference is prorated. Cancel anytime — access continues until the end of the period you've paid for, and invoices are always available from the billing portal.",
       },
       {
         q: "What happens if I downgrade?",
@@ -127,7 +131,7 @@ const SECTIONS: Section[] = [
       },
       {
         q: "How do I cancel?",
-        a: "Downgrade anytime from the dashboard. No lock-in, no exit interview — your PoCs stay protected within Free limits.",
+        a: "Cancel anytime from the dashboard — access continues until the end of the period you've paid for. No lock-in, no exit interview — your PoCs stay protected within Free limits.",
       },
     ],
   },

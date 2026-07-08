@@ -131,13 +131,46 @@ const en = {
       "CSV export",
       "Priority support",
     ],
-    downgrade: "Downgrade to Free",
     upgrade: "Upgrade to Pro",
     working: "Working…",
-    downgradeConfirm:
-      "Downgrade to Free? PoCs keep at most 3 active evaluator seats and the audit trail view is locked (events are still recorded).",
-    stripeNote:
-      "Card payments via Stripe. When Stripe isn't configured this workspace switches instantly (demo mode).",
+    /* Upgraded banner */
+    upgradedTitle: "Welcome to Pro",
+    upgradedBody:
+      "Your workspace now has unlimited evaluator seats and the full audit trail.",
+    /* Billing-interval toggle (Free plan) */
+    intervalAria: "Billing interval",
+    intervalMonthly: (price: number): string => `Monthly — US$${price}/mo`,
+    intervalYearly: (price: number): string => `Yearly — US$${price}/yr`,
+    saveBadge: (pct: number): string => `Save ${pct}% — 2 months+ free`,
+    perWorkspaceYear: " / workspace / year",
+    yearlyEquivalent: (approx: number): string =>
+      `≈ US$${approx}/mo billed annually`,
+    /* Pro subscription card */
+    subscriptionTitle: "Subscription",
+    statusMonthly: "Pro · billed monthly",
+    statusYearly: "Pro · billed yearly",
+    renewsOn: (date: string): string => `Renews on ${date}`,
+    cancelsOn: (date: string): string =>
+      `Cancels on ${date} — Pro access continues until then`,
+    cancelsAtPeriodEnd:
+      "Cancels at the end of the current billing period — Pro access continues until then",
+    resume: "Resume subscription",
+    manageBilling: "Manage billing & invoices",
+    switchToYearly: (pct: number): string => `Switch to yearly — save ${pct}%`,
+    switchConfirm: (price: number): string =>
+      `Switch to yearly billing (US$${price}/yr)? The prorated difference is invoiced today.`,
+    cancelSubscription: "Cancel subscription",
+    cancelConfirm:
+      "Cancel your Pro subscription? Pro access continues until the end of the period you've already paid for.",
+    /* Retention offer */
+    retentionTitle: "Before you go — 50% off for 3 months",
+    retentionBody: (price: string): string =>
+      `Stay on Pro and your next 3 monthly invoices are half price (${price}/mo). One-time offer.`,
+    retentionAccept: "Keep Pro at 50% off",
+    retentionDecline: "Cancel anyway",
+    retentionClose: "Close",
+    demoNote:
+      "Stripe isn't configured on this deployment — plan changes apply instantly (demo mode).",
     workspaceTitle: "Workspace",
     workspaceDesc:
       "The workspace name appears in the dashboard sidebar and on billing records.",
@@ -229,6 +262,14 @@ const en = {
       allowlistNote:
         "Only allowlisted emails can request an access code at the gate.",
       seatsUsed: (used: number, max: string) => `${used} of ${max} seats used.`,
+      seatNudge: (
+        used: number,
+        max: number,
+        monthly: number,
+        yearly: number,
+      ): string =>
+        `You're using ${used} of ${max} free evaluator seats. Pro removes the cap — US$${monthly}/mo or US$${yearly}/yr.`,
+      seatNudgeCta: "See plans",
       upgradeCta: "Upgrade to Pro for unlimited seats →",
       upgradeLink: "Upgrade →",
       emailLabel: "Email",
@@ -522,13 +563,43 @@ const ja: DashboardStrings = {
       "CSVエクスポート",
       "優先サポート",
     ],
-    downgrade: "Freeにダウングレード",
     upgrade: "Proにアップグレード",
     working: "処理中…",
-    downgradeConfirm:
-      "Freeにダウングレードしますか?各PoCの有効な評価者シートは最大3名までとなり、監査ログの閲覧はロックされます(イベントの記録は継続されます)。",
-    stripeNote:
-      "カード決済はStripe経由です。Stripeが未設定の場合、このワークスペースは即時に切り替わります(デモモード)。",
+    upgradedTitle: "Proへようこそ",
+    upgradedBody:
+      "このワークスペースで評価者シート無制限と完全な監査ログが利用可能になりました。",
+    intervalAria: "請求サイクル",
+    intervalMonthly: (price: number): string => `月払い — US$${price}/月`,
+    intervalYearly: (price: number): string => `年払い — US$${price}/年`,
+    saveBadge: (pct: number): string => `${pct}%お得 — 2ヶ月分以上無料`,
+    perWorkspaceYear: " / ワークスペース / 年",
+    yearlyEquivalent: (approx: number): string =>
+      `年払いで実質 US$${approx}/月`,
+    subscriptionTitle: "サブスクリプション",
+    statusMonthly: "Pro・月払い",
+    statusYearly: "Pro・年払い",
+    renewsOn: (date: string): string => `次回更新日: ${date}`,
+    cancelsOn: (date: string): string =>
+      `${date} に解約予定 — それまでProをご利用いただけます`,
+    cancelsAtPeriodEnd:
+      "現在の請求期間の終了時に解約予定 — それまでProをご利用いただけます",
+    resume: "解約を取り消す",
+    manageBilling: "請求とインボイスの管理",
+    switchToYearly: (pct: number): string =>
+      `年額プランに切り替え — ${pct}%お得`,
+    switchConfirm: (price: number): string =>
+      `年払い(US$${price}/年)に切り替えますか?差額は本日、日割りで請求されます。`,
+    cancelSubscription: "サブスクリプションを解約",
+    cancelConfirm:
+      "Proサブスクリプションを解約しますか?お支払い済みの期間が終了するまでProをご利用いただけます。",
+    retentionTitle: "解約の前に — 3ヶ月間50%オフ",
+    retentionBody: (price: string): string =>
+      `Proを継続すると、次の3回の月次請求が半額(${price}/月)になります。この特典は一度限りです。`,
+    retentionAccept: "50%オフでProを継続",
+    retentionDecline: "それでも解約する",
+    retentionClose: "閉じる",
+    demoNote:
+      "このデプロイメントにはStripeが設定されていないため、プラン変更は即時に適用されます(デモモード)。",
     workspaceTitle: "ワークスペース",
     workspaceDesc:
       "ワークスペース名はダッシュボードのサイドバーと請求記録に表示されます。",
@@ -622,6 +693,14 @@ const ja: DashboardStrings = {
         "許可リストに登録されたメールアドレスのみゲートでアクセスコードを取得できます。",
       seatsUsed: (used: number, max: string) =>
         `${max}シート中${used}シート使用中。`,
+      seatNudge: (
+        used: number,
+        max: number,
+        monthly: number,
+        yearly: number,
+      ): string =>
+        `無料プランの評価者シート${max}枠のうち${used}枠を使用中です。Proなら上限なし — US$${monthly}/月 または US$${yearly}/年。`,
+      seatNudgeCta: "プランを見る",
       upgradeCta: "Proにアップグレードして無制限に →",
       upgradeLink: "アップグレード →",
       emailLabel: "メールアドレス",

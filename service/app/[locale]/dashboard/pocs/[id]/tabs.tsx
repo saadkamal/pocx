@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { localePath, splitLocaleFromPath } from "@/lib/i18n/locales";
 import { dashboardDict, type DashboardStrings } from "@/lib/i18n/dashboard";
@@ -19,7 +20,14 @@ const TABS: { key: keyof DashboardStrings["poc"]["tabs"]; segment: string }[] =
   ];
 
 /** Section tab bar — client-side so it can highlight the active route. */
-export function PocTabs({ pocId }: { pocId: string }) {
+export function PocTabs({
+  pocId,
+  showAuditLock,
+}: {
+  pocId: string;
+  /** True when the workspace plan doesn't include the audit trail. */
+  showAuditLock: boolean;
+}) {
   const pathname = usePathname() ?? "/";
   // Compare against the locale-stripped path so /ja/… highlights correctly.
   const [locale, strippedPath] = splitLocaleFromPath(pathname);
@@ -43,13 +51,16 @@ export function PocTabs({ pocId }: { pocId: string }) {
             href={localePath(locale, path)}
             aria-current={active ? "page" : undefined}
             className={cn(
-              "-mb-px whitespace-nowrap border-b-2 px-3 py-2.5 text-sm font-medium transition-colors",
+              "-mb-px inline-flex items-center gap-1.5 whitespace-nowrap border-b-2 px-3 py-2.5 text-sm font-medium transition-colors",
               active
                 ? "border-ink-900 text-ink-900"
                 : "border-transparent text-ink-500 hover:text-ink-800",
             )}
           >
             {t.tabs[tab.key]}
+            {tab.key === "audit" && showAuditLock ? (
+              <Lock className="h-3 w-3 text-ink-400" aria-hidden />
+            ) : null}
           </Link>
         );
       })}

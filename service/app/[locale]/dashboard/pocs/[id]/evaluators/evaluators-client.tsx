@@ -24,6 +24,7 @@ import {
 } from "@/components/ui";
 import { localePath, type Locale } from "@/lib/i18n/locales";
 import { dashboardDict } from "@/lib/i18n/dashboard";
+import { PRO_PRICE_USD, PRO_PRICE_YEARLY_USD } from "@/lib/plans";
 
 export type EvaluatorItem = {
   id: string;
@@ -59,6 +60,9 @@ export function EvaluatorsClient({
   const [pending, startTransition] = useTransition();
 
   const capped = maxSeats !== null && activeCount >= maxSeats;
+  // Upgrade nudge: free plan, near or at the seat cap (e.g. 2 of 3 used).
+  const nearCap =
+    planId === "free" && maxSeats !== null && activeCount >= maxSeats - 1;
 
   function submitAdd(fd: FormData) {
     setAddResult(null);
@@ -95,6 +99,25 @@ export function EvaluatorsClient({
 
   return (
     <div className="space-y-6">
+      {nearCap && maxSeats !== null ? (
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-brand/20 bg-brand-subtle px-4 py-3">
+          <p className="text-sm text-ink-800">
+            {t.seatNudge(
+              activeCount,
+              maxSeats,
+              PRO_PRICE_USD,
+              PRO_PRICE_YEARLY_USD,
+            )}
+          </p>
+          <Link
+            href={localePath(locale, "/dashboard/billing")}
+            className="text-sm font-semibold whitespace-nowrap text-brand hover:underline"
+          >
+            {t.seatNudgeCta} →
+          </Link>
+        </div>
+      ) : null}
+
       <Card>
         <CardTitle>{t.addTitle}</CardTitle>
         <p className="mb-4 text-sm text-ink-500">

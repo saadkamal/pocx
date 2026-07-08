@@ -155,6 +155,21 @@ function createTables(sqlite: Database.Database) {
     CREATE INDEX IF NOT EXISTS idx_audit_ws ON audit_logs(workspace_id);
     CREATE INDEX IF NOT EXISTS idx_audit_created ON audit_logs(created_at);
   `);
+
+  // Additive columns shipped after tables existed on persistent volumes.
+  // SQLite has no ADD COLUMN IF NOT EXISTS — attempt-and-ignore.
+  for (const stmt of [
+    `ALTER TABLE workspaces ADD COLUMN billing_interval TEXT`,
+    `ALTER TABLE workspaces ADD COLUMN cancel_at_period_end INTEGER NOT NULL DEFAULT 0`,
+    `ALTER TABLE workspaces ADD COLUMN current_period_end INTEGER`,
+    `ALTER TABLE workspaces ADD COLUMN retention_offer_redeemed_at INTEGER`,
+  ]) {
+    try {
+      sqlite.exec(stmt);
+    } catch {
+      /* column already exists — fine */
+    }
+  }
 }
 
 /**

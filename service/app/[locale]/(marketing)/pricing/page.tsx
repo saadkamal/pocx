@@ -4,6 +4,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { buttonCn } from "@/components/ui";
 import { localePath, type Locale } from "@/lib/i18n/locales";
 import { marketingDict } from "@/lib/i18n/marketing";
+import { PRO_PRICE_USD } from "@/lib/plans";
 
 export async function generateMetadata({
   params,
@@ -73,10 +74,13 @@ export default async function PricingPage({
           </span>
           <h2 className="text-lg font-semibold text-ink-900">{t.pro.name}</h2>
           <p className="mt-3 text-5xl font-semibold tracking-tight text-ink-900">
-            US$39
+            US${PRO_PRICE_USD}
             <span className="text-base font-medium text-ink-500">
               {t.pro.priceSuffix}
             </span>
+          </p>
+          <p className="mt-2 text-sm font-medium text-success">
+            {t.pro.yearlyLine}
           </p>
           <p className="mt-2 text-sm text-ink-500">{t.pro.tagline}</p>
           <ul className="mt-7 flex-1 space-y-3 text-sm text-ink-600">

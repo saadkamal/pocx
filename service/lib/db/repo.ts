@@ -57,6 +57,13 @@ export function setWorkspacePlan(
     .set({
       plan,
       upgradedAt: plan === "pro" ? new Date() : null,
+      ...(plan === "free"
+        ? {
+            billingInterval: null,
+            cancelAtPeriodEnd: false,
+            currentPeriodEnd: null,
+          }
+        : {}),
       ...(stripe?.customerId !== undefined
         ? { stripeCustomerId: stripe.customerId }
         : {}),
@@ -66,6 +73,34 @@ export function setWorkspacePlan(
     })
     .where(eq(workspaces.id, id))
     .run();
+}
+
+/** Mirror subscription state from Stripe (webhooks / post-action sync). */
+export function updateWorkspaceBilling(
+  id: string,
+  patch: Partial<{
+    billingInterval: "month" | "year" | null;
+    cancelAtPeriodEnd: boolean;
+    currentPeriodEnd: Date | null;
+    retentionOfferRedeemedAt: Date | null;
+    stripeCustomerId: string | null;
+    stripeSubscriptionId: string | null;
+  }>,
+): void {
+  getDb().update(workspaces).set(patch).where(eq(workspaces.id, id)).run();
+}
+
+/** Find the workspace that owns a Stripe subscription (webhook lookups). */
+export function getWorkspaceByStripeSubscription(
+  subscriptionId: string,
+): WorkspaceRow | null {
+  return (
+    getDb()
+      .select()
+      .from(workspaces)
+      .where(eq(workspaces.stripeSubscriptionId, subscriptionId))
+      .get() ?? null
+  );
 }
 
 /* --- Operators --- */

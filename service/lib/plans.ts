@@ -11,8 +11,14 @@
  */
 
 export type PlanId = "free" | "pro";
+export type BillingInterval = "month" | "year";
 
 export const PRO_PRICE_USD = 39;
+/** Annual: ~32% off vs 12 × monthly (US$468) — "2.8 months free". */
+export const PRO_PRICE_YEARLY_USD = 320;
+export const YEARLY_SAVINGS_PCT = Math.round(
+  (1 - PRO_PRICE_YEARLY_USD / (PRO_PRICE_USD * 12)) * 100,
+);
 
 export const PLANS: Record<
   PlanId,

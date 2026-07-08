@@ -1,11 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
-import { setWorkspacePlan, insertAudit, getWorkspace } from "@/lib/db/repo";
-import { verifyStripeSignature } from "@/lib/billing";
+import {
+  getWorkspace,
+  getWorkspaceByStripeSubscription,
+  insertAudit,
+  setWorkspacePlan,
+} from "@/lib/db/repo";
+import {
+  fetchSubscription,
+  snapshotSubscription,
+  syncSubscriptionToWorkspace,
+  verifyStripeSignature,
+} from "@/lib/billing";
 
-/* Stripe webhook — flips the workspace plan on checkout completion /
-   subscription cancellation. Only active when Stripe is configured. */
+/**
+ * Stripe webhook — the authoritative sync point for subscription state.
+ *
+ *  checkout.session.completed     → plan=pro + mirror the new subscription
+ *  customer.subscription.updated  → mirror interval / cancel-at-period-end /
+ *                                   period end (covers cancel, resume,
+ *                                   monthly→yearly switches, renewals)
+ *  customer.subscription.deleted  → plan=free
+ *  invoice.payment_failed         → audit trail entry (Stripe smart retries
+ *                                   + the billing portal handle recovery)
+ */
 
 export const runtime = "nodejs";
+
+type StripeObject = {
+  id?: string;
+  client_reference_id?: string;
+  customer?: string;
+  subscription?: string;
+  metadata?: { workspaceId?: string };
+  [key: string]: unknown;
+};
+
+function workspaceIdFrom(obj: StripeObject): string | null {
+  return obj.client_reference_id ?? obj.metadata?.workspaceId ?? null;
+}
 
 export async function POST(req: NextRequest) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -20,18 +52,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Bad signature" }, { status: 400 });
   }
 
-  type StripeEvent = {
-    type: string;
-    data: {
-      object: {
-        client_reference_id?: string;
-        customer?: string;
-        subscription?: string;
-        metadata?: { workspaceId?: string };
-      };
-    };
-  };
-  let event: StripeEvent;
+  let event: { type: string; data: { object: StripeObject } };
   try {
     event = JSON.parse(payload);
   } catch {
@@ -39,30 +60,88 @@ export async function POST(req: NextRequest) {
   }
 
   const obj = event.data?.object ?? {};
-  const workspaceId = obj.client_reference_id ?? obj.metadata?.workspaceId;
 
-  if (event.type === "checkout.session.completed" && workspaceId) {
-    if (getWorkspace(workspaceId)) {
+  switch (event.type) {
+    case "checkout.session.completed": {
+      const workspaceId = workspaceIdFrom(obj);
+      if (!workspaceId || !getWorkspace(workspaceId)) break;
+
       setWorkspacePlan(workspaceId, "pro", {
         customerId: obj.customer ?? null,
         subscriptionId: obj.subscription ?? null,
       });
+      // Pull interval + period end from the subscription itself.
+      if (obj.subscription) {
+        try {
+          const snap = await fetchSubscription(obj.subscription);
+          syncSubscriptionToWorkspace(workspaceId, snap);
+        } catch (e) {
+          console.warn("[pocx] subscription fetch after checkout failed:", e);
+        }
+      }
       insertAudit({
         workspaceId,
         event: "plan_upgraded",
         detail: "pro (stripe checkout)",
         source: "dashboard",
       });
+      break;
     }
-  } else if (event.type === "customer.subscription.deleted" && workspaceId) {
-    if (getWorkspace(workspaceId)) {
-      setWorkspacePlan(workspaceId, "free");
+
+    case "customer.subscription.updated": {
+      const snap = snapshotSubscription(obj);
+      const workspaceId = workspaceIdFrom(obj);
+      const ws =
+        (workspaceId && getWorkspace(workspaceId)) ||
+        getWorkspaceByStripeSubscription(snap.id);
+      if (!ws) break;
+
+      syncSubscriptionToWorkspace(ws.id, snap);
       insertAudit({
-        workspaceId,
+        workspaceId: ws.id,
+        event: "subscription_updated",
+        detail: `${snap.status}/${snap.interval ?? "?"}${snap.cancelAtPeriodEnd ? " (cancels at period end)" : ""}`,
+        source: "dashboard",
+      });
+      break;
+    }
+
+    case "customer.subscription.deleted": {
+      const snap = snapshotSubscription(obj);
+      const workspaceId = workspaceIdFrom(obj);
+      const ws =
+        (workspaceId && getWorkspace(workspaceId)) ||
+        getWorkspaceByStripeSubscription(snap.id);
+      if (!ws) break;
+
+      setWorkspacePlan(ws.id, "free");
+      insertAudit({
+        workspaceId: ws.id,
         event: "plan_downgraded",
         detail: "free (stripe subscription ended)",
         source: "dashboard",
       });
+      break;
+    }
+
+    case "invoice.payment_failed": {
+      const workspaceId = workspaceIdFrom(obj);
+      const subId =
+        obj.subscription ??
+        ((obj as { parent?: { subscription_details?: { subscription?: string } } })
+          .parent?.subscription_details?.subscription ?? null);
+      const ws =
+        (workspaceId && getWorkspace(workspaceId)) ||
+        (subId ? getWorkspaceByStripeSubscription(subId) : null);
+      if (!ws) break;
+
+      insertAudit({
+        workspaceId: ws.id,
+        event: "payment_failed",
+        detail: "invoice payment failed — Stripe will retry",
+        source: "dashboard",
+      });
+      break;
     }
   }
 

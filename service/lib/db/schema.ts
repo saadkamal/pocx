@@ -23,6 +23,16 @@ export const workspaces = sqliteTable("workspaces", {
   upgradedAt: integer("upgraded_at", { mode: "timestamp_ms" }),
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
+  // Subscription state mirrored from Stripe webhooks (null in demo mode).
+  billingInterval: text("billing_interval"), // month | year
+  cancelAtPeriodEnd: integer("cancel_at_period_end", { mode: "boolean" })
+    .notNull()
+    .default(false),
+  currentPeriodEnd: integer("current_period_end", { mode: "timestamp_ms" }),
+  // The 50%-off-3-months save offer can be redeemed once per workspace.
+  retentionOfferRedeemedAt: integer("retention_offer_redeemed_at", {
+    mode: "timestamp_ms",
+  }),
 });
 
 export const operators = sqliteTable("operators", {
