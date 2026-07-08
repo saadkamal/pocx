@@ -1,7 +1,7 @@
 import "server-only";
 import type { PocRow } from "@/lib/db/schema";
 import { sendMail, type SendMailResult } from "@/lib/mail/send";
-import { pocxOrigin } from "@/lib/utils";
+import { escapeHtml, pocxOrigin } from "@/lib/utils";
 
 /**
  * Invitation emails. Evaluator invites are bilingual (EN + JA) because the
@@ -15,6 +15,12 @@ export async function sendEvaluatorInvite(
 ): Promise<SendMailResult> {
   const gateUrl = `${pocxOrigin()}/gate/${poc.slug}`;
   const contact = poc.supportEmail ? ` (${poc.supportEmail})` : "";
+  // Operator-controlled values — escape before they enter the HTML body.
+  const nameH = escapeHtml(poc.name);
+  const ownerH = escapeHtml(poc.ownerEntity);
+  const contactH = poc.supportEmail
+    ? ` (${escapeHtml(poc.supportEmail)})`
+    : "";
 
   const text = `${poc.ownerEntity} has invited you to evaluate "${poc.name}", a private proof of concept.
 
@@ -40,7 +46,7 @@ ${poc.ownerEntity} より、非公開の概念実証(PoC)「${poc.name}」の評
 
 — Sent via POCX`;
 
-  const html = `<p><strong>${poc.ownerEntity}</strong> has invited you to evaluate <strong>${poc.name}</strong>, a private proof of concept.</p>
+  const html = `<p><strong>${ownerH}</strong> has invited you to evaluate <strong>${nameH}</strong>, a private proof of concept.</p>
 <p>How access works:</p>
 <ol>
 <li>Open <a href="${gateUrl}">${gateUrl}</a></li>
@@ -48,9 +54,9 @@ ${poc.ownerEntity} より、非公開の概念実証(PoC)「${poc.name}」の評
 <li>Review and accept the Terms of Access (recorded as an electronic signature; a signed PDF copy is emailed to you).</li>
 <li>You're in.</li>
 </ol>
-<p>Access is personal to this email address — please don't share the link on. Questions? Contact ${poc.ownerEntity}${contact}.</p>
+<p>Access is personal to this email address — please don't share the link on. Questions? Contact ${ownerH}${contactH}.</p>
 <hr>
-<p lang="ja"><strong>${poc.ownerEntity}</strong> より、非公開の概念実証(PoC)「<strong>${poc.name}</strong>」の評価にご招待します。<br>
+<p lang="ja"><strong>${ownerH}</strong> より、非公開の概念実証(PoC)「<strong>${nameH}</strong>」の評価にご招待します。<br>
 <a href="${gateUrl}">${gateUrl}</a> を開き、このメールアドレスを入力すると6桁のアクセスコードが届きます。利用規約に同意するとアクセスできます(同意は電子署名として記録されます)。</p>
 <p style="color:#7c7365">— Sent via POCX</p>`;
 

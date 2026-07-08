@@ -3,7 +3,12 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getAdminContext } from "@/lib/auth/admin";
-import { getWorkspace, insertAudit, setWorkspacePlan } from "@/lib/db/repo";
+import {
+  getOperatorByEmail,
+  getWorkspace,
+  insertAudit,
+  setWorkspacePlan,
+} from "@/lib/db/repo";
 import { workspaceSummary } from "@/lib/db/platform";
 import {
   addTicketMessage,
@@ -15,6 +20,17 @@ import {
   notifyCustomerOfReply,
   sendNudgeEmail,
 } from "@/lib/mail/support";
+import {
+  friendlyFirstName,
+  getNudgeConfig,
+  renderNudge,
+  resetNudgeConfig,
+  saveNudgeConfig,
+  NUDGE_STAGES,
+  type NudgeConfig,
+  type NudgeStage,
+} from "@/lib/mail/nudge-templates";
+import { sendMail } from "@/lib/mail/send";
 
 /**
  * Ops-console mutations. Every action re-authenticates the admin session
@@ -49,10 +65,12 @@ export async function sendNudgeAction(
     return err("Nudged within the last 7 days — give them room to breathe.");
   }
 
+  const owner = getOperatorByEmail(summary.ownerEmail);
   const sent = await sendNudgeEmail({
     to: summary.ownerEmail,
     stage: summary.stage,
     workspaceName: summary.ws.name,
+    firstName: friendlyFirstName(owner?.name, summary.ownerEmail),
   });
   if (!sent) return err("No nudge template for this stage.");
 
@@ -66,6 +84,97 @@ export async function sendNudgeAction(
   revalidatePath("/admin/funnel");
   revalidatePath(`/admin/workspaces/${workspaceId}`);
   return { ok: true, message: `Nudge (${summary.stage}) sent to ${summary.ownerEmail}.` };
+}
+
+/* --- Nudge email templates (customizable copy) --- */
+
+const TemplateSchema = z.object({
+  subject: z.string().trim().min(1).max(200),
+  body: z.string().trim().min(1).max(8000),
+});
+const SaveNudgeSchema = z.object({
+  signature: z.string().trim().min(1).max(500),
+  stages: z.record(z.string(), TemplateSchema),
+});
+
+/** Save edited nudge templates + signature (from /admin/settings). */
+export async function saveNudgeConfigAction(
+  formData: FormData,
+): Promise<AdminActionResult> {
+  const admin = await getAdminContext();
+  if (!admin) return err("Not signed in.");
+
+  const stages: Record<string, { subject: string; body: string }> = {};
+  for (const stage of NUDGE_STAGES) {
+    stages[stage] = {
+      subject: String(formData.get(`subject_${stage}`) ?? ""),
+      body: String(formData.get(`body_${stage}`) ?? ""),
+    };
+  }
+  const parsed = SaveNudgeSchema.safeParse({
+    signature: String(formData.get("signature") ?? ""),
+    stages,
+  });
+  if (!parsed.success) {
+    return err("Every template needs a subject and a body.");
+  }
+
+  saveNudgeConfig(parsed.data as NudgeConfig);
+  insertAudit({
+    email: admin.email,
+    event: "nudge_templates_saved",
+    source: "dashboard",
+  });
+  revalidatePath("/admin/settings");
+  return { ok: true, message: "Saved. New nudges will use this copy." };
+}
+
+/** Restore the built-in default copy. */
+export async function resetNudgeConfigAction(): Promise<AdminActionResult> {
+  const admin = await getAdminContext();
+  if (!admin) return err("Not signed in.");
+  resetNudgeConfig();
+  insertAudit({
+    email: admin.email,
+    event: "nudge_templates_reset",
+    source: "dashboard",
+  });
+  revalidatePath("/admin/settings");
+  return { ok: true, message: "Restored the default copy." };
+}
+
+/** Send one stage's nudge to the signed-in admin so they can preview it. */
+export async function sendTestNudgeAction(
+  stage: string,
+): Promise<AdminActionResult> {
+  const admin = await getAdminContext();
+  if (!admin) return err("Not signed in.");
+  if (!NUDGE_STAGES.includes(stage as NudgeStage)) {
+    return err("Unknown stage.");
+  }
+  const config = getNudgeConfig();
+  const rendered = renderNudge(config.stages[stage as NudgeStage], {
+    firstName: friendlyFirstName(null, admin.email),
+    workspace: "Acme Pte Ltd",
+    signature: config.signature,
+  });
+  await sendMail({
+    to: admin.email,
+    subject: `[TEST] ${rendered.subject}`,
+    text: rendered.body,
+    html: rendered.body
+      .split("\n\n")
+      .map(
+        (p) =>
+          `<p>${p
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/\n/g, "<br>")}</p>`,
+      )
+      .join(""),
+  });
+  return { ok: true, message: `Test "${stage}" nudge sent to ${admin.email}.` };
 }
 
 /**

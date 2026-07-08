@@ -154,6 +154,11 @@ function createTables(sqlite: Database.Database) {
     CREATE INDEX IF NOT EXISTS idx_audit_poc ON audit_logs(poc_id);
     CREATE INDEX IF NOT EXISTS idx_audit_ws ON audit_logs(workspace_id);
     CREATE INDEX IF NOT EXISTS idx_audit_created ON audit_logs(created_at);
+    CREATE TABLE IF NOT EXISTS admin_settings (
+      key TEXT PRIMARY KEY,
+      value TEXT NOT NULL,
+      updated_at INTEGER NOT NULL
+    );
     CREATE TABLE IF NOT EXISTS tickets (
       id TEXT PRIMARY KEY,
       workspace_id TEXT NOT NULL,

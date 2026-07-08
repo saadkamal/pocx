@@ -15,6 +15,7 @@ const navLinks = [
   { href: "/admin/workspaces", label: "Workspaces" },
   { href: "/admin/tickets", label: "Tickets" },
   { href: "/admin/events", label: "Events" },
+  { href: "/admin/settings", label: "Settings" },
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {

@@ -282,9 +282,13 @@ export function verifyStripeSignature(
   nowMs = Date.now(),
 ): boolean {
   if (!header) return false;
-  const parts = new Map(
-    header.split(",").map((kv) => kv.split("=", 2) as [string, string]),
-  );
+  // Parse "t=…,v1=…" — split only on the first '=' so a value containing
+  // '=' is preserved (String.split(sep, limit) truncates, which would drop it).
+  const parts = new Map<string, string>();
+  for (const kv of header.split(",")) {
+    const eq = kv.indexOf("=");
+    if (eq > 0) parts.set(kv.slice(0, eq).trim(), kv.slice(eq + 1).trim());
+  }
   const t = parts.get("t");
   const v1 = parts.get("v1");
   if (!t || !v1) return false;

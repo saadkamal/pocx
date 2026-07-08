@@ -2,9 +2,16 @@ import { getOperatorContext, pocForWorkspace } from "@/lib/auth/operator";
 import { listAudit } from "@/lib/db/repo";
 import { hasAuditTrail } from "@/lib/plans";
 
-/** RFC-4180-style field: always quoted, internal quotes doubled. */
+/**
+ * RFC-4180-style field: always quoted, internal quotes doubled. Also
+ * neutralizes spreadsheet formula injection — a field starting with
+ * = + - @ (or a control char) is prefixed with a single quote so Excel /
+ * Sheets treat it as text, since some audit fields (userAgent, detail)
+ * originate from SDK-ingested app events.
+ */
 function csvField(value: string | number | null | undefined): string {
-  const s = value === null || value === undefined ? "" : String(value);
+  let s = value === null || value === undefined ? "" : String(value);
+  if (/^[=+\-@\t\r]/.test(s)) s = `'${s}`;
   return `"${s.replace(/"/g, '""')}"`;
 }
 

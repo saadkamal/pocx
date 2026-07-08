@@ -3,6 +3,26 @@
 All notable changes to POCX. Semver: patch = fixes, minor = features,
 major = breaking changes to the SDK contract or self-host setup.
 
+## [0.3.1] — 2026-07-09
+
+Friendlier nudges, editable email copy, and a security-audit hardening pass.
+
+- **Nudge emails rewritten** in a warm, first-person founder voice with a
+  proper greeting ("Hi {first name}," → "Hi there," when unknown) and a
+  sign-off
+- **Editable email copy** at `/admin/settings`: edit every nudge's subject
+  and body plus your signature, with `{{placeholders}}`, live preview,
+  reset-to-default and send-a-test-to-myself
+- Security hardening (full audit — no cross-tenant issues found):
+  - `POCX_SESSION_SECRET` is now mandatory in production (fail closed,
+    never fall back to a public key)
+  - HTML-escape all user-controlled values in outbound emails
+  - Content-Security-Policy added; `frame-ancestors 'none'` +
+    `X-Frame-Options: DENY` on every route (protects the gate + console)
+  - CSV audit export neutralizes spreadsheet formula injection
+  - Robuster Stripe webhook signature-header parsing
+- New table `admin_settings`
+
 ## [0.3.0] — 2026-07-09
 
 The owner operations console + customer support.

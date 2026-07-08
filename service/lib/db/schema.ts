@@ -169,6 +169,13 @@ export const outboundEmails = sqliteTable("outbound_emails", {
   createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
 });
 
+/** Platform-wide owner settings (key → JSON string). Editable in /admin. */
+export const adminSettings = sqliteTable("admin_settings", {
+  key: text("key").primaryKey(),
+  value: text("value").notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" }).notNull(),
+});
+
 /** Support tickets — customers file from the dashboard, admins triage. */
 export const tickets = sqliteTable("tickets", {
   id: text("id").primaryKey(), // tkt_…
@@ -193,6 +200,7 @@ export const ticketMessages = sqliteTable("ticket_messages", {
 export type WorkspaceRow = typeof workspaces.$inferSelect;
 export type TicketRow = typeof tickets.$inferSelect;
 export type TicketMessageRow = typeof ticketMessages.$inferSelect;
+export type AdminSettingRow = typeof adminSettings.$inferSelect;
 export type OperatorRow = typeof operators.$inferSelect;
 export type PocRow = typeof pocs.$inferSelect;
 export type EvaluatorRow = typeof evaluators.$inferSelect;

@@ -32,12 +32,15 @@ const TOUCH_INTERVAL_MS = 60_000;
 
 function secret(): string {
   const s = process.env.POCX_SESSION_SECRET;
-  if (!s && process.env.NODE_ENV === "production") {
-    console.warn(
-      "[pocx] POCX_SESSION_SECRET is not set — using dev fallback key.",
+  if (s) return s;
+  // Never fall back to a public key in production — that would let anyone
+  // forge the cookie seal. Fail closed instead.
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      "POCX_SESSION_SECRET must be set in production (it seals every session cookie).",
     );
   }
-  return s || "dev-only-insecure-pocx-secret";
+  return "dev-only-insecure-pocx-secret";
 }
 
 function sign(id: string): string {

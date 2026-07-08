@@ -5,6 +5,16 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/** Escape a string for safe interpolation into HTML (email bodies, etc.). */
+export function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 /** Public origin of this POCX deployment (emails, redirects, snippets). */
 export function pocxOrigin(): string {
   return (process.env.POCX_ORIGIN ?? "http://localhost:3000").replace(/\/$/, "");
