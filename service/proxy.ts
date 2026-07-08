@@ -45,15 +45,16 @@ function isDocumentNavigation(req: NextRequest): boolean {
 export function proxy(req: NextRequest) {
   const rawPath = req.nextUrl.pathname;
 
-  // www → apex, permanently (one canonical host).
-  const host = req.headers.get("host");
-  const apexHost = new URL(
-    process.env.POCX_ORIGIN ?? "http://localhost:3000",
-  ).host;
-  if (host === `www.${apexHost}`) {
-    const url = req.nextUrl.clone();
-    url.host = apexHost;
-    return NextResponse.redirect(url, 308);
+  // www → apex, permanently (one canonical host). Build the target from
+  // POCX_ORIGIN — req.nextUrl carries the proxy's internal port behind
+  // Railway, which must never leak into the redirect.
+  const origin = process.env.POCX_ORIGIN ?? "http://localhost:3000";
+  const apexHost = new URL(origin).host;
+  if (req.headers.get("host") === `www.${apexHost}`) {
+    return NextResponse.redirect(
+      new URL(rawPath + req.nextUrl.search, origin),
+      308,
+    );
   }
 
   // ── Locale-exempt surfaces ────────────────────────────────────────────
