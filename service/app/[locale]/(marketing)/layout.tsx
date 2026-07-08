@@ -117,9 +117,6 @@ export default async function MarketingLayout({
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-500">
               {t.footer.tagline}
             </p>
-            <p className="mt-4 max-w-xs text-xs leading-relaxed text-ink-400">
-              {t.footer.company}
-            </p>
           </div>
           {footerColumns.map((col) => (
             <div key={col.title}>

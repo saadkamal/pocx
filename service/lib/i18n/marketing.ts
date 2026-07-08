@@ -41,8 +41,6 @@ const en = {
   footer: {
     tagline:
       "Protection for the demos, prototypes and mockups that win you clients — verified entry, e-signed terms, every view on the record.",
-    company:
-      "POCX is built and operated by Haxo Pty Ltd (Australia). Created by Saad Kamal.",
     product: "Product",
     forAgents: "For agents",
     account: "Account",
@@ -375,8 +373,6 @@ const ja: MarketingStrings = {
   footer: {
     tagline:
       "受注を勝ち取るデモ・プロトタイプ・モックアップのための保護 — 本人確認済みの入場、電子署名付き規約、すべての閲覧を記録。",
-    company:
-      "POCXはHaxo Pty Ltd（オーストラリア）が開発・運営しています。作者: Saad Kamal。",
     product: "プロダクト",
     forAgents: "エージェント向け",
     account: "アカウント",
