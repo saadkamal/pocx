@@ -179,11 +179,21 @@ export function ProblemDemo({ demo }: { demo: Demo }) {
   );
 }
 
-/* A simplified app-UI mock — a few ink blocks/lines in a bordered card. */
+/* A miniature product-demo mock — sidebar, header, chart bars and table
+   rows — so it instantly reads as "an app screenshot". The clone renders
+   the exact same app (it IS a clone); only the frame goes danger-toned. */
 function Thumbnail({ cloned = false }: { cloned?: boolean }) {
   return (
-    <div className="overflow-hidden rounded-lg border border-ink-200 bg-white shadow-card">
-      <div className="flex items-center gap-1.5 border-b border-ink-100 bg-ink-50 px-3 py-2">
+    <div
+      className={`overflow-hidden rounded-lg border bg-white shadow-card ${
+        cloned ? "border-danger/50" : "border-ink-200"
+      }`}
+    >
+      <div
+        className={`flex items-center gap-1.5 border-b px-3 py-2 ${
+          cloned ? "border-danger/20 bg-danger-subtle" : "border-ink-100 bg-ink-50"
+        }`}
+      >
         <span className="size-1.5 rounded-full bg-ink-300" />
         <span className="size-1.5 rounded-full bg-ink-300" />
         <span className="size-1.5 rounded-full bg-ink-300" />
@@ -193,19 +203,37 @@ function Thumbnail({ cloned = false }: { cloned?: boolean }) {
           </span>
         ) : null}
       </div>
-      <div className="space-y-2.5 p-3.5">
-        <div className="flex items-center gap-2">
-          <div className="size-6 rounded-md bg-ink-200" />
-          <div className="h-2 w-20 rounded-full bg-ink-200" />
+
+      {/* App body: tiny sidebar + main pane. Identical in both cards. */}
+      <div className="flex">
+        <div className="flex w-11 shrink-0 flex-col border-r border-ink-100 bg-ink-50/60 p-2">
+          <span className="size-3 rounded bg-ink-300" />
+          <div className="mt-2.5 space-y-2">
+            <div className="h-1 w-full rounded-full bg-ink-300" />
+            <div className="h-1 w-5/6 rounded-full bg-ink-200" />
+            <div className="h-1 w-4/6 rounded-full bg-ink-200" />
+            <div className="h-1 w-5/6 rounded-full bg-ink-200" />
+          </div>
         </div>
-        <div className="grid grid-cols-3 gap-2">
-          <div className="h-8 rounded-md bg-brand/20" />
-          <div className="h-8 rounded-md bg-ink-100" />
-          <div className="h-8 rounded-md bg-ink-100" />
-        </div>
-        <div className="space-y-1.5">
-          <div className="h-1.5 w-full rounded-full bg-ink-100" />
-          <div className="h-1.5 w-4/5 rounded-full bg-ink-100" />
+
+        <div className="min-w-0 flex-1 p-2.5">
+          <div className="flex items-center justify-between">
+            <div className="h-1.5 w-12 rounded-full bg-ink-300" />
+            <div className="size-3 rounded-full bg-ink-200" />
+          </div>
+          <div className="mt-2 flex h-10 items-end gap-1">
+            <div className="h-4 flex-1 rounded-sm bg-ink-200" />
+            <div className="h-6 flex-1 rounded-sm bg-ink-200" />
+            <div className="h-5 flex-1 rounded-sm bg-ink-200" />
+            <div className="h-8 flex-1 rounded-sm bg-brand/60" />
+            <div className="h-6 flex-1 rounded-sm bg-ink-200" />
+            <div className="h-7 flex-1 rounded-sm bg-ink-200" />
+          </div>
+          <div className="mt-2.5 space-y-1.5">
+            <div className="h-1.5 w-full rounded-full bg-ink-100" />
+            <div className="h-1.5 w-5/6 rounded-full bg-ink-100" />
+            <div className="h-1.5 w-4/6 rounded-full bg-ink-100" />
+          </div>
         </div>
       </div>
     </div>

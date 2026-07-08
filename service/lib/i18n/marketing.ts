@@ -10,19 +10,21 @@ import {
  * `en` is the source of truth for the shape; `ja: MarketingStrings` makes
  * TypeScript enforce key parity between the two locales.
  *
- * Kept in English everywhere: product terms (POCX, PoC, OTP, SDK, API),
- * code snippets, the copyable agent prompt, /llms.txt and /sdk/* labels,
- * and the gate-mock's fictional content (ACME, Project Falcon, emails).
+ * Voice: audience-first ("demo / prototype / mockup", consultants & dev
+ * shops), not product jargon ("PoC" appears only where precision matters,
+ * e.g. seat definitions). Kept in English everywhere: product terms
+ * (POCX, OTP, SDK, API), code snippets, the agent prompt, /llms.txt and
+ * /sdk/* labels, and the gate-mock's fictional content.
  */
 
 const en = {
   meta: {
-    landingTitle: "POCX — Protect your ideas in the age of AI",
+    landingTitle: "POCX — Protect the demos that win you clients",
     landingDescription:
-      "AI can rebuild your proof of concept from a screenshot. POCX gates your PoC behind verified identity and e-signed terms, so showing your work no longer means giving it away. Open source — self-host free, or start on the cloud.",
+      "Consultants and dev shops win work by showing demos — and AI can rebuild one from a screenshot overnight. POCX gates your demo behind verified identity and e-signed terms, so showing your work no longer means giving it away. Open source — self-host free, or start on the cloud.",
     pricingTitle: "Pricing",
     pricingDescription:
-      "POCX pricing — protect proofs of concept free with up to 3 evaluator seats per PoC, go Pro for unlimited seats and a full audit trail, or self-host the open-source version for free.",
+      "POCX pricing — protect demos free with up to 3 viewer seats each, go Pro for unlimited seats and a full audit trail, or self-host the open-source version for free.",
   },
 
   nav: {
@@ -38,7 +40,7 @@ const en = {
 
   footer: {
     tagline:
-      "IP protection for builders in the age of AI. Show your proof of concept without giving it away — verified entry, e-signed terms, every view on the record.",
+      "Protection for the demos, prototypes and mockups that win you clients — verified entry, e-signed terms, every view on the record.",
     product: "Product",
     forAgents: "For agents",
     account: "Account",
@@ -53,16 +55,23 @@ const en = {
   },
 
   hero: {
-    eyebrow: "IP protection for builders in the age of AI",
-    titleMain: "Anyone can rebuild your PoC from a screenshot now. ",
-    titleAccent: "Make them sign for it first.",
+    eyebrow: "For consultants, dev shops & everyone who pitches with demos",
+    titleMain: "Your best pitch is a working demo. ",
+    titleAccent: "Protect it.",
     subtitle:
-      "AI turned copying into a weekend project — a screenshot and a prompt is all it takes to clone what took you months to design. POCX puts a gate in front of your proof of concept: every viewer verifies who they are and e-signs terms that make building on your work a binding commitment. Show it. Don’t give it away.",
+      "A screenshot of your prototype is all AI needs to rebuild it overnight. POCX puts a gate on your demo — every viewer proves who they are and signs your terms before they see a single screen.",
     startFree: "Start free",
     selfHost: "Self-host it — free",
     readDocs: "Read the docs",
     finePrint:
-      "Free on the cloud for 3 evaluators · or self-host free forever · no card required",
+      "Free for 3 invited viewers per demo · or self-host free forever · no card required",
+    audience: [
+      "Consultancies",
+      "Dev shops",
+      "Agencies",
+      "Freelancers",
+      "Founders",
+    ],
   },
 
   heroVisual: {
@@ -73,8 +82,8 @@ const en = {
   },
 
   trustChips: [
-    "Every viewer verified by email OTP",
-    "Terms e-signed before the first screen",
+    "Every viewer verified by email code",
+    "Terms signed before the first screen",
     "Open source — self-host free",
   ],
 
@@ -85,7 +94,7 @@ const en = {
     beats: [
       {
         n: "01",
-        text: "You show a prospect your proof of concept.",
+        text: "You pitch a prospect with your demo.",
       },
       {
         n: "02",
@@ -97,13 +106,12 @@ const en = {
       },
     ],
     punch:
-      "Your ideas are more valuable than ever, and more exposed than ever. The asset is the concept — but you can’t sell it without showing it.",
-    // Animated demo strings (screenshot → prompt → clone → POCX blocks it)
+      "Your ideas are worth more than ever — and easier to take than ever. The demo is the pitch. You can’t win the deal without showing it.",
     demo: {
       promptLabel: "coding agent",
       prompt: "Rebuild this app from the screenshot →",
       cloning: "cloning…",
-      cloned: "your-idea, cloned",
+      cloned: "your idea, cloned",
       blockedLabel: "with POCX",
       blocked: "Access denied — signature required",
     },
@@ -112,7 +120,7 @@ const en = {
   solution: {
     eyebrow: "What POCX does",
     title: "Show the work. Keep the idea.",
-    body: "POCX doesn’t hide your PoC — it makes seeing it accountable. Before anyone reaches a single screen, they prove their identity and sign your Terms of Access. A screenshot is no longer anonymous: it’s tied to a named person who agreed, in writing, not to build on your work without you.",
+    body: "POCX doesn’t hide your demo — it makes seeing it accountable. Before anyone reaches a single screen, they prove their identity and sign your Terms of Access. A screenshot is no longer anonymous: it’s tied to a named person who agreed, in writing, not to build on your work without you.",
   },
 
   how: {
@@ -120,8 +128,8 @@ const en = {
     title: "From unprotected to protected in three steps.",
     step1: {
       eyebrow: "01 — Create",
-      title: "Create your PoC",
-      body: "Name the PoC, name the entity that built it, invite your evaluators by email. Terms, branding and session rules — all customizable from the dashboard.",
+      title: "Register your demo",
+      body: "Name it, name the company that built it, invite your viewers by email. Terms, branding and session rules — all customizable from the dashboard.",
     },
     step2: {
       eyebrow: "02 — Drop in",
@@ -131,7 +139,7 @@ const en = {
     step3: {
       eyebrow: "03 — Send the link",
       title: "Send the link",
-      body: "Evaluators OTP in with their allowlisted email, e-sign the Terms of Access, and land in your app. You watch sessions and signatures live — and can revoke anyone, instantly.",
+      body: "Viewers sign in with their invited email, e-sign your Terms of Access, and land in your demo. You watch sessions and signatures live — and can revoke anyone, instantly.",
     },
   },
 
@@ -139,10 +147,10 @@ const en = {
     eyebrow: "Features",
     title: "The whole front door, handled.",
     subtitle:
-      "Identity, terms, sessions, evidence. POCX handles who gets in and on what conditions — your PoC stays exactly as you built it.",
+      "Identity, terms, sessions, evidence. POCX handles who gets in and on what conditions — your demo stays exactly as you built it.",
     items: [
       {
-        title: "Allowlist + OTP login",
+        title: "Invite-only + email codes",
         body: "Only invited emails get in. Codes are hashed, single-use, rate-limited, and lock out after five attempts. No passwords — ever.",
       },
       {
@@ -151,15 +159,15 @@ const en = {
       },
       {
         title: "Session control",
-        body: "TTL and idle timeouts, one-click revoke for any evaluator, and a panic button that revokes every session at once.",
+        body: "TTL and idle timeouts, one-click revoke for any viewer, and a panic button that revokes every session at once.",
       },
       {
         title: "Audit trail (Pro)",
-        body: "Every OTP request, denial, login, signature and revocation — plus in-app access events from the SDK. Export it all as CSV.",
+        body: "Every code request, denial, login, signature and revocation — plus in-app access events from the SDK. Export it all as CSV.",
       },
       {
         title: "Branded hosted gate",
-        body: "Your entity name, your PoC name, your brand color. The gate looks like yours because it is — we just run it for you.",
+        body: "Your company name, your demo’s name, your brand color. The gate looks like yours because it is — we just run it for you.",
       },
       {
         title: "Built for coding agents",
@@ -178,11 +186,11 @@ const en = {
   why: {
     eyebrow: "Why it holds up",
     title: "A login wall is not protection. A signature is.",
-    p1: "Your PoC embodies your IP — the designs, the workflows, the ideas your client is evaluating. A password keeps strangers out. It does nothing when the people you invited take what they saw and build it without you.",
+    p1: "Your demo embodies your thinking — the designs, the workflows, the idea your prospect is evaluating. A password keeps strangers out. It does nothing when the people you invited take what they saw and build it without you.",
     p2Before: "POCX’s standard Terms of Access include the clause that matters: ",
-    p2Em: "if you build on this PoC, you engage us",
+    p2Em: "if you build on this work, you engage us",
     p2After:
-      ". Every evaluator e-signs it before they see a single screen — and every signature is recorded with the SHA-256 hash of the exact text they agreed to, their verified email, IP, and timestamp, sealed in a PDF certificate.",
+      ". Every viewer e-signs it before they see a single screen — and every signature is recorded with the SHA-256 hash of the exact text they agreed to, their verified email, IP, and timestamp, sealed in a PDF certificate.",
     p3: "That turns reuse-without-engagement from a grey area into a signed, enforceable commitment — with the evidence trail to back it up.",
     cert: {
       title: "Signature certificate",
@@ -217,8 +225,8 @@ const en = {
       name: "Free",
       priceSuffix: " forever",
       bullets: [
-        "Up to 3 evaluator seats per PoC",
-        "OTP gate + e-signed terms with PDF",
+        "Up to 3 viewer seats per demo",
+        "Email-code gate + e-signed terms with PDF",
         "Session control & instant revoke",
       ],
       cta: "Start free",
@@ -229,7 +237,7 @@ const en = {
       priceSuffix: " /workspace/month",
       yearlyLine: `US$${PRO_PRICE_USD}/mo · or US$${PRO_PRICE_YEARLY_USD}/yr (save ${YEARLY_SAVINGS_PCT}%)`,
       bullets: [
-        "Unlimited evaluator seats",
+        "Unlimited viewer seats",
         "Full audit trail with CSV export",
         "Priority support",
       ],
@@ -241,26 +249,26 @@ const en = {
     titleMain: "Ship the demo. ",
     titleAccent: "Keep the idea.",
     subtitle:
-      "Free on the cloud for three evaluators, or self-host the whole thing for free. Your ideas, protected either way.",
+      "Free on the cloud for three viewers per demo, or self-host the whole thing for free. Your ideas, protected either way.",
     cta: "Start free",
     ctaGithub: "Get it on GitHub",
   },
 
   pricing: {
     eyebrow: "Pricing",
-    title: "Simple pricing for protected PoCs",
+    title: "Simple pricing for protected demos",
     subtitle:
-      "Start free, no card required. Upgrade when your evaluation grows beyond three people — or self-host the open-source version for free.",
+      "Start free, no card required. Upgrade when your audience grows beyond three people — or self-host the open-source version for free.",
     free: {
       name: "Free",
       priceSuffix: " forever",
-      tagline: "Everything you need to gate a PoC properly.",
+      tagline: "Everything you need to gate a demo properly.",
       features: [
-        "Up to 3 evaluator seats per PoC",
-        "Email OTP gate, allowlist-only",
+        "Up to 3 viewer seats per demo",
+        "Email-code gate, invite-only",
         "E-signed Terms of Access + PDF certificate",
         "Session control & instant revoke",
-        "Hosted gate branded per PoC",
+        "Hosted gate branded per demo",
       ],
       cta: "Start free",
     },
@@ -272,7 +280,7 @@ const en = {
       tagline: "For teams running real evaluations at scale.",
       features: [
         "Everything in Free",
-        "Unlimited evaluator seats",
+        "Unlimited viewer seats",
         "Full audit trail",
         "CSV export",
         "Priority support",
@@ -296,32 +304,32 @@ const en = {
     faqTitle: "Frequently asked questions",
     faq: [
       {
-        q: "What counts as an evaluator seat?",
-        a: "An allowlisted email address on a PoC. Each PoC has its own allowlist, so the Free limit is per PoC — not per workspace. Disabled seats don’t count against the limit.",
+        q: "What counts as a viewer seat?",
+        a: "An invited email address on a demo. Each demo has its own invite list, so the Free limit is per demo — not per workspace. Disabled seats don’t count against the limit.",
       },
       {
-        q: "Do you see my PoC’s code or data?",
-        a: "No. POCX only handles the front door: identity, terms and sessions. Once an evaluator is through the gate, traffic goes straight to your app — nothing passes through us. And if you self-host, nothing leaves your servers at all.",
+        q: "Do you see my demo’s code or data?",
+        a: "No. POCX only handles the front door: identity, terms and sessions. Once a viewer is through the gate, traffic goes straight to your app — nothing passes through us. And if you self-host, nothing leaves your servers at all.",
       },
       {
         q: "It’s open source — why would I pay?",
-        a: "You wouldn’t, for the software — it’s free to self-host with every feature. The Pro plan pays for the managed cloud: we run it, keep email deliverability healthy, and handle upgrades, so you don’t stand up a server for a proof of concept.",
+        a: "You wouldn’t, for the software — it’s free to self-host with every feature. The Pro plan pays for the managed cloud: we run it, keep email deliverability healthy, and handle upgrades, so you don’t stand up a server just to pitch a demo.",
       },
       {
         q: "What happens when I hit 3 seats on Free?",
-        a: "Adding a fourth evaluator prompts an upgrade to Pro. Existing evaluators keep their access — nothing breaks, nothing is revoked. (Self-hosting has no seat limit.)",
+        a: "Adding a fourth viewer prompts an upgrade to Pro. Existing viewers keep their access — nothing breaks, nothing is revoked. (Self-hosting has no seat limit.)",
       },
       {
         q: "Are the signatures legally meaningful?",
-        a: "Each signature records the signer’s email identity (verified by OTP), a timestamp, IP address and user agent, plus a SHA-256 hash of the exact terms text shown — and a signed PDF certificate is emailed to the signer. That’s standard electronic-signature evidence. (This is product information, not legal advice.)",
+        a: "Each signature records the signer’s email identity (verified by a one-time code), a timestamp, IP address and user agent, plus a SHA-256 hash of the exact terms text shown — and a signed PDF certificate is emailed to the signer. That’s standard electronic-signature evidence. (This is product information, not legal advice.)",
       },
       {
         q: "Can I bring fully custom terms?",
-        a: "Yes. Use the standard protective template with {{variables}} for your entity, PoC and purpose — or replace it entirely with your own text. Bumping the version forces every evaluator to re-accept.",
+        a: "Yes. Use the standard protective template with {{variables}} for your company, demo and purpose — or replace it entirely with your own text. Bumping the version forces every viewer to re-accept.",
       },
       {
         q: "How do I cancel?",
-        a: "Cancel anytime from the dashboard — access continues until the end of the period you’ve paid for. After that, your gates keep working within Free limits — evaluators aren’t locked out.",
+        a: "Cancel anytime from the dashboard — access continues until the end of the period you’ve paid for. After that, your gates keep working within Free limits — viewers aren’t locked out.",
       },
     ],
     still: {
@@ -329,7 +337,7 @@ const en = {
       docsLabel: "Read the docs",
       middle: " or ",
       startLabel: "start free",
-      suffix: " — protecting your first PoC takes about five minutes.",
+      suffix: " — protecting your first demo takes about five minutes.",
     },
   },
 };
@@ -338,12 +346,12 @@ export type MarketingStrings = typeof en;
 
 const ja: MarketingStrings = {
   meta: {
-    landingTitle: "POCX — AI時代に、あなたのアイデアを守る",
+    landingTitle: "POCX — 受注を勝ち取るデモを、守る",
     landingDescription:
-      "AIはスクリーンショット1枚からあなたのPoCを再現できます。POCXは、本人確認と電子署名付き規約でPoCをゲートし、「見せること」が「渡すこと」にならないようにします。オープンソース — 自分で無料ホスト、またはクラウドで開始。",
+      "コンサルタントや開発会社は、デモを見せて仕事を勝ち取ります。しかしAIは、スクリーンショット1枚からそのデモを一晩で再現できます。POCXは本人確認と電子署名付き規約でデモをゲートし、「見せること」が「渡すこと」にならないようにします。オープンソース — 自分で無料ホスト、またはクラウドで開始。",
     pricingTitle: "料金プラン",
     pricingDescription:
-      "POCXの料金 — PoCごとに評価者3名まで無料で保護。無制限のシートと完全な監査ログが必要ならPro、あるいはオープンソース版を自分で無料ホスト。",
+      "POCXの料金 — デモごとに閲覧者3名まで無料で保護。無制限のシートと完全な監査ログが必要ならPro、あるいはオープンソース版を自分で無料ホスト。",
   },
 
   nav: {
@@ -359,7 +367,7 @@ const ja: MarketingStrings = {
 
   footer: {
     tagline:
-      "AI時代の、つくる人のための知財保護。PoCを渡すことなく見せる — 本人確認済みの入場、電子署名付き規約、すべての閲覧を記録。",
+      "受注を勝ち取るデモ・プロトタイプ・モックアップのための保護 — 本人確認済みの入場、電子署名付き規約、すべての閲覧を記録。",
     product: "プロダクト",
     forAgents: "エージェント向け",
     account: "アカウント",
@@ -374,16 +382,23 @@ const ja: MarketingStrings = {
   },
 
   hero: {
-    eyebrow: "AI時代の、つくる人のための知財保護",
-    titleMain: "あなたのPoCは、スクショ1枚で再現される時代。",
-    titleAccent: "まず署名させよう。",
+    eyebrow: "デモで仕事を勝ち取る、コンサルタント・開発会社のために",
+    titleMain: "最強の提案は、動くデモ。",
+    titleAccent: "だから、守る。",
     subtitle:
-      "AIは複製を週末仕事に変えました。スクリーンショットとプロンプトさえあれば、何ヶ月もかけて設計したものが再現できてしまいます。POCXは、あなたのPoCの前にゲートを設けます。閲覧する人は全員、本人確認を行い、あなたの成果物を無断で流用しないという法的効力のある利用規約に電子署名します。見せても、渡さない。",
+      "AIは、プロトタイプのスクリーンショット1枚から一晩で複製をつくれます。POCXはあなたのデモにゲートを設けます — 閲覧者は全員、本人確認を行い、あなたの規約に署名してから最初の画面を目にします。",
     startFree: "無料で始める",
     selfHost: "自分でホストする（無料）",
     readDocs: "ドキュメントを読む",
     finePrint:
-      "クラウドは評価者3名まで無料 · または自分でホストすればずっと無料 · カード不要",
+      "デモごとに閲覧者3名まで無料 · または自分でホストすればずっと無料 · カード不要",
+    audience: [
+      "コンサルティング会社",
+      "開発会社",
+      "エージェンシー",
+      "フリーランス",
+      "起業家",
+    ],
   },
 
   heroVisual: {
@@ -395,8 +410,8 @@ const ja: MarketingStrings = {
   },
 
   trustChips: [
-    "閲覧者は全員メールOTPで本人確認",
-    "最初の画面の前に規約へ電子署名",
+    "閲覧者は全員メールコードで本人確認",
+    "最初の画面の前に規約へ署名",
     "オープンソース — 自分でホストすれば無料",
   ],
 
@@ -407,7 +422,7 @@ const ja: MarketingStrings = {
     beats: [
       {
         n: "01",
-        text: "見込み客にPoCを見せる。",
+        text: "見込み客にデモを見せて提案する。",
       },
       {
         n: "02",
@@ -419,7 +434,7 @@ const ja: MarketingStrings = {
       },
     ],
     punch:
-      "アイデアの価値はかつてなく高まり、かつてなくむき出しになっています。資産は「概念」そのもの — けれど、見せなければ売れません。",
+      "アイデアの価値はかつてなく高まり、かつてなく持ち去られやすくなっています。デモこそが提案そのもの — 見せなければ、受注は取れません。",
     demo: {
       promptLabel: "コーディングエージェント",
       prompt: "このスクショからアプリを再現して →",
@@ -433,16 +448,16 @@ const ja: MarketingStrings = {
   solution: {
     eyebrow: "POCXの役割",
     title: "見せる。でも、渡さない。",
-    body: "POCXはPoCを隠しません — 見ることに責任を持たせます。誰かが最初の画面にたどり着く前に、本人確認を行い、あなたの利用規約に署名します。スクリーンショットはもう匿名ではありません。それは、あなたの成果物を無断で流用しないと書面で同意した、名前のある人物に紐づきます。",
+    body: "POCXはデモを隠しません — 見ることに責任を持たせます。誰かが最初の画面にたどり着く前に、本人確認を行い、あなたの利用規約に署名します。スクリーンショットはもう匿名ではありません。それは、あなたの成果物を無断で流用しないと書面で同意した、名前のある人物に紐づきます。",
   },
 
   how: {
     eyebrow: "仕組み",
     title: "無防備な状態から、3ステップで保護へ。",
     step1: {
-      eyebrow: "01 — 作成",
-      title: "PoCを作成する",
-      body: "PoCに名前を付け、開発元の事業者名を設定し、評価者をメールで招待します。規約、ブランディング、セッションルールはすべてダッシュボードからカスタマイズできます。",
+      eyebrow: "01 — 登録",
+      title: "デモを登録する",
+      body: "デモに名前を付け、開発した会社名を設定し、閲覧者をメールで招待します。規約、ブランディング、セッションルールはすべてダッシュボードからカスタマイズできます。",
     },
     step2: {
       eyebrow: "02 — 組み込み",
@@ -452,7 +467,7 @@ const ja: MarketingStrings = {
     step3: {
       eyebrow: "03 — リンク送信",
       title: "リンクを送る",
-      body: "評価者は許可リストに登録されたメールでOTPログインし、利用規約に電子署名して、あなたのアプリに入ります。セッションと署名はリアルタイムで確認でき、誰のアクセスでも即座に取り消せます。",
+      body: "閲覧者は招待されたメールでサインインし、利用規約に電子署名して、あなたのデモに入ります。セッションと署名はリアルタイムで確認でき、誰のアクセスでも即座に取り消せます。",
     },
   },
 
@@ -460,10 +475,10 @@ const ja: MarketingStrings = {
     eyebrow: "機能",
     title: "アプリの玄関口を、まるごと引き受けます。",
     subtitle:
-      "本人確認、規約、セッション、証跡。誰が、どんな条件で入れるかはPOCXが管理します — あなたのPoCには一切手を加えません。",
+      "本人確認、規約、セッション、証跡。誰が、どんな条件で入れるかはPOCXが管理します — あなたのデモには一切手を加えません。",
     items: [
       {
-        title: "許可リスト + OTPログイン",
+        title: "招待制 + メールコード",
         body: "招待されたメールアドレスだけが入場できます。コードはハッシュ化・使い捨て・レート制限付きで、5回失敗するとロックされます。パスワードは一切使いません。",
       },
       {
@@ -472,15 +487,15 @@ const ja: MarketingStrings = {
       },
       {
         title: "セッション制御",
-        body: "TTLとアイドルタイムアウト、評価者ごとのワンクリック取り消し、そして全セッションを一括で無効化するパニックボタンを備えています。",
+        body: "TTLとアイドルタイムアウト、閲覧者ごとのワンクリック取り消し、そして全セッションを一括で無効化するパニックボタンを備えています。",
       },
       {
         title: "監査ログ(Pro)",
-        body: "OTPリクエスト、拒否、ログイン、署名、取り消しのすべてに加え、SDK経由のアプリ内アクセスイベントも記録。まとめてCSVでエクスポートできます。",
+        body: "コードのリクエスト、拒否、ログイン、署名、取り消しのすべてに加え、SDK経由のアプリ内アクセスイベントも記録。まとめてCSVでエクスポートできます。",
       },
       {
         title: "ブランド対応のホスト型ゲート",
-        body: "あなたの事業者名、PoC名、ブランドカラーを反映。ゲートはあなたのものに見えます — 実際にあなたのものだからです。運用だけを私たちが担います。",
+        body: "あなたの会社名、デモの名前、ブランドカラーを反映。ゲートはあなたのものに見えます — 実際にあなたのものだからです。運用だけを私たちが担います。",
       },
       {
         title: "コーディングエージェント対応",
@@ -499,11 +514,11 @@ const ja: MarketingStrings = {
   why: {
     eyebrow: "なぜ効くのか",
     title: "ログイン画面は保護ではありません。署名こそが保護です。",
-    p1: "PoCには、あなたの知的財産が詰まっています — デザイン、ワークフロー、そしてクライアントが評価しているアイデアそのもの。パスワードは部外者を締め出せても、招待した相手が見たものを持ち帰り、あなた抜きで作ってしまうことは防げません。",
+    p1: "デモには、あなたの思考が詰まっています — デザイン、ワークフロー、そして見込み客が評価しているアイデアそのもの。パスワードは部外者を締め出せても、招待した相手が見たものを持ち帰り、あなた抜きで作ってしまうことは防げません。",
     p2Before: "POCXの標準利用規約には、核心となる条項が含まれています — ",
-    p2Em: "このPoCを基に開発する場合は、当方と契約すること",
+    p2Em: "この成果物を基に開発する場合は、当方と契約すること",
     p2After:
-      "。すべての評価者は、画面を1つ見る前にこの規約に電子署名します。そして各署名には、同意した規約本文のSHA-256ハッシュ、確認済みメールアドレス、IPアドレス、タイムスタンプが記録され、PDF証明書として保全されます。",
+      "。すべての閲覧者は、画面を1つ見る前にこの規約に電子署名します。そして各署名には、同意した規約本文のSHA-256ハッシュ、確認済みメールアドレス、IPアドレス、タイムスタンプが記録され、PDF証明書として保全されます。",
     p3: "これにより「契約なしの流用」は、グレーゾーンではなく、署名済みの法的コミットメントになります — それを裏付ける証跡とともに。",
     cert: {
       title: "署名証明書",
@@ -538,8 +553,8 @@ const ja: MarketingStrings = {
       name: "Free",
       priceSuffix: " ずっと無料",
       bullets: [
-        "PoCごとに評価者3名まで",
-        "OTPゲート + PDF付き電子署名規約",
+        "デモごとに閲覧者3名まで",
+        "メールコードのゲート + PDF付き電子署名規約",
         "セッション制御と即時取り消し",
       ],
       cta: "無料で始める",
@@ -550,7 +565,7 @@ const ja: MarketingStrings = {
       priceSuffix: " /ワークスペース/月",
       yearlyLine: `US$${PRO_PRICE_USD}/月 · または US$${PRO_PRICE_YEARLY_USD}/年（${YEARLY_SAVINGS_PCT}%オフ）`,
       bullets: [
-        "評価者数は無制限",
+        "閲覧者数は無制限",
         "CSVエクスポート付きの完全な監査ログ",
         "優先サポート",
       ],
@@ -562,26 +577,26 @@ const ja: MarketingStrings = {
     titleMain: "デモは届ける。",
     titleAccent: "アイデアは守る。",
     subtitle:
-      "クラウドなら評価者3名まで無料、あるいは製品まるごと自分で無料ホスト。どちらでも、あなたのアイデアは守られます。",
+      "クラウドならデモごとに閲覧者3名まで無料、あるいは製品まるごと自分で無料ホスト。どちらでも、あなたのアイデアは守られます。",
     cta: "無料で始める",
     ctaGithub: "GitHubで入手",
   },
 
   pricing: {
     eyebrow: "料金",
-    title: "PoCを守るための、シンプルな料金",
+    title: "デモを守るための、シンプルな料金",
     subtitle:
-      "クレジットカード不要で、無料で始められます。評価者が3名を超えたらアップグレード — または、オープンソース版を自分で無料ホスト。",
+      "クレジットカード不要で、無料で始められます。閲覧者が3名を超えたらアップグレード — または、オープンソース版を自分で無料ホスト。",
     free: {
       name: "Free",
       priceSuffix: " ずっと無料",
-      tagline: "PoCをきちんと守るために必要なもの、すべて。",
+      tagline: "デモをきちんと守るために必要なもの、すべて。",
       features: [
-        "PoCごとに評価者3名まで",
-        "メールOTPゲート(許可リスト制)",
+        "デモごとに閲覧者3名まで",
+        "メールコードのゲート(招待制)",
         "電子署名付き利用規約 + PDF証明書",
         "セッション制御と即時取り消し",
-        "PoCごとにブランド設定できるホスト型ゲート",
+        "デモごとにブランド設定できるホスト型ゲート",
       ],
       cta: "無料で始める",
     },
@@ -593,7 +608,7 @@ const ja: MarketingStrings = {
       tagline: "本格的な評価を大規模に進めるチームへ。",
       features: [
         "Freeの全機能",
-        "評価者数は無制限",
+        "閲覧者数は無制限",
         "完全な監査ログ",
         "CSVエクスポート",
         "優先サポート",
@@ -617,32 +632,32 @@ const ja: MarketingStrings = {
     faqTitle: "よくある質問",
     faq: [
       {
-        q: "評価者シートとは何を指しますか?",
-        a: "PoCの許可リストに登録されたメールアドレス1件を指します。許可リストはPoCごとに独立しているため、Freeプランの上限もワークスペース単位ではなくPoC単位です。無効化したシートは上限にカウントされません。",
+        q: "閲覧者シートとは何を指しますか?",
+        a: "デモの招待リストに登録されたメールアドレス1件を指します。招待リストはデモごとに独立しているため、Freeプランの上限もワークスペース単位ではなくデモ単位です。無効化したシートは上限にカウントされません。",
       },
       {
-        q: "POCXは私のPoCのコードやデータにアクセスしますか?",
-        a: "いいえ。POCXが扱うのは入口だけです — 本人確認、規約、セッションのみ。評価者がゲートを通過した後のトラフィックはあなたのアプリへ直接流れ、POCXを経由することはありません。セルフホストなら、何一つあなたのサーバーの外には出ません。",
+        q: "POCXは私のデモのコードやデータにアクセスしますか?",
+        a: "いいえ。POCXが扱うのは入口だけです — 本人確認、規約、セッションのみ。閲覧者がゲートを通過した後のトラフィックはあなたのアプリへ直接流れ、POCXを経由することはありません。セルフホストなら、何一つあなたのサーバーの外には出ません。",
       },
       {
         q: "オープンソースなら、なぜ払うのですか?",
-        a: "ソフトウェアには払いません — 全機能付きで、セルフホストは無料です。Proプランは、マネージドクラウドへの対価です。運用、メール到達性の維持、アップグレードを私たちが担うので、PoCのためにサーバーを立てる必要がありません。",
+        a: "ソフトウェアには払いません — 全機能付きで、セルフホストは無料です。Proプランは、マネージドクラウドへの対価です。運用、メール到達性の維持、アップグレードを私たちが担うので、デモの提案のためだけにサーバーを立てる必要がありません。",
       },
       {
         q: "Freeプランで3シートに達するとどうなりますか?",
-        a: "4人目の評価者を追加しようとすると、Proへのアップグレードが案内されます。既存の評価者のアクセスはそのまま維持され、何も停止・取り消しされません。(セルフホストにシート上限はありません。)",
+        a: "4人目の閲覧者を追加しようとすると、Proへのアップグレードが案内されます。既存の閲覧者のアクセスはそのまま維持され、何も停止・取り消しされません。(セルフホストにシート上限はありません。)",
       },
       {
         q: "署名には法的な意味がありますか?",
-        a: "各署名には、OTPで確認済みの署名者メールアドレス、タイムスタンプ、IPアドレス、ユーザーエージェント、さらに表示された規約本文そのもののSHA-256ハッシュが記録され、署名済みPDF証明書が署名者にメール送付されます。これは電子署名の標準的な証拠要件に沿ったものです。(本記載は製品情報であり、法的助言ではありません。)",
+        a: "各署名には、ワンタイムコードで確認済みの署名者メールアドレス、タイムスタンプ、IPアドレス、ユーザーエージェント、さらに表示された規約本文そのもののSHA-256ハッシュが記録され、署名済みPDF証明書が署名者にメール送付されます。これは電子署名の標準的な証拠要件に沿ったものです。(本記載は製品情報であり、法的助言ではありません。)",
       },
       {
         q: "完全に独自の規約を使うことはできますか?",
-        a: "はい。標準の保護テンプレートに {{variables}} で事業者名・PoC名・目的を差し込むことも、全文を独自の規約に置き換えることもできます。バージョンを上げると、すべての評価者に再同意が求められます。",
+        a: "はい。標準の保護テンプレートに {{variables}} で会社名・デモ名・目的を差し込むことも、全文を独自の規約に置き換えることもできます。バージョンを上げると、すべての閲覧者に再同意が求められます。",
       },
       {
         q: "解約するにはどうすればよいですか?",
-        a: "ダッシュボードからいつでも解約できます。支払い済み期間の終わりまではそのまま利用でき、その後もゲートはFreeプランの範囲内で動き続けます。評価者が締め出されることはありません。",
+        a: "ダッシュボードからいつでも解約できます。支払い済み期間の終わりまではそのまま利用でき、その後もゲートはFreeプランの範囲内で動き続けます。閲覧者が締め出されることはありません。",
       },
     ],
     still: {
@@ -650,7 +665,7 @@ const ja: MarketingStrings = {
       docsLabel: "ドキュメントを読む",
       middle: "か、",
       startLabel: "無料で始めて",
-      suffix: "みてください — 最初のPoCの保護は5分ほどで完了します。",
+      suffix: "みてください — 最初のデモの保護は5分ほどで完了します。",
     },
   },
 };

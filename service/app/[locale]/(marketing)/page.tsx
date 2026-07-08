@@ -7,6 +7,7 @@ import {
   FileSignature,
   KeyRound,
   ListChecks,
+  Lock,
   Paintbrush,
   ScrollText,
   ShieldCheck,
@@ -71,20 +72,20 @@ export default async function LandingPage({
 function Hero({ locale, t }: { locale: Locale; t: MarketingStrings }) {
   return (
     <section>
-      <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 pt-20 pb-16 sm:pt-28 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 pt-14 pb-14 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
         <div>
           <p className="eyebrow">{t.hero.eyebrow}</p>
 
-          <h1 className="mt-6 text-5xl leading-[1.05] font-semibold tracking-tight text-balance text-ink-900 sm:text-6xl">
+          <h1 className="mt-5 text-5xl leading-[1.02] font-semibold tracking-tight text-balance text-ink-900 sm:text-6xl lg:text-7xl">
             {t.hero.titleMain}
             <span className="text-brand">{t.hero.titleAccent}</span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-600">
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-600">
             {t.hero.subtitle}
           </p>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <div className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
             <Link
               href={localePath(locale, "/signup")}
               className={buttonCn("primary", "lg")}
@@ -109,8 +110,22 @@ function Hero({ locale, t }: { locale: Locale; t: MarketingStrings }) {
               <ArrowRight className="size-4" aria-hidden />
             </Link>
           </div>
-          <p className="mt-5 font-mono text-xs text-ink-500">
+          <p className="mt-4 font-mono text-xs text-ink-500">
             {t.hero.finePrint}
+          </p>
+
+          {/* Audience strip — quiet mono labels, dot-separated. */}
+          <p className="mt-6 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 font-mono text-[11px] tracking-[0.12em] text-ink-500 uppercase">
+            {t.hero.audience.map((label, i) => (
+              <span key={label} className="flex items-center gap-x-2.5">
+                {i > 0 ? (
+                  <span aria-hidden className="text-ink-300">
+                    ·
+                  </span>
+                ) : null}
+                {label}
+              </span>
+            ))}
           </p>
         </div>
 
@@ -124,10 +139,10 @@ function HeroVisual({ t }: { t: MarketingStrings }) {
   return (
     <div className="relative mx-auto w-full max-w-md lg:max-w-none">
       <div className="hero-visual-in">
-        {/* Terms card — peeks out behind the gate, straight and subtle */}
+        {/* Terms card — clearly secondary, peeks out behind the frame. */}
         <div
           aria-hidden
-          className="absolute -top-6 -right-4 z-0 hidden w-64 rounded-xl border border-ink-200 bg-white p-5 shadow-card md:block xl:-right-8"
+          className="absolute -top-6 -right-4 z-0 hidden w-60 rounded-xl border border-ink-200 bg-white p-5 shadow-card md:block xl:-right-8"
         >
           <div className="flex items-center justify-between">
             <p className="text-xs font-semibold text-ink-900">
@@ -149,35 +164,115 @@ function HeroVisual({ t }: { t: MarketingStrings }) {
           </div>
         </div>
 
-        {/* Browser-chrome frame around the hosted gate */}
-        <div className="relative z-10 rounded-xl border border-ink-200 bg-white shadow-pop">
-          <div className="flex items-center gap-3 rounded-t-xl border-b border-ink-200 bg-ink-50 px-4 py-3">
+        {/* Browser frame: a real-looking demo app, visible but gated. */}
+        <div className="relative z-10 overflow-hidden rounded-xl border border-ink-200 bg-white shadow-pop">
+          <div className="flex items-center gap-3 border-b border-ink-200 bg-ink-50 px-4 py-3">
             <div className="flex gap-1.5" aria-hidden>
               <span className="size-2.5 rounded-full bg-ink-300" />
               <span className="size-2.5 rounded-full bg-ink-300" />
               <span className="size-2.5 rounded-full bg-ink-300" />
             </div>
             <div className="flex-1 rounded-md border border-ink-200 bg-white px-3 py-1.5 text-center font-mono text-xs text-ink-500">
-              pocx.dev/gate/project-falcon
+              demo.acme.dev
             </div>
           </div>
 
-          <div className="px-8 py-10 sm:px-12">
-            <div className="mx-auto max-w-sm text-center">
-              <p className="eyebrow">ACME PTE LTD · Proof of Concept</p>
-              <p className="mt-2 text-xl font-bold text-ink-900">
-                Project Falcon
-              </p>
-              <div className="mt-6 rounded-lg border border-ink-300 bg-white px-3.5 py-2.5 text-left text-sm text-ink-400">
-                you@company.com
+          <div className="relative">
+            {/* The demo app itself — skeleton UI in ink tones. */}
+            <div aria-hidden className="flex min-h-[460px]">
+              {/* Sidebar */}
+              <div className="hidden w-28 shrink-0 flex-col border-r border-ink-100 bg-ink-50/60 p-3.5 sm:flex">
+                <div className="flex items-center gap-2">
+                  <span className="size-4 shrink-0 rounded bg-ink-300" />
+                  <span className="h-2 w-12 rounded-full bg-ink-200" />
+                </div>
+                <div className="mt-6 space-y-3.5">
+                  <div className="h-2 w-full rounded-full bg-ink-300" />
+                  <div className="h-2 w-5/6 rounded-full bg-ink-200" />
+                  <div className="h-2 w-4/6 rounded-full bg-ink-200" />
+                  <div className="h-2 w-5/6 rounded-full bg-ink-200" />
+                  <div className="h-2 w-3/6 rounded-full bg-ink-200" />
+                </div>
               </div>
-              <div className="mt-3 rounded-lg bg-ink-900 px-4 py-2.5 text-sm font-semibold text-paper">
-                {t.heroVisual.emailCode}
+
+              {/* Main pane: header, stat cards, chart, table rows. */}
+              <div className="min-w-0 flex-1 p-4 sm:p-5">
+                <div className="flex items-center justify-between">
+                  <div className="h-2.5 w-28 rounded-full bg-ink-300" />
+                  <div className="flex items-center gap-2">
+                    <div className="h-6 w-16 rounded-md bg-ink-100" />
+                    <div className="size-6 rounded-full bg-ink-200" />
+                  </div>
+                </div>
+
+                <div className="mt-4 grid grid-cols-3 gap-2.5">
+                  <div className="rounded-lg border border-ink-100 p-2.5">
+                    <div className="h-1.5 w-10 rounded-full bg-ink-200" />
+                    <div className="mt-2 h-2.5 w-12 rounded-full bg-ink-300" />
+                  </div>
+                  <div className="rounded-lg border border-ink-100 p-2.5">
+                    <div className="h-1.5 w-8 rounded-full bg-ink-200" />
+                    <div className="mt-2 h-2.5 w-14 rounded-full bg-ink-300" />
+                  </div>
+                  <div className="rounded-lg border border-ink-100 p-2.5">
+                    <div className="h-1.5 w-10 rounded-full bg-ink-200" />
+                    <div className="mt-2 h-2.5 w-10 rounded-full bg-ink-300" />
+                  </div>
+                </div>
+
+                <div className="mt-3 rounded-lg border border-ink-100 p-3">
+                  <div className="h-1.5 w-16 rounded-full bg-ink-200" />
+                  <div className="mt-3 flex h-20 items-end gap-1.5">
+                    <div className="h-8 flex-1 rounded-sm bg-ink-200" />
+                    <div className="h-12 flex-1 rounded-sm bg-ink-200" />
+                    <div className="h-9 flex-1 rounded-sm bg-ink-200" />
+                    <div className="h-14 flex-1 rounded-sm bg-ink-200" />
+                    <div className="h-10 flex-1 rounded-sm bg-ink-200" />
+                    <div className="h-16 flex-1 rounded-sm bg-brand/70" />
+                    <div className="h-11 flex-1 rounded-sm bg-ink-200" />
+                    <div className="h-12 flex-1 rounded-sm bg-ink-200" />
+                  </div>
+                </div>
+
+                <div className="mt-3.5 space-y-2.5">
+                  <div className="flex items-center gap-2.5">
+                    <span className="size-4 shrink-0 rounded-full bg-ink-100" />
+                    <span className="h-1.5 flex-1 rounded-full bg-ink-100" />
+                    <span className="h-1.5 w-10 rounded-full bg-ink-100" />
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="size-4 shrink-0 rounded-full bg-ink-100" />
+                    <span className="h-1.5 flex-1 rounded-full bg-ink-100" />
+                    <span className="h-1.5 w-14 rounded-full bg-ink-100" />
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="size-4 shrink-0 rounded-full bg-ink-100" />
+                    <span className="h-1.5 flex-1 rounded-full bg-ink-100" />
+                    <span className="h-1.5 w-8 rounded-full bg-ink-100" />
+                  </div>
+                </div>
               </div>
-              <div className="rule mt-8 pt-4">
-                <p className="flex items-center justify-center gap-1.5 text-xs text-ink-400">
-                  <ShieldCheck className="size-3" aria-hidden />
-                  {t.heroVisual.protectedLine}
+            </div>
+
+            {/* Frosted gate over the lower part of the app: visible, not accessible. */}
+            <div className="absolute inset-x-0 top-[34%] bottom-0 flex items-center justify-center border-t border-ink-200/60 bg-paper/70 p-4 backdrop-blur-sm">
+              <div className="w-full max-w-[300px] rounded-xl border border-ink-200 bg-white p-5 text-center shadow-pop">
+                <span className="inline-flex size-9 items-center justify-center rounded-full border border-ink-200 bg-ink-50 text-ink-700">
+                  <Lock className="size-4" aria-hidden />
+                </span>
+                <p className="eyebrow mt-3">ACME PTE LTD · PRIVATE DEMO</p>
+                <p className="mt-1.5 text-lg font-bold text-ink-900">
+                  Project Falcon
+                </p>
+                <div className="mt-4 rounded-lg border border-ink-300 bg-white px-3 py-2 text-left text-xs text-ink-400">
+                  you@company.com
+                </div>
+                <div className="mt-2 rounded-lg bg-ink-900 px-4 py-2 text-xs font-semibold text-paper">
+                  {t.heroVisual.emailCode}
+                </div>
+                <p className="mt-4 flex items-center justify-center gap-1.5 text-[10px] leading-snug text-ink-400">
+                  <ShieldCheck className="size-3 shrink-0" aria-hidden />
+                  <span className="text-left">{t.heroVisual.protectedLine}</span>
                 </p>
               </div>
             </div>
