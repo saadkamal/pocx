@@ -1,5 +1,9 @@
-POCX — the access layer for proofs of concept
-Copyright (c) 2026 Saad Kamal <saad@haxo.com.au>
+POCX — protection for the demos, prototypes and PoCs that win you clients
+Copyright (c) 2026 Haxo Pty Ltd (Australia)
+Created and maintained by Saad Kamal.
+
+POCX and the hosted service at https://pocx.dev are owned and operated by
+Haxo Pty Ltd. Contact: pocx@haxo.com.au
 
 Licensing:
 - service/ and everything not otherwise marked: GNU AGPL-3.0 (see LICENSE)
@@ -7,7 +11,8 @@ Licensing:
   (see sdk/LICENSE) — so it can be vendored into any application,
   proprietary or otherwise, without copyleft obligations.
 
-Trademark: "POCX" and the POCX logo identify the official project and the
-hosted service at https://pocx.dev. You may self-host and modify the
-software under the AGPL, but you may not offer a derived product or
-service under the POCX name without written permission.
+Trademark: "POCX" and the POCX logo are trademarks of Haxo Pty Ltd and
+identify the official project and the hosted service at https://pocx.dev.
+You may self-host and modify the software under the AGPL, but you may not
+offer a derived product or service under the POCX name without written
+permission.

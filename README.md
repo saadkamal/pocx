@@ -1,46 +1,57 @@
-# POCX — the access layer for your proof of concept
+# POCX — protect the demos that win you clients
 
-**Open source (AGPL-3.0) · Cloud at [pocx.dev](https://pocx.dev) · SDK is MIT**
+**Open source (AGPL-3.0) · Hosted at [pocx.dev](https://pocx.dev) · SDK is MIT**
 
-You built a PoC for a client. It embodies your ideas, your workflows, your
-IP — and it's about to be opened by people you've never met. **POCX puts a
-gate in front of it**: only invited evaluators get in, everyone e-signs
-your Terms of Access before seeing a single screen, and every access
-decision is on the record.
+Consultants, dev shops and founders win work by showing working demos —
+and a screenshot of your prototype is all AI needs to rebuild it
+overnight. You pitch; they paste it into a coding agent; by morning they
+have a working copy and never needed you.
 
-Battle-tested in a real client engagement and productized — multi-tenant,
-fully customizable and integrable into any app in minutes.
+**POCX puts a gate on your demo.** Every viewer proves who they are with
+an email code and e-signs your Terms of Access — including the clause
+that matters: *if you build on this work, you engage us* — before they
+see a single screen. A screenshot is no longer anonymous: it's tied to a
+named person who agreed, in writing, not to build on your work without
+you. Every signature is recorded with a SHA-256 hash of the exact terms
+text, verified email, IP and timestamp, sealed in a PDF certificate.
 
-## Cloud or self-host — same code
+Show the work. Keep the idea.
+
+## ☁️ The easiest way to run POCX: [pocx.dev](https://pocx.dev)
+
+The hosted service is the same code as this repo, run for you by the
+people who build it:
+
+- **Zero ops** — no server, no database, no email deliverability to
+  babysit. Protecting your first demo takes about five minutes.
+- **Free to start** — 3 viewer seats per demo, e-signed terms + PDF
+  certificates, session control and instant revoke included. No card.
+- **Pro at US$39/workspace/month** — unlimited viewer seats, full audit
+  trail with CSV export, priority support.
+- **It funds the project** — subscribing to the cloud is how this open
+  source stays maintained.
+
+→ **[Start free at pocx.dev](https://pocx.dev/signup)**
+
+## 🏠 Or self-host — same code, every feature
 
 This repository is the **entire product** (Supabase-style open core —
-there is no hidden enterprise fork; see [MAINTAINING.md](MAINTAINING.md)):
+there is no hidden enterprise fork; see [MAINTAINING.md](MAINTAINING.md)).
+Self-hosting is free forever, with no seat limits and no plan gates: one
+Node process + one SQLite file. You'll want `POCX_ORIGIN`,
+`POCX_SESSION_SECRET` and a Resend key for real email — see
+[Run it](#run-it) below.
 
-- ☁️ **[pocx.dev](https://pocx.dev)** — the hosted service. Zero ops,
-  production email deliverability, free for 3 evaluator seats per PoC,
-  Pro at US$39/mo. This is how you support the project.
-- 🏠 **Self-host** — run this repo yourself, free, all features (plan
-  limits only apply on the cloud). One Node process + one SQLite file.
-  See [Run it](#run-it) below; you'll want `POCX_ORIGIN`,
-  `POCX_SESSION_SECRET` and a Resend key for real email.
-
-## What a protected PoC gets
+## What a protected demo gets
 
 | | |
 |---|---|
-| 🔐 **Allowlist + OTP login** | Evaluators sign in with a 6-digit email code. Codes are hashed, single-use, rate-limited, and lock after 5 wrong attempts. No passwords exist to leak. |
-| ✍️ **Terms of Access, e-signed** | Standard protective template (customizable per PoC — entity name, registration number, purpose, or fully custom text). Acceptance is recorded with timestamp, IP, user agent and a SHA-256 hash of the exact text shown, plus a signed PDF certificate emailed to the signer. |
-| ⏱ **Session control** | Absolute TTL + idle timeout per PoC. Revoke any session (or all of them) from the dashboard — access dies on the next request, even inside the protected app. |
-| 📜 **Audit trail** (Pro) | Every OTP request, denial, login, signature, revocation and in-app access event. CSV export. Recorded from day one on every plan; Pro unlocks the view. |
-| 🎨 **Branded hosted gate** | Your entity name, PoC name and brand color on the login + terms pages. "Protected by POCX" is the only trace of us. |
-| 🤖 **Coding-agent native** | `/llms.txt` + a single-file zero-dependency SDK. Paste one prompt into Claude Code / Codex and the integration is done. |
-
-## Pricing
-
-- **Free** — protect PoCs with up to 3 evaluator seats each. Gate, terms
-  e-signature + PDF, session control included.
-- **Pro — US$39 / workspace / month** — unlimited evaluator seats, full
-  audit trail with CSV export, priority support.
+| 🔐 **Invite-only + email codes** | Viewers sign in with a 6-digit email code. Codes are hashed, single-use, rate-limited, and lock after 5 wrong attempts. No passwords exist to leak. |
+| ✍️ **Terms of Access, e-signed** | Standard protective template (customizable per demo — entity name, purpose, or fully custom text). Acceptance recorded with timestamp, IP, user agent and a SHA-256 hash of the exact text shown, plus a signed PDF certificate emailed to the signer. |
+| ⏱ **Session control** | Absolute TTL + idle timeout per demo. Revoke any session (or all of them) from the dashboard — access dies on the next request, even inside the protected app. |
+| 📜 **Audit trail** (Pro) | Every code request, denial, login, signature, revocation and in-app access event. CSV export. Recorded from day one on every plan; Pro unlocks the view. |
+| 🎨 **Branded hosted gate** | Your company name, demo name and brand color on the login + terms pages. "Protected by POCX" is the only trace of us. |
+| 🤖 **Coding-agent native** | `/llms.txt` + a single-file zero-dependency SDK. Paste one prompt into Claude Code / Codex / Cursor and the integration is done. |
 
 ## Repo layout
 
@@ -75,8 +86,9 @@ npm run build
 
 ## Protect an app (customer view)
 
-1. Sign up at `/signup`, create a PoC, invite evaluator emails.
-2. Copy the three env vars from the PoC's Overview page.
+1. Sign up at [pocx.dev/signup](https://pocx.dev/signup) (or your own
+   deployment), create a demo, invite viewer emails.
+2. Copy the three env vars from the demo's Overview page.
 3. `curl -o lib/pocx.ts <your-pocx-origin>/sdk/pocx.ts`
 4. Next 16 `proxy.ts` (or ≤15 `middleware.ts`):
 
@@ -98,15 +110,26 @@ short-lived single-use grant the SDK exchanges (server-to-server) for an
 HS256 session token. Requests verify locally and revalidate against POCX
 every 60 s, so revocations, pauses and terms bumps bite within a minute.
 
-## License & author
+## Support
 
-Created and maintained by **Saad Kamal** ([saad@haxo.com.au](mailto:saad@haxo.com.au)).
+- 🐛 **Bugs & features** — open a [GitHub issue](https://github.com/saadkamal/pocx/issues)
+  (see [CONTRIBUTING.md](CONTRIBUTING.md)).
+- 🔒 **Security** — never the public tracker; see [SECURITY.md](SECURITY.md).
+- ✉️ **Everything else** — **pocx@haxo.com.au**. Cloud customers can also
+  open a ticket from the dashboard's Support tab.
+
+## Company, license & author
+
+POCX is created and maintained by **Saad Kamal**, and owned and operated
+by **[Haxo Pty Ltd](mailto:pocx@haxo.com.au)** (Australia) — the company
+behind the hosted service at [pocx.dev](https://pocx.dev)
+([Terms](https://pocx.dev/terms) · [Privacy](https://pocx.dev/privacy)).
 
 - Service & repository: [AGPL-3.0](LICENSE) — self-host freely; if you
   offer a modified POCX as a service, your modifications must be open too.
 - [`sdk/`](sdk) (and the file served at `/sdk/pocx.ts`): [MIT](sdk/LICENSE)
   — vendor it into any app, no strings attached.
-- "POCX" is a trademark of the project (see [NOTICE](NOTICE)).
+- "POCX" is a trademark of Haxo Pty Ltd (see [NOTICE](NOTICE)).
 
 Contributions welcome — read [CONTRIBUTING.md](CONTRIBUTING.md) and
 [MAINTAINING.md](MAINTAINING.md) first.

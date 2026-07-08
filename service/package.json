@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "AGPL-3.0-only",
-  "author": "Saad Kamal <saad@haxo.com.au>",
+  "author": "Saad Kamal <pocx@haxo.com.au> (https://haxo.com.au)",
   "homepage": "https://pocx.dev",
   "scripts": {
     "dev": "next dev",

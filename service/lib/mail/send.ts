@@ -19,6 +19,8 @@ export type SendMailInput = {
   subject: string;
   html: string;
   text: string;
+  /** Reply-To header (e.g. the original sender of a forwarded email). */
+  replyTo?: string;
   attachments?: MailAttachment[];
   /** For the mock inbox: which PoC / workspace this mail belongs to. */
   pocId?: string;
@@ -45,6 +47,7 @@ export async function sendMail(input: SendMailInput): Promise<SendMailResult> {
       body: JSON.stringify({
         from: MAIL_FROM,
         to: [input.to],
+        reply_to: input.replyTo,
         subject: input.subject,
         html: input.html,
         text: input.text,

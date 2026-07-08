@@ -41,9 +41,12 @@ const en = {
   footer: {
     tagline:
       "Protection for the demos, prototypes and mockups that win you clients — verified entry, e-signed terms, every view on the record.",
+    company:
+      "POCX is built and operated by Haxo Pty Ltd (Australia). Created by Saad Kamal.",
     product: "Product",
     forAgents: "For agents",
     account: "Account",
+    legal: "Legal",
     pricing: "Pricing",
     docs: "Docs",
     tutorials: "Tutorials",
@@ -51,7 +54,11 @@ const en = {
     login: "Log in",
     signup: "Sign up",
     github: "GitHub",
-    copyright: "© 2026 POCX. Built to protect the people who build.",
+    terms: "Terms of Service",
+    privacy: "Privacy Policy",
+    contact: "Contact",
+    copyright:
+      "© 2026 Haxo Pty Ltd. POCX — built to protect the people who build.",
   },
 
   hero: {
@@ -368,9 +375,12 @@ const ja: MarketingStrings = {
   footer: {
     tagline:
       "受注を勝ち取るデモ・プロトタイプ・モックアップのための保護 — 本人確認済みの入場、電子署名付き規約、すべての閲覧を記録。",
+    company:
+      "POCXはHaxo Pty Ltd（オーストラリア）が開発・運営しています。作者: Saad Kamal。",
     product: "プロダクト",
     forAgents: "エージェント向け",
     account: "アカウント",
+    legal: "法的情報",
     pricing: "料金",
     docs: "ドキュメント",
     tutorials: "チュートリアル",
@@ -378,7 +388,10 @@ const ja: MarketingStrings = {
     login: "ログイン",
     signup: "新規登録",
     github: "GitHub",
-    copyright: "© 2026 POCX. つくる人を守るために。",
+    terms: "利用規約",
+    privacy: "プライバシーポリシー",
+    contact: "お問い合わせ",
+    copyright: "© 2026 Haxo Pty Ltd. POCX — つくる人を守るために。",
   },
 
   hero: {

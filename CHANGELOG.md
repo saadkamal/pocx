@@ -3,6 +3,27 @@
 All notable changes to POCX. Semver: patch = fixes, minor = features,
 major = breaking changes to the SDK contract or self-host setup.
 
+## [0.3.2] — 2026-07-09
+
+Company, legal and support plumbing.
+
+- **Haxo Pty Ltd** (Australia) is now credited as the company that owns
+  and operates POCX and the hosted service at pocx.dev; Saad Kamal
+  remains the author/maintainer (NOTICE, README, footer, package
+  metadata)
+- **Terms of Service** (`/terms`) and **Privacy Policy** (`/privacy`)
+  pages in both locales, linked from the marketing footer, the signup
+  form, the hosted-gate footer and `/llms.txt`
+- **Inbound support email**: new `email.received` webhook endpoint
+  (`/api/inbound/resend`) that verifies the Svix signature, pulls the
+  full message + attachments from Resend's Received-emails API and
+  forwards everything to `POCX_SUPPORT_INBOX` (default pocx@haxo.com.au)
+  with Reply-To preserved — this powers support@pocx.dev; see
+  `.env.example` (`RESEND_INBOUND_WEBHOOK_SECRET`)
+- `sendMail` supports a `replyTo` header
+- Dashboard Support tab and CONTRIBUTING/SECURITY now point at
+  pocx@haxo.com.au
+
 ## [0.3.1] — 2026-07-09
 
 Friendlier nudges, editable email copy, and a security-audit hardening pass.

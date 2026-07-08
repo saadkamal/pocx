@@ -62,6 +62,18 @@ export default async function MarketingLayout({
         { href: localePath(locale, "/signup"), label: t.footer.signup },
       ],
     },
+    {
+      title: t.footer.legal,
+      links: [
+        { href: localePath(locale, "/terms"), label: t.footer.terms },
+        { href: localePath(locale, "/privacy"), label: t.footer.privacy },
+        {
+          href: "mailto:pocx@haxo.com.au",
+          label: t.footer.contact,
+          external: true,
+        },
+      ],
+    },
   ];
 
   return (
@@ -99,11 +111,14 @@ export default async function MarketingLayout({
       <main>{children}</main>
 
       <footer className="rule">
-        <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
           <div>
             <Wordmark />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-500">
               {t.footer.tagline}
+            </p>
+            <p className="mt-4 max-w-xs text-xs leading-relaxed text-ink-400">
+              {t.footer.company}
             </p>
           </div>
           {footerColumns.map((col) => (
@@ -138,7 +153,21 @@ export default async function MarketingLayout({
         <div className="rule">
           <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-3 px-6 py-6 sm:flex-row sm:items-center">
             <p className="text-sm text-ink-500">{t.footer.copyright}</p>
-            <LocaleSwitcher tone="light" />
+            <div className="flex items-center gap-5">
+              <Link
+                href={localePath(locale, "/terms")}
+                className="text-sm text-ink-500 transition-colors hover:text-ink-900"
+              >
+                {t.footer.terms}
+              </Link>
+              <Link
+                href={localePath(locale, "/privacy")}
+                className="text-sm text-ink-500 transition-colors hover:text-ink-900"
+              >
+                {t.footer.privacy}
+              </Link>
+              <LocaleSwitcher tone="light" />
+            </div>
           </div>
         </div>
       </footer>

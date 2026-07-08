@@ -25,6 +25,8 @@ const en = {
       /** Eyebrow after "{owner} · " above the card. */
       proofOfConcept: "Proof of Concept",
       trustFooter: "Protected by POCX — access is logged and terms-gated.",
+      legalTerms: "Terms",
+      legalPrivacy: "Privacy",
     },
     paused: {
       title: "This PoC is paused",
@@ -133,6 +135,12 @@ const en = {
       haveAccount: "Already have an account?",
       logIn: "Log in",
       logInArrow: "Log in →",
+      /** Segments around the terms/privacy links under the form. */
+      agreePrefix: "By continuing you agree to our ",
+      agreeTerms: "Terms of Service",
+      agreeAnd: " and ",
+      agreePrivacy: "Privacy Policy",
+      agreeSuffix: ".",
     },
   },
 
@@ -217,6 +225,8 @@ const ja: GateStrings = {
       proofOfConcept: "概念実証（PoC）",
       trustFooter:
         "POCXで保護されています — アクセスは記録され、規約への同意が必要です。",
+      legalTerms: "利用規約",
+      legalPrivacy: "プライバシー",
     },
     paused: {
       title: "このPoCは一時停止中です",
@@ -323,6 +333,11 @@ const ja: GateStrings = {
       haveAccount: "すでにアカウントをお持ちの場合",
       logIn: "ログイン",
       logInArrow: "ログイン →",
+      agreePrefix: "続行することで、",
+      agreeTerms: "利用規約",
+      agreeAnd: "と",
+      agreePrivacy: "プライバシーポリシー",
+      agreeSuffix: "に同意したものとみなされます。",
     },
   },
 

@@ -39,6 +39,24 @@ export default async function SignupPage({
 
       <SignupClient locale={locale} />
 
+      <p className="mt-4 max-w-sm text-center text-xs leading-relaxed text-ink-400">
+        {t.agreePrefix}
+        <Link
+          href={localePath(locale, "/terms")}
+          className="underline transition-colors hover:text-ink-600"
+        >
+          {t.agreeTerms}
+        </Link>
+        {t.agreeAnd}
+        <Link
+          href={localePath(locale, "/privacy")}
+          className="underline transition-colors hover:text-ink-600"
+        >
+          {t.agreePrivacy}
+        </Link>
+        {t.agreeSuffix}
+      </p>
+
       <p className="mt-6 text-sm text-ink-500">
         {t.haveAccount}{" "}
         <Link

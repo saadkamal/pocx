@@ -10,6 +10,8 @@ this easy for everyone.
   tracker.
 - **Features**: open an issue first. POCX is deliberately small and sharp;
   features that grow the core get more scrutiny than fixes.
+- **Anything else** (questions, cloud/pocx.dev matters): email
+  **pocx@haxo.com.au**.
 
 ## Developing
 

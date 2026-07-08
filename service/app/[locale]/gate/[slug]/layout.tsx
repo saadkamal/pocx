@@ -51,6 +51,21 @@ export default async function GateLayout({
             <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
             {t.trustFooter}
           </Link>
+          <p className="text-xs text-ink-400">
+            <Link
+              href={localePath(locale, "/terms")}
+              className="transition-colors hover:text-ink-600"
+            >
+              {t.legalTerms}
+            </Link>
+            <span aria-hidden> · </span>
+            <Link
+              href={localePath(locale, "/privacy")}
+              className="transition-colors hover:text-ink-600"
+            >
+              {t.legalPrivacy}
+            </Link>
+          </p>
           <LocaleSwitcher tone="light" />
         </footer>
       </main>

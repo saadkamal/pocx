@@ -46,5 +46,10 @@ Unauthenticated request → 307 to the hosted gate → email OTP (allowlist enfo
 - No email arriving: the POCX deployment may be in mock-mail mode; codes appear in the dashboard's Emails tab.
 
 Full docs: ${origin}/docs
+
+## About
+POCX is open source (AGPL-3.0; SDK MIT) — https://github.com/saadkamal/pocx
+Built and operated by Haxo Pty Ltd (Australia); created by Saad Kamal. Hosted service: https://pocx.dev
+Support: pocx@haxo.com.au · Terms: ${origin}/terms · Privacy: ${origin}/privacy
 `;
 }

@@ -74,7 +74,16 @@ export function SupportClient({
       <h1 className="text-2xl font-bold tracking-tight text-ink-900">
         {t.title}
       </h1>
-      <p className="mt-2 mb-6 text-sm text-ink-600">{t.intro}</p>
+      <p className="mt-2 mb-6 text-sm text-ink-600">
+        {t.intro} {t.emailPrefix}
+        <a
+          href="mailto:pocx@haxo.com.au"
+          className="font-semibold text-brand hover:underline"
+        >
+          pocx@haxo.com.au
+        </a>
+        {t.emailSuffix}
+      </p>
 
       <div className="space-y-6">
         <Card>

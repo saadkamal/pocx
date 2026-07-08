@@ -213,6 +213,9 @@ const en = {
     metaTitle: "Support — POCX",
     title: "Support",
     intro: "Questions, bugs, onboarding help — we read everything.",
+    /** Segments around the mailto link after the intro. */
+    emailPrefix: "Prefer email? Write to ",
+    emailSuffix: ".",
     newTitle: "New ticket",
     newNote:
       "Replies land in this thread and in your inbox — no separate helpdesk account.",
@@ -679,6 +682,8 @@ const ja: DashboardStrings = {
     title: "サポート",
     intro:
       "ご質問、不具合のご報告、導入のご相談 — すべて拝見しています。",
+    emailPrefix: "メールをご希望の場合は ",
+    emailSuffix: " までご連絡ください。",
     newTitle: "新規チケット",
     newNote:
       "返信はこのスレッドとメールの両方に届きます — 別途ヘルプデスクのアカウントは不要です。",
