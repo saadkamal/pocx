@@ -69,6 +69,28 @@ export default async function LandingPage({
 /* 1 — Hero                                                            */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Headline text with natural line breaks. Japanese has no spaces, so
+ * browsers break a CJK run at any character — splitting words like
+ * "だから" across lines, which reads as machine-set. We wrap each phrase
+ * (a run ending at 、 or 。) in a nowrap inline-block so line breaks only
+ * fall at phrase (文節) boundaries. English keeps its normal whitespace +
+ * text-balance behaviour untouched.
+ */
+function Headline({ locale, text }: { locale: Locale; text: string }) {
+  if (locale !== "ja") return <>{text}</>;
+  const phrases = text.match(/[^、。]+[、。]?/g) ?? [text];
+  return (
+    <>
+      {phrases.map((phrase, i) => (
+        <span key={i} className="inline-block whitespace-nowrap">
+          {phrase}
+        </span>
+      ))}
+    </>
+  );
+}
+
 function Hero({ locale, t }: { locale: Locale; t: MarketingStrings }) {
   return (
     <section>
@@ -76,9 +98,15 @@ function Hero({ locale, t }: { locale: Locale; t: MarketingStrings }) {
         <div>
           <p className="eyebrow">{t.hero.eyebrow}</p>
 
-          <h1 className="mt-5 text-5xl leading-[1.02] font-semibold tracking-tight text-balance text-ink-900 sm:text-6xl lg:text-7xl">
-            {t.hero.titleMain}
-            <span className="text-brand">{t.hero.titleAccent}</span>
+          <h1
+            className={`mt-5 text-5xl leading-[1.02] font-semibold tracking-tight text-ink-900 sm:text-6xl lg:text-7xl ${
+              locale === "ja" ? "" : "text-balance"
+            }`}
+          >
+            <Headline locale={locale} text={t.hero.titleMain} />
+            <span className="text-brand">
+              <Headline locale={locale} text={t.hero.titleAccent} />
+            </span>
           </h1>
 
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-600">
@@ -771,9 +799,15 @@ function FinalCta({ locale, t }: { locale: Locale; t: MarketingStrings }) {
     <section className="bg-ink-950">
       <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-10 px-6 py-24 sm:py-28 lg:flex-row lg:items-center">
         <div>
-          <h2 className="text-3xl font-semibold tracking-tight text-balance text-paper sm:text-5xl">
-            {t.finalCta.titleMain}
-            <span className="text-brand">{t.finalCta.titleAccent}</span>
+          <h2
+            className={`text-3xl font-semibold tracking-tight text-paper sm:text-5xl ${
+              locale === "ja" ? "" : "text-balance"
+            }`}
+          >
+            <Headline locale={locale} text={t.finalCta.titleMain} />
+            <span className="text-brand">
+              <Headline locale={locale} text={t.finalCta.titleAccent} />
+            </span>
           </h2>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-300">
             {t.finalCta.subtitle}

@@ -9,7 +9,7 @@ export function PrivacyContentEn() {
       updated="Last updated: 9 July 2026"
       intro={
         <>
-          This policy explains what <strong>Haxo Pty Ltd</strong> (Australia),
+          This policy explains what <strong>Haxo Pty Ltd</strong>,
           the operator of the hosted POCX service at <strong>pocx.dev</strong>,
           collects and why. The short version: we collect the minimum an
           access-control product needs — identities, signatures and access

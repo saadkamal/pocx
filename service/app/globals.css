@@ -314,3 +314,20 @@ body {
     animation: none;
   }
 }
+
+/* ─ Japanese line-breaking ────────────────────────────────────────────
+   CJK text has no spaces, so browsers break a run at any glyph — which
+   splits words across lines and reads as machine-set. `line-break: strict`
+   keeps kinsoku rules (no leading 。、), and `auto-phrase` breaks at natural
+   phrase (文節) boundaries on browsers that support it (Chromium; a no-op
+   elsewhere). Hero/final-CTA headlines additionally use per-phrase nowrap
+   spans in the markup, which works everywhere. */
+:lang(ja) h1,
+:lang(ja) h2,
+:lang(ja) h3 {
+  line-break: strict;
+  word-break: auto-phrase;
+}
+:lang(ja) p {
+  line-break: strict;
+}

@@ -7,7 +7,7 @@ major = breaking changes to the SDK contract or self-host setup.
 
 Company, legal and support plumbing.
 
-- **Haxo Pty Ltd** (Australia) is now credited as the company that owns
+- **Haxo Pty Ltd** is now credited as the company that owns
   and operates POCX and the hosted service at pocx.dev; Saad Kamal
   remains the author/maintainer (NOTICE, README, footer, package
   metadata)

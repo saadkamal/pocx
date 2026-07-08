@@ -11,7 +11,7 @@ export function TermsContentEn() {
         <>
           These terms govern your use of the hosted POCX service at{" "}
           <strong>pocx.dev</strong>, which is owned and operated by{" "}
-          <strong>Haxo Pty Ltd</strong> (Australia). If you self-host the
+          <strong>Haxo Pty Ltd</strong>. If you self-host the
           open-source version, that use is governed by the AGPL-3.0 license in
           the repository, not by these terms. Note these Terms of Service are
           different from the per-demo <em>Terms of Access</em> your viewers

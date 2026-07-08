@@ -49,7 +49,7 @@ Full docs: ${origin}/docs
 
 ## About
 POCX is open source (AGPL-3.0; SDK MIT) — https://github.com/saadkamal/pocx
-Built and operated by Haxo Pty Ltd (Australia); created by Saad Kamal. Hosted service: https://pocx.dev
+Built and operated by Haxo Pty Ltd; created by Saad Kamal. Hosted service: https://pocx.dev
 Support: pocx@haxo.com.au · Terms: ${origin}/terms · Privacy: ${origin}/privacy
 `;
 }

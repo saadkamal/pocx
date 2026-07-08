@@ -121,7 +121,7 @@ every 60 s, so revocations, pauses and terms bumps bite within a minute.
 ## Company, license & author
 
 POCX is created and maintained by **Saad Kamal**, and owned and operated
-by **[Haxo Pty Ltd](mailto:pocx@haxo.com.au)** (Australia) — the company
+by **[Haxo Pty Ltd](mailto:pocx@haxo.com.au)** — the company
 behind the hosted service at [pocx.dev](https://pocx.dev)
 ([Terms](https://pocx.dev/terms) · [Privacy](https://pocx.dev/privacy)).
 

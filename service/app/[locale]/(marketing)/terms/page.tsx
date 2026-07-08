@@ -13,13 +13,13 @@ export async function generateMetadata({
     return {
       title: "利用規約",
       description:
-        "pocx.devのホスト型POCXサービスの利用規約。運営: Haxo Pty Ltd（オーストラリア）。",
+        "pocx.devのホスト型POCXサービスの利用規約。運営: Haxo Pty Ltd。",
     };
   }
   return {
     title: "Terms of Service",
     description:
-      "Terms of Service for the hosted POCX service at pocx.dev, operated by Haxo Pty Ltd (Australia).",
+      "Terms of Service for the hosted POCX service at pocx.dev, operated by Haxo Pty Ltd.",
   };
 }
 
