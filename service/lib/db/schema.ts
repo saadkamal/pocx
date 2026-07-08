@@ -169,7 +169,30 @@ export const outboundEmails = sqliteTable("outbound_emails", {
   createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
 });
 
+/** Support tickets — customers file from the dashboard, admins triage. */
+export const tickets = sqliteTable("tickets", {
+  id: text("id").primaryKey(), // tkt_…
+  workspaceId: text("workspace_id").notNull(),
+  createdBy: text("created_by").notNull(), // operator email
+  subject: text("subject").notNull(),
+  // open (needs admin) | pending (waiting on customer) | closed
+  status: text("status").notNull().default("open"),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" }).notNull(),
+});
+
+export const ticketMessages = sqliteTable("ticket_messages", {
+  id: text("id").primaryKey(), // tmsg_…
+  ticketId: text("ticket_id").notNull(),
+  authorRole: text("author_role").notNull(), // customer | admin
+  authorEmail: text("author_email").notNull(),
+  body: text("body").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+});
+
 export type WorkspaceRow = typeof workspaces.$inferSelect;
+export type TicketRow = typeof tickets.$inferSelect;
+export type TicketMessageRow = typeof ticketMessages.$inferSelect;
 export type OperatorRow = typeof operators.$inferSelect;
 export type PocRow = typeof pocs.$inferSelect;
 export type EvaluatorRow = typeof evaluators.$inferSelect;

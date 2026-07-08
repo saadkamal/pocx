@@ -15,6 +15,7 @@ import type { SessionRow } from "@/lib/db/schema";
  */
 
 export const OPERATOR_COOKIE = "pocx_op";
+export const ADMIN_COOKIE = "pocx_admin"; // owner ops console (/admin)
 export const gateCookieName = (slug: string) => `pocx_gate_${slug}`;
 
 export const OPERATOR_TTL_HOURS = Number(
@@ -24,7 +25,7 @@ export const OPERATOR_IDLE_HOURS = Number(
   process.env.POCX_DEFAULT_IDLE_TIMEOUT_HOURS ?? 6,
 );
 
-export type SessionKind = "operator" | "gate";
+export type SessionKind = "operator" | "gate" | "admin";
 
 /** Throttle last-active writes: at most one per this many ms per session. */
 const TOUCH_INTERVAL_MS = 60_000;

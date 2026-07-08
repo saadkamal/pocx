@@ -306,7 +306,7 @@ export function createOtp(input: {
   id: string;
   email: string;
   codeHash: string;
-  purpose: "operator" | "gate";
+  purpose: "operator" | "gate" | "admin";
   pocId?: string | null;
   expiresAt: number;
 }): void {
@@ -333,7 +333,7 @@ function otpScope(email: string, purpose: string, pocId?: string | null) {
 /** The newest unconsumed, unexpired code for this email + realm. */
 export function getActiveOtp(
   email: string,
-  purpose: "operator" | "gate",
+  purpose: "operator" | "gate" | "admin",
   pocId?: string | null,
 ): OtpCodeRow | null {
   return (
@@ -356,7 +356,7 @@ export function getActiveOtp(
 /** Recent codes (any state) — used to explain stale-code attempts. */
 export function listRecentOtps(
   email: string,
-  purpose: "operator" | "gate",
+  purpose: "operator" | "gate" | "admin",
   pocId?: string | null,
 ): OtpCodeRow[] {
   return getDb()
@@ -390,7 +390,7 @@ export function incrementOtpAttempts(id: string): number {
 
 export function createSessionRow(input: {
   id: string;
-  kind: "operator" | "gate";
+  kind: "operator" | "gate" | "admin";
   email: string;
   workspaceId?: string | null;
   pocId?: string | null;

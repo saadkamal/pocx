@@ -3,6 +3,27 @@
 All notable changes to POCX. Semver: patch = fixes, minor = features,
 major = breaking changes to the SDK contract or self-host setup.
 
+## [0.3.0] — 2026-07-09
+
+The owner operations console + customer support.
+
+- **Ops console** at `/admin` — its own OTP realm, allowlisted via
+  `POCX_ADMIN_EMAILS` (probing it returns a uniform response and is
+  audit-logged)
+- **Overview**: workspaces, Pro subscriptions, approximate MRR, PoCs,
+  evaluators, signatures, live sessions, open tickets, 14-day signup
+  chart, payment failures, platform activity stream
+- **Onboarding funnel**: every workspace classified (no PoC → no
+  evaluators → not connected → no logins → active → dormant) with
+  days-stuck and one-click stage-appropriate nudge emails (7-day cooldown)
+- **Workspace drill-down**: billing state, operators, PoCs, activity,
+  outbound emails, comp-Pro support gesture (guarded against live Stripe
+  subscriptions)
+- **Support tickets**: customers file and reply from the dashboard's new
+  Support tab (en/ja); admins triage, reply and close from the console;
+  email notifications both directions
+- New tables `tickets`/`ticket_messages`; new env `POCX_ADMIN_EMAILS`
+
 ## [0.2.0] — 2026-07-08
 
 Full subscription billing.

@@ -154,6 +154,26 @@ function createTables(sqlite: Database.Database) {
     CREATE INDEX IF NOT EXISTS idx_audit_poc ON audit_logs(poc_id);
     CREATE INDEX IF NOT EXISTS idx_audit_ws ON audit_logs(workspace_id);
     CREATE INDEX IF NOT EXISTS idx_audit_created ON audit_logs(created_at);
+    CREATE TABLE IF NOT EXISTS tickets (
+      id TEXT PRIMARY KEY,
+      workspace_id TEXT NOT NULL,
+      created_by TEXT NOT NULL,
+      subject TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'open',
+      created_at INTEGER NOT NULL,
+      updated_at INTEGER NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS ticket_messages (
+      id TEXT PRIMARY KEY,
+      ticket_id TEXT NOT NULL,
+      author_role TEXT NOT NULL,
+      author_email TEXT NOT NULL,
+      body TEXT NOT NULL,
+      created_at INTEGER NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS idx_tickets_ws ON tickets(workspace_id);
+    CREATE INDEX IF NOT EXISTS idx_tickets_status ON tickets(status);
+    CREATE INDEX IF NOT EXISTS idx_ticket_msgs ON ticket_messages(ticket_id);
   `);
 
   // Additive columns shipped after tables existed on persistent volumes.

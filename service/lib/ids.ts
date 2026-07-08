@@ -16,3 +16,5 @@ export const newGrantId = () => `grant_${randomHex(24)}`;
 export const newSignatureId = () => `sig_${randomHex(12)}`;
 export const newPublicKey = () => `pocx_pk_${randomHex(12)}`;
 export const newSecret = () => `pocx_sk_${randomHex(24)}`;
+export const newTicketId = () => `tkt_${randomHex(8)}`;
+export const newTicketMessageId = () => `tmsg_${randomHex(8)}`;

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { BookOpen, CreditCard, Layers, Users } from "lucide-react";
+import { BookOpen, CreditCard, Layers, LifeBuoy, Users } from "lucide-react";
 import { requireOperator } from "@/lib/auth/operator";
 import { planFor } from "@/lib/plans";
 import { Badge } from "@/components/ui";
@@ -52,6 +52,13 @@ export default async function DashboardLayout({
           >
             <Users className="h-4 w-4" aria-hidden />
             {t.nav.team}
+          </Link>
+          <Link
+            href={localePath(locale, "/dashboard/support")}
+            className={navItemCn}
+          >
+            <LifeBuoy className="h-4 w-4" aria-hidden />
+            {t.nav.support}
           </Link>
           <Link
             href={localePath(locale, "/dashboard/billing")}

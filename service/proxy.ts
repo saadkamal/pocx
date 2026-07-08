@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { OPERATOR_COOKIE, checkSession } from "@/lib/auth/session";
+import { ADMIN_COOKIE, OPERATOR_COOKIE, checkSession } from "@/lib/auth/session";
 import {
   detectLocale,
   isLocale,
@@ -115,6 +115,34 @@ export function proxy(req: NextRequest) {
   }
 
   // ── Auth gating (on the locale-stripped path) ─────────────────────────
+
+  // Owner ops console — its own realm; an operator/gate cookie never opens it.
+  if (path.startsWith("/admin") || path.startsWith("/api/admin")) {
+    const ADMIN_PUBLIC =
+      path === "/admin/login" || path.startsWith("/api/admin/auth/");
+    const ok = checkSession(req.cookies.get(ADMIN_COOKIE)?.value, {
+      kind: "admin",
+      idleHours: 2,
+    }).ok;
+
+    if (ADMIN_PUBLIC) {
+      if (path === "/admin/login" && ok) {
+        return NextResponse.redirect(new URL("/admin", req.url));
+      }
+      return localeResponse ?? NextResponse.next();
+    }
+    if (!ok) {
+      if (path.startsWith("/api/")) {
+        return NextResponse.json(
+          { error: "Admin authentication required" },
+          { status: 401 },
+        );
+      }
+      return NextResponse.redirect(new URL("/admin/login", req.url));
+    }
+    return localeResponse ?? NextResponse.next();
+  }
+
   if (path.startsWith("/dashboard") || path.startsWith("/api/dashboard")) {
     const ok = checkSession(req.cookies.get(OPERATOR_COOKIE)?.value, {
       kind: "operator",

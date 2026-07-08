@@ -16,6 +16,7 @@ const en = {
     nav: {
       pocs: "PoCs",
       team: "Team",
+      support: "Support",
       billing: "Billing",
       docs: "Docs",
     },
@@ -206,6 +207,40 @@ const en = {
     saving: "Saving…",
     disableConfirm: (email: string) =>
       `Disable ${email}? They are signed out immediately and can't access this workspace until re-enabled.`,
+  },
+
+  support: {
+    metaTitle: "Support — POCX",
+    title: "Support",
+    intro: "Questions, bugs, onboarding help — we read everything.",
+    newTitle: "New ticket",
+    newNote:
+      "Replies land in this thread and in your inbox — no separate helpdesk account.",
+    subjectLabel: "Subject",
+    subjectPlaceholder: "e.g. Evaluator can't sign in at the gate",
+    bodyLabel: "What's going on?",
+    bodyPlaceholder:
+      "Tell us what happened — the more detail, the faster we can help.",
+    submit: "Create ticket",
+    submitting: "Creating…",
+    emptyTitle: "No tickets yet",
+    emptyHint:
+      "Stuck on anything — setup, the gate, billing? Open a ticket above and we'll get back to you.",
+    thSubject: "Subject",
+    thStatus: "Status",
+    thUpdated: "Updated",
+    /** Customer-facing status labels: "open" = we're on it, "pending" = their turn. */
+    statusOpen: "Open",
+    statusPending: "Awaiting your reply",
+    statusClosed: "Closed",
+    backToList: "← Support",
+    supportLabel: "POCX support",
+    openedOn: (date: string): string => `Opened ${date}`,
+    replyLabel: "Reply",
+    replyPlaceholder: "Write a reply…",
+    send: "Send reply",
+    sending: "Sending…",
+    closedNote: "This ticket is closed — replying reopens it.",
   },
 
   poc: {
@@ -454,6 +489,7 @@ const ja: DashboardStrings = {
     nav: {
       pocs: "PoC一覧",
       team: "チーム",
+      support: "サポート",
       billing: "請求",
       docs: "ドキュメント",
     },
@@ -636,6 +672,41 @@ const ja: DashboardStrings = {
     saving: "保存中…",
     disableConfirm: (email: string) =>
       `${email} を無効化しますか?即座にログアウトされ、再有効化されるまでこのワークスペースにアクセスできなくなります。`,
+  },
+
+  support: {
+    metaTitle: "サポート — POCX",
+    title: "サポート",
+    intro:
+      "ご質問、不具合のご報告、導入のご相談 — すべて拝見しています。",
+    newTitle: "新規チケット",
+    newNote:
+      "返信はこのスレッドとメールの両方に届きます — 別途ヘルプデスクのアカウントは不要です。",
+    subjectLabel: "件名",
+    subjectPlaceholder: "例: 評価者がゲートでログインできない",
+    bodyLabel: "お困りの内容",
+    bodyPlaceholder:
+      "状況をできるだけ詳しくお書きください — 詳しいほど早く対応できます。",
+    submit: "チケットを作成",
+    submitting: "作成中…",
+    emptyTitle: "チケットはまだありません",
+    emptyHint:
+      "セットアップ、ゲート、請求など、お困りのことがあれば上のフォームからご連絡ください。",
+    thSubject: "件名",
+    thStatus: "ステータス",
+    thUpdated: "更新日時",
+    statusOpen: "対応中",
+    statusPending: "返信待ち",
+    statusClosed: "クローズ",
+    backToList: "← サポート",
+    supportLabel: "POCXサポート",
+    openedOn: (date: string): string => `作成日: ${date}`,
+    replyLabel: "返信",
+    replyPlaceholder: "返信を入力…",
+    send: "返信を送信",
+    sending: "送信中…",
+    closedNote:
+      "このチケットはクローズ済みです — 返信すると再開されます。",
   },
 
   poc: {
