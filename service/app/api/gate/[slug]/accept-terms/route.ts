@@ -136,6 +136,7 @@ export async function POST(
     };
     const result = await sendMail({
       to: email,
+      replyTo: poc.supportEmail ?? undefined,
       subject: t.email.signedTerms.subject(poc.name),
       text: t.email.signedTerms.text(mailParams),
       html: t.email.signedTerms.html(mailParams),

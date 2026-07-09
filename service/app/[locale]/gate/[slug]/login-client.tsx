@@ -203,6 +203,9 @@ export default function LoginClient({
           <span className="font-medium text-ink-900">{email}</span>
           {t.codeSentAfter}
         </p>
+        <p className="mt-2 text-xs leading-relaxed text-ink-400">
+          {t.spamHint}
+        </p>
 
         <div className="mt-5">
           <Label htmlFor="gate-code">{t.codeLabel}</Label>

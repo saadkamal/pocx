@@ -107,6 +107,7 @@ export async function POST(
   };
   await sendMail({
     to: email,
+    replyTo: poc.supportEmail ?? undefined,
     subject: t.email.otp.subject(code, poc.name),
     text: t.email.otp.text(mailParams),
     html: t.email.otp.html(mailParams),

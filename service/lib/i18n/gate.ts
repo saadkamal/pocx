@@ -61,6 +61,8 @@ const en = {
       codeSentBefore: "We sent a 6-digit code to ",
       codeSentAfter: ".",
       codeLabel: "Access code",
+      spamHint:
+        "Not seeing it? Check your spam or junk folder — and mark it \"Not junk\" so the next one lands in your inbox.",
       verify: "Verify & continue",
       verifying: "Verifying…",
       useDifferentEmail: "Use a different email",
@@ -99,6 +101,8 @@ const en = {
       title: "Log in",
       emailHint: "We'll email you a one-time code — no password to remember.",
       codeSent: (email: string) => `We sent a 6-digit code to ${email}.`,
+      spamHint:
+        "Not seeing it? Check your spam or junk folder — and mark it \"Not junk\" so the next one lands in your inbox.",
       workEmail: "Work email",
       emailPlaceholder: "you@company.com",
       sendCode: "Email me a code",
@@ -121,6 +125,8 @@ const en = {
       detailsHint:
         "Free to start — we'll email you a one-time code to confirm.",
       codeSent: (email: string) => `We sent a 6-digit code to ${email}.`,
+      spamHint:
+        "Not seeing it? Check your spam or junk folder — and mark it \"Not junk\" so the next one lands in your inbox.",
       yourName: "Your name",
       namePlaceholder: "Ada Lovelace",
       workspaceName: "Workspace / company name",
@@ -185,14 +191,14 @@ const en = {
         minutes: number;
         ownerEntity: string;
       }) =>
-        `Your ${p.pocName} access code is: ${p.code}\n\nIt expires in ${p.minutes} minutes and replaces any earlier code we sent you. If you did not request this, you can ignore this email.\n\n— ${p.ownerEntity}, via POCX`,
+        `Your ${p.pocName} access code is: ${p.code}\n\nIt expires in ${p.minutes} minutes and replaces any earlier code we sent you. If you did not request this, you can ignore this email.\n\n— ${p.ownerEntity}, via POCX\n\nYou are receiving this because your email address was used to sign in to ${p.pocName}, which is protected by POCX (https://pocx.dev), operated by Haxo Pty Ltd.`,
       html: (p: {
         code: string;
         pocName: string;
         minutes: number;
         ownerEntity: string;
       }) =>
-        `<p>Your <strong>${p.pocName}</strong> access code is:</p><p style="font-size:28px;font-weight:bold;letter-spacing:6px">${p.code}</p><p>It expires in ${p.minutes} minutes and <strong>replaces any earlier code</strong> we sent you. If you did not request this, you can ignore this email.</p><p style="color:#6e6e7a">— ${p.ownerEntity}, via POCX</p>`,
+        `<p>Your <strong>${p.pocName}</strong> access code is:</p><p style="font-size:28px;font-weight:bold;letter-spacing:6px">${p.code}</p><p>It expires in ${p.minutes} minutes and <strong>replaces any earlier code</strong> we sent you. If you did not request this, you can ignore this email.</p><p style="color:#6e6e7a">— ${p.ownerEntity}, via POCX</p><p style="color:#9a9aa6;font-size:12px;border-top:1px solid #e5e5ea;padding-top:10px;margin-top:18px">You are receiving this because your email address was used to sign in to ${p.pocName}, which is protected by <a href="https://pocx.dev" style="color:#9a9aa6">POCX</a>, operated by Haxo Pty Ltd.</p>`,
     },
     signedTerms: {
       subject: (pocName: string) =>
@@ -206,7 +212,7 @@ const en = {
         hash: string;
         ownerEntity: string;
       }) =>
-        `Thank you. Your acceptance of the ${p.pocName} Terms of Access (version ${p.termsVersion}) has been recorded.\n\nSignature id: ${p.signatureId}\nAccepted at (UTC): ${p.acceptedAtUtc}\nIP address: ${p.ip}\nTerms hash (SHA-256): ${p.hash}\n\nA signed PDF copy is attached for your records.\n\n— ${p.ownerEntity}, via POCX`,
+        `Thank you. Your acceptance of the ${p.pocName} Terms of Access (version ${p.termsVersion}) has been recorded.\n\nSignature id: ${p.signatureId}\nAccepted at (UTC): ${p.acceptedAtUtc}\nIP address: ${p.ip}\nTerms hash (SHA-256): ${p.hash}\n\nA signed PDF copy is attached for your records.\n\n— ${p.ownerEntity}, via POCX\n\nYou are receiving this because you e-signed the Terms of Access for ${p.pocName}, which is protected by POCX (https://pocx.dev), operated by Haxo Pty Ltd.`,
       html: (p: {
         pocName: string;
         termsVersion: string;
@@ -216,7 +222,7 @@ const en = {
         hash: string;
         ownerEntity: string;
       }) =>
-        `<p>Thank you. Your acceptance of the ${p.pocName} <strong>Terms of Access</strong> (version ${p.termsVersion}) has been recorded.</p><ul><li>Signature id: <code>${p.signatureId}</code></li><li>Accepted at (UTC): ${p.acceptedAtUtc}</li><li>IP address: ${p.ip}</li><li>Terms hash (SHA-256): <code>${p.hash}</code></li></ul><p>A signed PDF copy is attached for your records.</p><p style="color:#6e6e7a">— ${p.ownerEntity}, via POCX</p>`,
+        `<p>Thank you. Your acceptance of the ${p.pocName} <strong>Terms of Access</strong> (version ${p.termsVersion}) has been recorded.</p><ul><li>Signature id: <code>${p.signatureId}</code></li><li>Accepted at (UTC): ${p.acceptedAtUtc}</li><li>IP address: ${p.ip}</li><li>Terms hash (SHA-256): <code>${p.hash}</code></li></ul><p>A signed PDF copy is attached for your records.</p><p style="color:#6e6e7a">— ${p.ownerEntity}, via POCX</p><p style="color:#9a9aa6;font-size:12px;border-top:1px solid #e5e5ea;padding-top:10px;margin-top:18px">You are receiving this because you e-signed the Terms of Access for ${p.pocName}, which is protected by <a href="https://pocx.dev" style="color:#9a9aa6">POCX</a>, operated by Haxo Pty Ltd.</p>`,
     },
   },
 };
@@ -262,6 +268,8 @@ const ja: GateStrings = {
       codeSentBefore: "",
       codeSentAfter: " 宛てに6桁のコードを送信しました。",
       codeLabel: "アクセスコード",
+      spamHint:
+        "届かない場合は、迷惑メール（スパム）フォルダをご確認ください。「迷惑メールではない」に登録すると、次回から受信箱に届きます。",
       verify: "確認して続行",
       verifying: "確認中…",
       useDifferentEmail: "別のメールアドレスを使う",
@@ -300,6 +308,8 @@ const ja: GateStrings = {
         "ワンタイムコードをメールでお送りします。パスワードは不要です。",
       codeSent: (email: string) =>
         `${email} 宛てに6桁のコードを送信しました。`,
+      spamHint:
+        "届かない場合は、迷惑メール（スパム）フォルダをご確認ください。「迷惑メールではない」に登録すると、次回から受信箱に届きます。",
       workEmail: "勤務先メールアドレス",
       emailPlaceholder: "you@company.com",
       sendCode: "コードをメールで受け取る",
@@ -323,6 +333,8 @@ const ja: GateStrings = {
         "無料で始められます。確認用のワンタイムコードをメールでお送りします。",
       codeSent: (email: string) =>
         `${email} 宛てに6桁のコードを送信しました。`,
+      spamHint:
+        "届かない場合は、迷惑メール（スパム）フォルダをご確認ください。「迷惑メールではない」に登録すると、次回から受信箱に届きます。",
       yourName: "お名前",
       namePlaceholder: "山田 花子",
       workspaceName: "ワークスペース／会社名",
@@ -388,14 +400,14 @@ const ja: GateStrings = {
         minutes: number;
         ownerEntity: string;
       }) =>
-        `${p.pocName}のアクセスコードは次のとおりです: ${p.code}\n\nこのコードの有効期限は${p.minutes}分です。以前にお送りしたコードは無効になります。このメールにお心当たりがない場合は、破棄していただいて構いません。\n\n— ${p.ownerEntity}（POCX経由）`,
+        `${p.pocName}のアクセスコードは次のとおりです: ${p.code}\n\nこのコードの有効期限は${p.minutes}分です。以前にお送りしたコードは無効になります。このメールにお心当たりがない場合は、破棄していただいて構いません。\n\n— ${p.ownerEntity}（POCX経由）\n\nこのメールは、POCX（https://pocx.dev、運営: Haxo Pty Ltd）で保護された${p.pocName}へのサインインにあなたのメールアドレスが使用されたため送信されています。`,
       html: (p: {
         code: string;
         pocName: string;
         minutes: number;
         ownerEntity: string;
       }) =>
-        `<p><strong>${p.pocName}</strong>のアクセスコードは次のとおりです。</p><p style="font-size:28px;font-weight:bold;letter-spacing:6px">${p.code}</p><p>このコードの有効期限は${p.minutes}分です。<strong>以前にお送りしたコードは無効になります</strong>。このメールにお心当たりがない場合は、破棄していただいて構いません。</p><p style="color:#6e6e7a">— ${p.ownerEntity}（POCX経由）</p>`,
+        `<p><strong>${p.pocName}</strong>のアクセスコードは次のとおりです。</p><p style="font-size:28px;font-weight:bold;letter-spacing:6px">${p.code}</p><p>このコードの有効期限は${p.minutes}分です。<strong>以前にお送りしたコードは無効になります</strong>。このメールにお心当たりがない場合は、破棄していただいて構いません。</p><p style="color:#6e6e7a">— ${p.ownerEntity}（POCX経由）</p><p style="color:#9a9aa6;font-size:12px;border-top:1px solid #e5e5ea;padding-top:10px;margin-top:18px">このメールは、<a href="https://pocx.dev" style="color:#9a9aa6">POCX</a>（運営: Haxo Pty Ltd）で保護された${p.pocName}へのサインインにあなたのメールアドレスが使用されたため送信されています。</p>`,
     },
     signedTerms: {
       subject: (pocName: string) =>
@@ -409,7 +421,7 @@ const ja: GateStrings = {
         hash: string;
         ownerEntity: string;
       }) =>
-        `ありがとうございます。${p.pocName}の利用規約（Terms of Access、バージョン${p.termsVersion}）への同意が記録されました。\n\n署名ID: ${p.signatureId}\n同意日時（UTC）: ${p.acceptedAtUtc}\nIPアドレス: ${p.ip}\n規約ハッシュ（SHA-256）: ${p.hash}\n\n署名済みPDFの控えを添付しています。お手元に保管してください。\n\n— ${p.ownerEntity}（POCX経由）`,
+        `ありがとうございます。${p.pocName}の利用規約（Terms of Access、バージョン${p.termsVersion}）への同意が記録されました。\n\n署名ID: ${p.signatureId}\n同意日時（UTC）: ${p.acceptedAtUtc}\nIPアドレス: ${p.ip}\n規約ハッシュ（SHA-256）: ${p.hash}\n\n署名済みPDFの控えを添付しています。お手元に保管してください。\n\n— ${p.ownerEntity}（POCX経由）\n\nこのメールは、POCX（https://pocx.dev、運営: Haxo Pty Ltd）で保護された${p.pocName}の利用規約に電子署名されたため送信されています。`,
       html: (p: {
         pocName: string;
         termsVersion: string;
@@ -419,7 +431,7 @@ const ja: GateStrings = {
         hash: string;
         ownerEntity: string;
       }) =>
-        `<p>ありがとうございます。${p.pocName}の<strong>利用規約（Terms of Access）</strong>（バージョン${p.termsVersion}）への同意が記録されました。</p><ul><li>署名ID: <code>${p.signatureId}</code></li><li>同意日時（UTC）: ${p.acceptedAtUtc}</li><li>IPアドレス: ${p.ip}</li><li>規約ハッシュ（SHA-256）: <code>${p.hash}</code></li></ul><p>署名済みPDFの控えを添付しています。お手元に保管してください。</p><p style="color:#6e6e7a">— ${p.ownerEntity}（POCX経由）</p>`,
+        `<p>ありがとうございます。${p.pocName}の<strong>利用規約（Terms of Access）</strong>（バージョン${p.termsVersion}）への同意が記録されました。</p><ul><li>署名ID: <code>${p.signatureId}</code></li><li>同意日時（UTC）: ${p.acceptedAtUtc}</li><li>IPアドレス: ${p.ip}</li><li>規約ハッシュ（SHA-256）: <code>${p.hash}</code></li></ul><p>署名済みPDFの控えを添付しています。お手元に保管してください。</p><p style="color:#6e6e7a">— ${p.ownerEntity}（POCX経由）</p><p style="color:#9a9aa6;font-size:12px;border-top:1px solid #e5e5ea;padding-top:10px;margin-top:18px">このメールは、<a href="https://pocx.dev" style="color:#9a9aa6">POCX</a>（運営: Haxo Pty Ltd）で保護された${p.pocName}の利用規約に電子署名されたため送信されています。</p>`,
     },
   },
 };

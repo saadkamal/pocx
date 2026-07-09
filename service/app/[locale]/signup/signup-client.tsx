@@ -108,6 +108,11 @@ export default function SignupClient({ locale }: { locale: Locale }) {
       <h1 className="text-lg font-semibold text-ink-900">{t.title}</h1>
       <p className="mt-1 mb-5 text-sm text-ink-500">
         {step === "details" ? t.detailsHint : t.codeSent(email.trim())}
+        {step !== "details" ? (
+          <span className="mt-1.5 block text-xs leading-relaxed text-ink-400">
+            {t.spamHint}
+          </span>
+        ) : null}
       </p>
 
       {error ? (
