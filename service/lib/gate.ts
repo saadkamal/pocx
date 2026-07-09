@@ -6,6 +6,7 @@ import {
 } from "@/lib/auth/session";
 import { getPocBySlug, getLatestAcceptance } from "@/lib/db/repo";
 import type { PocRow } from "@/lib/db/schema";
+import { DEMO_SLUG, ensureDemoPoc } from "@/lib/demo";
 
 /**
  * Hosted-gate helpers shared by the /gate/[slug] pages and
@@ -15,7 +16,11 @@ import type { PocRow } from "@/lib/db/schema";
 /** Resolve a live PoC for its hosted gate; null → 404. */
 export function resolveGatePoc(slug: string): PocRow | null {
   const poc = getPocBySlug(slug);
-  if (!poc || poc.archivedAt) return null;
+  if (!poc || poc.archivedAt) {
+    // The Project Falcon demo gate seeds itself on first visit.
+    if (slug === DEMO_SLUG) return ensureDemoPoc();
+    return null;
+  }
   return poc;
 }
 

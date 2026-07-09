@@ -7,8 +7,14 @@ import {
   OTP_REQUEST_LIMIT_PER_EMAIL,
   OTP_REQUEST_LIMIT_PER_IP,
 } from "@/lib/auth/rate-limit";
-import { createOtp, insertAudit, isEvaluatorAllowed } from "@/lib/db/repo";
-import { newOtpId } from "@/lib/ids";
+import {
+  addEvaluator,
+  createOtp,
+  insertAudit,
+  isEvaluatorAllowed,
+} from "@/lib/db/repo";
+import { isDemoPoc } from "@/lib/demo";
+import { newEvaluatorId, newOtpId } from "@/lib/ids";
 import { resolveGatePoc } from "@/lib/gate";
 import { gateDict, gateRequestLocale } from "@/lib/i18n/gate";
 import { sendMail } from "@/lib/mail/send";
@@ -65,10 +71,22 @@ export async function POST(
     });
 
   if (!isEvaluatorAllowed(poc.id, email)) {
-    audit("gate_access_denied", "not_allowlisted");
-    // Tell the person plainly they don't have access, rather than leaving
-    // them waiting for a code that will never arrive.
-    return NextResponse.json({ ok: false, allowed: false }, { status: 403 });
+    // The public Project Falcon demo enrolls anyone; isDemoPoc compares
+    // pinned ids, so no customer PoC can ever be open-enrollment.
+    if (isDemoPoc(poc)) {
+      addEvaluator({
+        id: newEvaluatorId(),
+        pocId: poc.id,
+        email,
+        addedBy: "demo",
+      });
+      audit("gate_demo_enrolled");
+    } else {
+      audit("gate_access_denied", "not_allowlisted");
+      // Tell the person plainly they don't have access, rather than leaving
+      // them waiting for a code that will never arrive.
+      return NextResponse.json({ ok: false, allowed: false }, { status: 403 });
+    }
   }
 
   const code = generateOtpCode();

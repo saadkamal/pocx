@@ -3,6 +3,24 @@
 All notable changes to POCX. Semver: patch = fixes, minor = features,
 major = breaking changes to the SDK contract or self-host setup.
 
+## [0.4.0] — 2026-07-09
+
+"See it in action" — a live, public demo of the gate.
+
+- **Project Falcon**: a real PoC behind the real gate on the landing page.
+  Any email can enroll (open enrollment is pinned to the demo PoC's id in
+  admin settings — customer PoCs can never be open), then rides the
+  ordinary product path: OTP → e-signed Terms of Access (with the PDF
+  certificate email) → grant → single-use exchange → HS256 session token →
+  the gated app at `/demo`, which re-validates the live session so
+  revocation bites instantly
+- The demo PoC seeds itself lazily into an operator-less pro workspace on
+  first visit to `/gate/falcon`
+- New landing section with an email form (prefills the gate login via
+  `?email=`); the app behind the gate is deliberately silly — that's the
+  punchline
+- Full-chain unit tests against a temp SQLite database
+
 ## [0.3.2] — 2026-07-09
 
 Company, legal and support plumbing.

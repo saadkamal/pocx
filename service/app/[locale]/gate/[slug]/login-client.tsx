@@ -21,6 +21,7 @@ export default function LoginClient({
   brandColor,
   supportEmail,
   returnTo,
+  initialEmail,
 }: {
   locale: Locale;
   slug: string;
@@ -29,12 +30,13 @@ export default function LoginClient({
   brandColor: string;
   supportEmail: string | null;
   returnTo: string | null;
+  initialEmail?: string;
 }) {
   const t = gateDict[locale].gate.login;
   const errs = gateDict[locale].errors;
 
   const [step, setStep] = useState<"email" | "code" | "denied">("email");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(initialEmail ?? "");
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

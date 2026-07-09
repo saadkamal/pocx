@@ -148,6 +148,53 @@ const en = {
     },
   },
 
+  seeAction: {
+    eyebrow: "See it in action",
+    title: "The next $100M idea is behind this gate.",
+    body: "Acme Pte Ltd won't show Project Falcon to anyone without a signature. Go through the gate exactly as your clients would: enter any email you own, get a real one-time code, e-sign real Terms of Access — a signed PDF certificate lands in your inbox — and see what all the secrecy is about.",
+    emailLabel: "Your email",
+    emailPlaceholder: "you@company.com",
+    cta: "Unlock Project Falcon",
+    finePrint:
+      "A real gate protecting a fictional idea. Any email works — it's only used for this demo's access flow, and you can sign out from inside.",
+  },
+
+  falcon: {
+    metaTitle: "Project Falcon — CONFIDENTIAL",
+    metaDescription:
+      "Acme Pte Ltd's most confidential prototype. You shouldn't be reading this description.",
+    bannerConfidential: "Confidential",
+    bannerSignedIn: "signed in as",
+    title: "Project Falcon",
+    tagline:
+      "Falcon-as-a-Service. Same-minute document delivery by trained falcons. Yes, really.",
+    kpis: [
+      { label: "Falcons in the air", value: "47" },
+      { label: "Avg. delivery time", value: "4m 12s" },
+      { label: "Documents lost to wind", value: "3" },
+      { label: "Pre-seed valuation", value: "US$100,000,000" },
+    ],
+    logTitle: "Dispatch log — live",
+    logs: [
+      "FLCN-017 delivered a signed NDA to Globex Corporation — 3m 58s, new record",
+      "FLCN-023 got distracted by an actual pigeon — rerouting",
+      "FLCN-009 is demanding a bigger fish before the next run — negotiating",
+      "FLCN-031 delivered the Q3 board deck. To the wrong roof. Investigating",
+      "FLCN-004 grounded: molting. HR has been notified",
+    ],
+    reveal: {
+      eyebrow: "Wait — that's the $100M idea?",
+      title: "That's the point.",
+      p1: "You just verified your identity with a one-time code and e-signed a legally recorded contract — to look at a joke. Check your inbox: the signed PDF certificate of your acceptance is already there.",
+      p2: "Now imagine this wasn't a joke. Imagine it was your demo — your designs, your workflows, the idea a prospect could screenshot into a coding agent tonight. That's what POCX gates.",
+      ctaPrimary: "Protect your demo — free",
+      ctaSecondary: "Read the docs",
+    },
+    signOut: "Sign out of Project Falcon",
+    protectedLine:
+      "This page is protected by POCX — the session you're on can be revoked at any moment.",
+  },
+
   features: {
     eyebrow: "Features",
     title: "The whole front door, handled.",
@@ -478,6 +525,53 @@ const ja: MarketingStrings = {
       title: "リンクを送る",
       body: "閲覧者は招待されたメールでサインインし、利用規約に電子署名して、あなたのデモに入ります。セッションと署名はリアルタイムで確認でき、誰のアクセスでも即座に取り消せます。",
     },
+  },
+
+  seeAction: {
+    eyebrow: "実際に体験する",
+    title: "次の1億ドルのアイデアは、このゲートの先に。",
+    body: "Acme Pte Ltdは、署名なしにProject Falconを誰にも見せません。あなたのクライアントが通るのと同じフローを、そのまま体験してください。メールアドレスを入力すると本物のワンタイムコードが届き、本物のアクセス規約に電子署名し（署名済みPDF証明書が受信箱に届きます）、この厳重な秘密の中身を確かめられます。",
+    emailLabel: "メールアドレス",
+    emailPlaceholder: "you@company.com",
+    cta: "Project Falconを開錠する",
+    finePrint:
+      "本物のゲートが、架空のアイデアを守っています。どのメールアドレスでも入れます — このデモのアクセスフローにのみ使用され、中からサインアウトできます。",
+  },
+
+  falcon: {
+    metaTitle: "Project Falcon — 極秘",
+    metaDescription:
+      "Acme Pte Ltdの最重要機密プロトタイプ。この説明文も、本来は読めないはずのものです。",
+    bannerConfidential: "極秘",
+    bannerSignedIn: "サインイン中:",
+    title: "Project Falcon",
+    tagline:
+      "Falcon-as-a-Service。訓練されたハヤブサによる、分単位の書類配達。ええ、本気です。",
+    kpis: [
+      { label: "飛行中のハヤブサ", value: "47" },
+      { label: "平均配達時間", value: "4分12秒" },
+      { label: "風で失われた書類", value: "3" },
+      { label: "プレシード評価額", value: "US$100,000,000" },
+    ],
+    logTitle: "配達ログ — ライブ",
+    logs: [
+      "FLCN-017がGlobex Corporationに署名済みNDAを配達 — 3分58秒、新記録",
+      "FLCN-023が本物のハトに気を取られました — 経路を再計算中",
+      "FLCN-009が次の配達の前に大きめの魚を要求 — 交渉中",
+      "FLCN-031がQ3の取締役会資料を配達。ただし隣のビルの屋上に。調査中",
+      "FLCN-004は換羽のため運航停止。人事に報告済み",
+    ],
+    reveal: {
+      eyebrow: "え、これが1億ドルのアイデア？",
+      title: "それこそが、ポイントです。",
+      p1: "あなたはたった今、ワンタイムコードで本人確認を行い、法的に記録される契約に電子署名しました — 冗談を見るために。受信箱を確認してください。承諾の署名済みPDF証明書が、すでに届いています。",
+      p2: "これが冗談ではなかったら、と想像してください。あなたのデモ — デザイン、ワークフロー、見込み客が今夜にでもスクリーンショット1枚からコーディングエージェントで複製できるアイデアだったら。POCXがゲートで守るのは、それです。",
+      ctaPrimary: "自分のデモを守る（無料）",
+      ctaSecondary: "ドキュメントを読む",
+    },
+    signOut: "Project Falconからサインアウト",
+    protectedLine:
+      "このページはPOCXで保護されています — このセッションは、いつでも取り消される可能性があります。",
   },
 
   features: {

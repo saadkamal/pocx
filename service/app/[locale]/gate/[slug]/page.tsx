@@ -30,6 +30,8 @@ export default async function GatePage({
   const sp = await searchParams;
   const returnTo =
     typeof sp.return_to === "string" && sp.return_to ? sp.return_to : null;
+  // Optional prefill (e.g. from the landing page's demo form).
+  const initialEmail = typeof sp.email === "string" ? sp.email.slice(0, 254) : "";
 
   const poc = resolveGatePoc(slug);
   if (!poc) notFound();
@@ -133,6 +135,7 @@ export default async function GatePage({
       brandColor={poc.brandColor}
       supportEmail={poc.supportEmail}
       returnTo={returnTo}
+      initialEmail={initialEmail}
     />
   );
 }

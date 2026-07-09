@@ -15,9 +15,11 @@ import {
   TimerReset,
 } from "lucide-react";
 import { buttonCn, GithubMark } from "@/components/ui";
+import { DEMO_SLUG } from "@/lib/demo";
 import { localePath, type Locale } from "@/lib/i18n/locales";
 import { marketingDict, type MarketingStrings } from "@/lib/i18n/marketing";
 import { PRO_PRICE_USD } from "@/lib/plans";
+import { pocxOrigin } from "@/lib/utils";
 import { CopyButton } from "./copy-button";
 import { ProblemDemo } from "./problem-demo";
 import { Reveal } from "./reveal";
@@ -56,6 +58,7 @@ export default async function LandingPage({
       <ProblemSection t={t} />
       <SolutionSection t={t} />
       <HowItWorks t={t} />
+      <SeeItInAction locale={locale} t={t} />
       <FeaturesGrid t={t} />
       <WhySection t={t} />
       <OpenSourceSection locale={locale} t={t} />
@@ -473,6 +476,62 @@ function HowItWorks({ t }: { t: MarketingStrings }) {
             {t.how.step3.body}
           </StepBlock>
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 4.5 — See it in action (the live Project Falcon demo gate)          */
+/* ------------------------------------------------------------------ */
+
+function SeeItInAction({ locale, t }: { locale: Locale; t: MarketingStrings }) {
+  const origin = pocxOrigin();
+
+  return (
+    <section className="bg-ink-950">
+      <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
+        <Reveal className="max-w-2xl">
+          <p className="eyebrow text-ink-400">{t.seeAction.eyebrow}</p>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-paper sm:text-4xl">
+            <Headline locale={locale} text={t.seeAction.title} />
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-ink-300">
+            {t.seeAction.body}
+          </p>
+        </Reveal>
+
+        <Reveal className="mt-10 max-w-2xl">
+          <form
+            action={localePath(locale, `/gate/${DEMO_SLUG}`)}
+            method="GET"
+            className="flex flex-col gap-3 sm:flex-row"
+          >
+            <input type="hidden" name="return_to" value={`${origin}/demo`} />
+            <label htmlFor="see-action-email" className="sr-only">
+              {t.seeAction.emailLabel}
+            </label>
+            <input
+              id="see-action-email"
+              name="email"
+              type="email"
+              required
+              maxLength={254}
+              placeholder={t.seeAction.emailPlaceholder}
+              className="h-12 flex-1 rounded-lg border border-white/15 bg-white/5 px-4 text-[15px] text-paper placeholder:text-ink-500 focus:border-white/40 focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-lg bg-paper px-6 text-sm font-semibold text-ink-900 transition-colors hover:bg-ink-100"
+            >
+              <Lock className="size-4" aria-hidden />
+              {t.seeAction.cta}
+            </button>
+          </form>
+          <p className="mt-3 text-xs leading-relaxed text-ink-500">
+            {t.seeAction.finePrint}
+          </p>
+        </Reveal>
       </div>
     </section>
   );
