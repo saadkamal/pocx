@@ -5,6 +5,7 @@ import {
   getPocById,
   getPocBySlug,
   setWorkspacePlan,
+  updatePoc,
 } from "@/lib/db/repo";
 import type { PocRow } from "@/lib/db/schema";
 import { getJsonSetting, setJsonSetting } from "@/lib/db/settings";
@@ -30,6 +31,14 @@ export const DEMO_SLUG = "falcon";
 export const DEMO_APP_COOKIE = "pocx_demo_session";
 const SETTING_KEY = "demo_poc_id";
 
+/**
+ * The demo PoC is code-managed (no operator can edit it), so its terms
+ * version lives here. Bumping it forces every existing demo signer to
+ * re-sign — which is itself a feature worth showing off.
+ * 1.1 — typed-name signature added.
+ */
+const DEMO_TERMS_VERSION = "1.1";
+
 export function getDemoPocId(): string | null {
   return getJsonSetting<string | null>(SETTING_KEY, null);
 }
@@ -43,7 +52,13 @@ export function ensureDemoPoc(): PocRow {
   const existingId = getDemoPocId();
   if (existingId) {
     const poc = getPocById(existingId);
-    if (poc && !poc.archivedAt) return poc;
+    if (poc && !poc.archivedAt) {
+      if (poc.termsVersion !== DEMO_TERMS_VERSION) {
+        updatePoc(poc.id, { termsVersion: DEMO_TERMS_VERSION });
+        return getPocById(poc.id)!;
+      }
+      return poc;
+    }
   }
 
   const origin = pocxOrigin();
@@ -74,7 +89,7 @@ export function ensureDemoPoc(): PocRow {
     secret: newSecret(),
     termsMode: "template",
     termsCustomText: null,
-    termsVersion: "1.0",
+    termsVersion: DEMO_TERMS_VERSION,
     sessionTtlHours: 24,
     idleTimeoutHours: 3,
     otpTtlMinutes: 10,
