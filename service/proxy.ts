@@ -15,8 +15,10 @@ import {
  * Node runtime, so the DB-backed session check runs right here).
  *
  * Locale routing (pages live under app/[locale]):
- *  - /ja/…            → Japanese, served as-is; refreshes the locale cookie.
- *  - /en/…            → redirected to the unprefixed canonical URL.
+ *  - /ja/…            → Japanese, served as-is (no cookie — viewing a link
+ *                       is not a language choice; only the switcher pins).
+ *  - /en/…            → redirected to the unprefixed canonical URL, and
+ *                       pins en (the escape hatch from a stale ja cookie).
  *  - unprefixed       → locale = cookie ?? Accept-Language.
  *      · ja + top-level GET navigation → 307 to /ja/… (the auto-redirect)
  *      · ja + non-navigation (RSC/POST/server action) → rewrite to /ja/…
@@ -87,9 +89,11 @@ export function proxy(req: NextRequest) {
     [locale, path] = splitLocaleFromPath(rawPath);
 
     if (locale === "ja") {
-      // Explicit /ja URL — remember the choice, serve directly.
+      // /ja URL — serve directly. Deliberately does NOT set the locale
+      // cookie: opening a shared /ja link is not a language choice, and
+      // pinning it here used to trap visitors in Japanese for a year.
+      // Only the manual switcher (and the /en escape hatch above) pins.
       localeResponse = NextResponse.next();
-      localeResponse.cookies.set(LOCALE_COOKIE, "ja", cookieOpts());
     } else {
       const cookieLocale = req.cookies.get(LOCALE_COOKIE)?.value;
       const preferred: Locale = isLocale(cookieLocale)
@@ -98,11 +102,11 @@ export function proxy(req: NextRequest) {
 
       if (preferred === "ja" && isDocumentNavigation(req)) {
         // Auto-redirect browsers that prefer Japanese to the /ja URL.
+        // No cookie: detection re-runs per request (same answer), so the
+        // visitor stays unpinned until they explicitly switch language.
         const url = req.nextUrl.clone();
         url.pathname = localePath("ja", path);
-        const res = NextResponse.redirect(url, 307);
-        res.cookies.set(LOCALE_COOKIE, "ja", cookieOpts());
-        return res;
+        return NextResponse.redirect(url, 307);
       }
 
       // Serve the preferred locale under the unprefixed URL (RSC fetches,
