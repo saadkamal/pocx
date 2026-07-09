@@ -161,4 +161,24 @@ describe("project falcon demo", () => {
     repo.revokeSession(sessionId);
     expect(repo.getSessionRow(sessionId)?.revokedAt).not.toBeNull();
   });
+
+  it("stores the typed-name signature on the acceptance record", () => {
+    const poc = demo.ensureDemoPoc();
+    const email = "signer@example.com";
+    const id = ids.newSignatureId();
+    repo.insertAcceptance({
+      id,
+      pocId: poc.id,
+      email,
+      signerName: "Ada Lovelace",
+      termsVersion: poc.termsVersion,
+      termsHash: "deadbeef",
+      termsText: "terms",
+      ip: "203.0.113.7",
+      userAgent: "vitest",
+    });
+    const row = repo.getLatestAcceptance(poc.id, email, poc.termsVersion);
+    expect(row?.id).toBe(id);
+    expect(row?.signerName).toBe("Ada Lovelace");
+  });
 });

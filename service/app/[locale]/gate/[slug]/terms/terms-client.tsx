@@ -31,20 +31,25 @@ export default function TermsClient({
   const errs = gateDict[locale].errors;
 
   const [agreed, setAgreed] = useState(false);
+  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const nameOk = name.trim().length >= 2;
 
   const rtQuery = returnTo
     ? `?return_to=${encodeURIComponent(returnTo)}`
     : "";
 
   async function acceptTerms() {
-    if (!agreed || loading) return;
+    if (!agreed || !nameOk || loading) return;
     setLoading(true);
     setError(null);
     try {
       const res = await fetch(`/api/gate/${slug}/accept-terms`, {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name.trim() }),
       });
       if (res.ok) {
         window.location.assign(
@@ -101,6 +106,40 @@ export default function TermsClient({
         )}
       </div>
 
+      {/* Typed-name signature — the visible, human part of the record. */}
+      <div className="mt-4">
+        <label
+          htmlFor="signer-name"
+          className="text-sm font-medium text-ink-900"
+        >
+          {t.nameLabel}
+        </label>
+        <input
+          id="signer-name"
+          type="text"
+          autoComplete="name"
+          maxLength={120}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          disabled={loading}
+          placeholder={t.namePlaceholder}
+          className="mt-1.5 w-full rounded-lg border border-ink-300 bg-white px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:ring-2"
+          style={{ "--tw-ring-color": brandColor } as React.CSSProperties}
+        />
+        <div className="mt-2 flex min-h-12 items-center justify-between gap-3 rounded-lg border border-dashed border-ink-300 bg-ink-50 px-4 py-2">
+          <span
+            className="truncate text-xl text-ink-900 italic"
+            style={{ fontFamily: "'Snell Roundhand', 'Segoe Script', 'Brush Script MT', cursive" }}
+            aria-hidden="true"
+          >
+            {name.trim() || "\u00A0"}
+          </span>
+          <span className="shrink-0 font-mono text-[10px] tracking-[0.12em] text-ink-400 uppercase">
+            {t.signatureLabel}
+          </span>
+        </div>
+      </div>
+
       <label className="mt-4 flex cursor-pointer items-start gap-3">
         <input
           type="checkbox"
@@ -122,7 +161,7 @@ export default function TermsClient({
       <button
         type="button"
         onClick={acceptTerms}
-        disabled={!agreed || loading}
+        disabled={!agreed || !nameOk || loading}
         className={`${buttonCn("primary", "lg")} mt-5 w-full hover:opacity-90`}
         style={{ backgroundColor: brandColor }}
       >

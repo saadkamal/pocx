@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
@@ -22,11 +23,16 @@ import { sendMail } from "@/lib/mail/send";
 
 /* Hosted gate — record the terms acceptance + electronic signature.
    Email is derived from the session; the text and hash are resolved
-   server-side. Nothing from the client is trusted. */
+   server-side. The only client-supplied field is the typed full name —
+   the visible signature — which is validated and stored verbatim. */
 
 export const runtime = "nodejs";
 
 const DB_PATH = process.env.POCX_DB_PATH ?? ".data/pocx.db";
+
+const BodySchema = z
+  .object({ name: z.string().trim().min(2).max(120) })
+  .strict();
 
 export async function POST(
   req: NextRequest,
@@ -49,6 +55,14 @@ export async function POST(
   const ip = clientIp(req.headers);
   const userAgent = req.headers.get("user-agent") ?? "unknown";
 
+  const body = await req.json().catch(() => null);
+  const parsed = BodySchema.safeParse(body);
+  if (!parsed.success) {
+    const t = gateDict[gateRequestLocale(req)];
+    return NextResponse.json({ error: t.api.nameRequired }, { status: 400 });
+  }
+  const signerName = parsed.data.name;
+
   // Idempotent: if this version is already accepted, return the record.
   const existing = getLatestAcceptance(poc.id, email, poc.termsVersion);
   if (existing) {
@@ -64,6 +78,7 @@ export async function POST(
     id: signatureId,
     pocId: poc.id,
     email,
+    signerName,
     termsVersion: poc.termsVersion,
     termsHash: hash,
     termsText: resolvedText,
@@ -77,7 +92,7 @@ export async function POST(
     email,
     sessionId: check.session.id,
     event: "gate_terms_accepted",
-    detail: `v${poc.termsVersion}`,
+    detail: `v${poc.termsVersion} · signed "${signerName}"`,
     source: "gate",
     ip,
     userAgent,
@@ -94,6 +109,7 @@ export async function POST(
         ownerEntity: poc.ownerEntity,
         signatureId,
         email,
+        signerName,
         acceptedAtUtc: acceptedAt.toISOString(),
         ip,
         userAgent,

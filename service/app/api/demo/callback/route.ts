@@ -3,6 +3,7 @@ import { clientIp } from "@/lib/auth/session";
 import { consumeGrant, getSessionRow, insertAudit } from "@/lib/db/repo";
 import { DEMO_APP_COOKIE, ensureDemoPoc } from "@/lib/demo";
 import { signJwt } from "@/lib/tokens/jwt";
+import { pocxOrigin } from "@/lib/utils";
 
 /**
  * Callback for the Project Falcon demo — the same handoff a customer
@@ -17,7 +18,10 @@ export const runtime = "nodejs";
 
 export async function GET(req: NextRequest) {
   const poc = ensureDemoPoc();
-  const gateUrl = new URL(`/gate/${poc.slug}`, req.url);
+  // Redirects must be built from POCX_ORIGIN — behind Railway, req.url
+  // carries the proxy's internal host:port (localhost:8080).
+  const origin = pocxOrigin();
+  const gateUrl = new URL(`/gate/${poc.slug}`, origin);
 
   const grantId = req.nextUrl.searchParams.get("pocx_grant");
   if (!grantId) return NextResponse.redirect(gateUrl);
@@ -59,11 +63,11 @@ export async function GET(req: NextRequest) {
   const target =
     next && /^\/(ja\/)?demo(\/|\?|$)/.test(next) ? next : "/demo";
 
-  const res = NextResponse.redirect(new URL(target, req.url));
+  const res = NextResponse.redirect(new URL(target, origin));
   res.cookies.set(DEMO_APP_COOKIE, token, {
     httpOnly: true,
     sameSite: "lax",
-    secure: req.nextUrl.protocol === "https:",
+    secure: origin.startsWith("https:"),
     path: "/",
     expires: session.expiresAt,
   });

@@ -112,6 +112,7 @@ function createTables(sqlite: Database.Database) {
       id TEXT PRIMARY KEY,
       poc_id TEXT NOT NULL,
       email TEXT NOT NULL,
+      signer_name TEXT,
       terms_version TEXT NOT NULL,
       terms_hash TEXT NOT NULL,
       terms_text TEXT NOT NULL DEFAULT '',
@@ -188,6 +189,7 @@ function createTables(sqlite: Database.Database) {
     `ALTER TABLE workspaces ADD COLUMN cancel_at_period_end INTEGER NOT NULL DEFAULT 0`,
     `ALTER TABLE workspaces ADD COLUMN current_period_end INTEGER`,
     `ALTER TABLE workspaces ADD COLUMN retention_offer_redeemed_at INTEGER`,
+    `ALTER TABLE acceptances ADD COLUMN signer_name TEXT`,
   ]) {
     try {
       sqlite.exec(stmt);

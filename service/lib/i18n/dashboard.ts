@@ -357,10 +357,11 @@ const en = {
 
     signatures: {
       intro:
-        "Each record stores the exact text shown, a SHA-256 hash, IP and browser — and the signed PDF was emailed to the signer.",
+        "Each record stores the typed-name signature, the exact text shown, a SHA-256 hash, IP and browser — and the signed PDF was emailed to the signer.",
       emptyTitle: "No signatures yet",
       emptyHint:
         "Signatures appear here when evaluators accept the Terms of Access at the gate.",
+      thName: "Signed by",
       thEmail: "Email",
       thVersion: "Terms version",
       thAccepted: "Accepted",
@@ -830,6 +831,7 @@ const ja: DashboardStrings = {
       emptyTitle: "署名はまだありません",
       emptyHint:
         "評価者がゲートでアクセス利用規約に同意すると、ここに署名が表示されます。",
+      thName: "署名者",
       thEmail: "メールアドレス",
       thVersion: "規約バージョン",
       thAccepted: "同意日時",

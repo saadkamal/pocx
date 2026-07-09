@@ -18,6 +18,7 @@ export type SignaturePdfProps = {
   ownerEntity: string;
   signatureId: string;
   email: string;
+  signerName?: string | null;
   acceptedAtUtc: string;
   ip: string;
   userAgent: string;
@@ -97,6 +98,12 @@ export function SignaturePdf(props: SignaturePdfProps) {
             <Text style={styles.metaKey}>Signature id</Text>
             <Text style={styles.metaVal}>{props.signatureId}</Text>
           </View>
+          {props.signerName ? (
+            <View style={styles.metaRow}>
+              <Text style={styles.metaKey}>Signed by (typed name)</Text>
+              <Text style={styles.metaVal}>{props.signerName}</Text>
+            </View>
+          ) : null}
           <View style={styles.metaRow}>
             <Text style={styles.metaKey}>Signed by (email)</Text>
             <Text style={styles.metaVal}>{props.email}</Text>

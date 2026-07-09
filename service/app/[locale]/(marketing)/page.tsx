@@ -633,7 +633,7 @@ function WhySection({ t }: { t: MarketingStrings }) {
           </div>
           <div className="mt-5">
             <CertRow label={t.why.cert.sigId} value="sig_9f2ce41ab7" />
-            <CertRow label={t.why.cert.signedBy} value="jane@client.com" />
+            <CertRow label={t.why.cert.signedBy} value="Jane Tan · jane@client.com" />
             <CertRow label={t.why.cert.termsVersion} value="v1.2" />
             <CertRow
               label={t.why.cert.timestamp}

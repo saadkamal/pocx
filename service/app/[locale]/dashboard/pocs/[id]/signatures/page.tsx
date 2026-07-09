@@ -30,6 +30,7 @@ export default async function SignaturesPage({
         <Table>
           <thead>
             <tr>
+              <Th>{t.thName}</Th>
               <Th>{t.thEmail}</Th>
               <Th>{t.thVersion}</Th>
               <Th>{t.thAccepted}</Th>
@@ -42,7 +43,10 @@ export default async function SignaturesPage({
           <tbody>
             {rows.map((a) => (
               <tr key={a.id}>
-                <Td className="font-medium text-ink-900">{a.email}</Td>
+                <Td className="font-medium text-ink-900">
+                  {a.signerName ?? "—"}
+                </Td>
+                <Td className="text-ink-600">{a.email}</Td>
                 <Td className="text-ink-600">v{a.termsVersion}</Td>
                 <Td className="text-ink-600">{formatDateTime(a.acceptedAt)}</Td>
                 <Td className="text-ink-600">{a.ip}</Td>

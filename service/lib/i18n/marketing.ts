@@ -207,7 +207,7 @@ const en = {
       },
       {
         title: "Terms of Access, e-signed",
-        body: "A SHA-256 hash of the exact text, timestamp, IP and user agent on every signature — plus a signed PDF certificate emailed to the signer.",
+        body: "Viewers sign by typing their full name. Every signature records that name, a SHA-256 hash of the exact text, timestamp, IP and user agent — plus a signed PDF certificate emailed to the signer.",
       },
       {
         title: "Session control",
@@ -373,7 +373,7 @@ const en = {
       },
       {
         q: "Are the signatures legally meaningful?",
-        a: "Each signature records the signer’s email identity (verified by a one-time code), a timestamp, IP address and user agent, plus a SHA-256 hash of the exact terms text shown — and a signed PDF certificate is emailed to the signer. That’s standard electronic-signature evidence. (This is product information, not legal advice.)",
+        a: "Each signature records the signer’s typed full name, their email identity (verified by a one-time code), a timestamp, IP address and user agent, plus a SHA-256 hash of the exact terms text shown — and a signed PDF certificate is emailed to the signer. That’s standard electronic-signature evidence. (This is product information, not legal advice.)",
       },
       {
         q: "Can I bring fully custom terms?",
@@ -586,7 +586,7 @@ const ja: MarketingStrings = {
       },
       {
         title: "電子署名付き利用規約",
-        body: "すべての署名に、規約本文のSHA-256ハッシュ、タイムスタンプ、IPアドレス、ユーザーエージェントを記録。さらに署名済みPDF証明書を署名者にメールで送付します。",
+        body: "閲覧者は氏名を入力して署名します。すべての署名にその氏名、規約本文のSHA-256ハッシュ、タイムスタンプ、IPアドレス、ユーザーエージェントを記録。さらに署名済みPDF証明書を署名者にメールで送付します。",
       },
       {
         title: "セッション制御",
@@ -752,7 +752,7 @@ const ja: MarketingStrings = {
       },
       {
         q: "署名には法的な意味がありますか?",
-        a: "各署名には、ワンタイムコードで確認済みの署名者メールアドレス、タイムスタンプ、IPアドレス、ユーザーエージェント、さらに表示された規約本文そのもののSHA-256ハッシュが記録され、署名済みPDF証明書が署名者にメール送付されます。これは電子署名の標準的な証拠要件に沿ったものです。(本記載は製品情報であり、法的助言ではありません。)",
+        a: "各署名には、署名者が入力した氏名、ワンタイムコードで確認済みのメールアドレス、タイムスタンプ、IPアドレス、ユーザーエージェント、さらに表示された規約本文そのもののSHA-256ハッシュが記録され、署名済みPDF証明書が署名者にメール送付されます。これは電子署名の標準的な証拠要件に沿ったものです。(本記載は製品情報であり、法的助言ではありません。)",
       },
       {
         q: "完全に独自の規約を使うことはできますか?",

@@ -43,12 +43,24 @@ export default function LoginClient({
   const [notice, setNotice] = useState<string | null>(null);
   const [cooldown, setCooldown] = useState(0);
   const codeRef = useRef<HTMLInputElement>(null);
+  const autoRequested = useRef(false);
 
   useEffect(() => {
     if (cooldown <= 0) return;
     const t = setTimeout(() => setCooldown((c) => c - 1), 1000);
     return () => clearTimeout(t);
   }, [cooldown]);
+
+  // Arriving with a prefilled email (e.g. the landing page's demo form):
+  // send the code immediately so the visitor isn't asked for it twice.
+  // Ref-guarded against Strict Mode double-mounts; rate limits still apply.
+  useEffect(() => {
+    if (!initialEmail || autoRequested.current) return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(initialEmail)) return;
+    autoRequested.current = true;
+    void requestCode(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (step === "code") codeRef.current?.focus();

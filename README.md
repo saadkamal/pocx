@@ -47,7 +47,7 @@ Node process + one SQLite file. You'll want `POCX_ORIGIN`,
 | | |
 |---|---|
 | 🔐 **Invite-only + email codes** | Viewers sign in with a 6-digit email code. Codes are hashed, single-use, rate-limited, and lock after 5 wrong attempts. No passwords exist to leak. |
-| ✍️ **Terms of Access, e-signed** | Standard protective template (customizable per demo — entity name, purpose, or fully custom text). Acceptance recorded with timestamp, IP, user agent and a SHA-256 hash of the exact text shown, plus a signed PDF certificate emailed to the signer. |
+| ✍️ **Terms of Access, e-signed** | Standard protective template (customizable per demo — entity name, purpose, or fully custom text). Viewers sign by typing their full name; acceptance is recorded with that name, timestamp, IP, user agent and a SHA-256 hash of the exact text shown, plus a signed PDF certificate emailed to the signer. |
 | ⏱ **Session control** | Absolute TTL + idle timeout per demo. Revoke any session (or all of them) from the dashboard — access dies on the next request, even inside the protected app. |
 | 📜 **Audit trail** (Pro) | Every code request, denial, login, signature, revocation and in-app access event. CSV export. Recorded from day one on every plan; Pro unlocks the view. |
 | 🎨 **Branded hosted gate** | Your company name, demo name and brand color on the login + terms pages. "Protected by POCX" is the only trace of us. |

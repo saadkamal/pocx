@@ -82,8 +82,11 @@ const en = {
       intro: (pocName: string) =>
         `One last step before you can open ${pocName}: please read and accept the terms below.`,
       consent:
-        "I have read and agree to these Terms of Access. I understand my acceptance is recorded as an electronic signature (email, timestamp, IP address, terms hash) and a signed copy will be emailed to me.",
-      agree: "Agree & continue",
+        "I have read and agree to these Terms of Access. I understand that typing my name below constitutes my electronic signature, recorded with my email, timestamp, IP address and a hash of these terms, and that a signed copy will be emailed to me.",
+      nameLabel: "Sign by typing your full name",
+      namePlaceholder: "Ada Lovelace",
+      signatureLabel: "Signature",
+      agree: "Sign & continue",
       recording: "Recording your signature…",
     },
   },
@@ -154,6 +157,7 @@ const en = {
   /** User-facing messages returned by the /api/gate/[slug]/* routes. */
   api: {
     paused: "This PoC is currently paused. Contact the owner for access.",
+    nameRequired: "Please type your full name to sign (2–120 characters).",
     tooManyRequests: "Too many requests. Try again in a few minutes.",
     tooManyAttempts: "Too many attempts. Try again in a few minutes.",
     codeSent: "Code sent — check your inbox.",
@@ -278,8 +282,11 @@ const ja: GateStrings = {
       intro: (pocName: string) =>
         `${pocName}をご利用いただく前に、以下の利用規約をお読みのうえご同意ください。`,
       consent:
-        "私はこの利用規約を読み、内容に同意します。同意が電子署名（メールアドレス、日時、IPアドレス、規約ハッシュ）として記録され、署名済みの控えがメールで送付されることを了承します。",
-      agree: "同意して続行",
+        "私はこの利用規約を読み、内容に同意します。下に氏名を入力することが電子署名となり、メールアドレス、日時、IPアドレス、規約ハッシュとともに記録され、署名済みの控えがメールで送付されることを了承します。",
+      nameLabel: "氏名を入力して署名",
+      namePlaceholder: "山田 花子",
+      signatureLabel: "署名",
+      agree: "署名して続行",
       recording: "署名を記録しています…",
     },
   },
@@ -352,6 +359,7 @@ const ja: GateStrings = {
   api: {
     paused:
       "このPoCは現在一時停止中です。アクセスについては提供元にお問い合わせください。",
+    nameRequired: "署名として氏名を入力してください（2〜120文字）。",
     tooManyRequests:
       "リクエストが多すぎます。数分おいてからもう一度お試しください。",
     tooManyAttempts:

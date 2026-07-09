@@ -3,6 +3,21 @@
 All notable changes to POCX. Semver: patch = fixes, minor = features,
 major = breaking changes to the SDK contract or self-host setup.
 
+## [0.4.1] — 2026-07-09
+
+Typed-name signatures + demo-flow fixes.
+
+- **Typed-name e-signature**: the Terms of Access now require the viewer
+  to type their full name — shown as a live signature preview — before
+  signing. The name is stored on the acceptance record (`signer_name`,
+  additive migration), printed on the PDF certificate, shown in the
+  dashboard's Signatures table and audit trail
+- Landing → gate handoff no longer asks for the email twice: arriving
+  with a prefilled email auto-sends the one-time code
+- Fixed redirects leaking Railway's internal `localhost:8080` origin
+  (demo callback + gate continue) — absolute redirects are now built
+  from `POCX_ORIGIN`
+
 ## [0.4.0] — 2026-07-09
 
 "See it in action" — a live, public demo of the gate.

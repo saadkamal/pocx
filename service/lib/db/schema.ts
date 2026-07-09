@@ -132,6 +132,7 @@ export const acceptances = sqliteTable("acceptances", {
   id: text("id").primaryKey(), // sig_…
   pocId: text("poc_id").notNull(),
   email: text("email").notNull(),
+  signerName: text("signer_name"), // typed full name (the visible signature)
   termsVersion: text("terms_version").notNull(),
   termsHash: text("terms_hash").notNull(), // sha256 of the exact text shown
   termsText: text("terms_text").notNull().default(""), // the exact text shown

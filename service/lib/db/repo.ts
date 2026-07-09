@@ -512,6 +512,7 @@ export function insertAcceptance(input: {
   id: string;
   pocId: string;
   email: string;
+  signerName?: string | null;
   termsVersion: string;
   termsHash: string;
   termsText: string;

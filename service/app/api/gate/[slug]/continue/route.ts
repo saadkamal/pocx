@@ -9,6 +9,7 @@ import {
   resolveGatePoc,
   safeReturnTo,
 } from "@/lib/gate";
+import { pocxOrigin } from "@/lib/utils";
 
 /**
  * Hosted gate → customer app handoff. Once the evaluator is signed in and
@@ -26,12 +27,16 @@ export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
+  // Redirects must be built from POCX_ORIGIN — behind Railway, req.url
+  // carries the proxy's internal host:port (localhost:8080).
+  const origin = pocxOrigin();
+
   const { slug } = await params;
   const poc = resolveGatePoc(slug);
-  if (!poc) return NextResponse.redirect(new URL("/", req.url));
+  if (!poc) return NextResponse.redirect(new URL("/", origin));
 
   const gateUrl = (path = "") =>
-    new URL(`/gate/${poc.slug}${path}`, req.url);
+    new URL(`/gate/${poc.slug}${path}`, origin);
 
   const returnTo = safeReturnTo(
     poc,
