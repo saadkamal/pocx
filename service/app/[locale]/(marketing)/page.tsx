@@ -79,6 +79,16 @@ function JsonLd() {
         priceCurrency: "USD",
       },
     ],
+    audience: {
+      "@type": "Audience",
+      audienceType: [
+        "Consultants",
+        "Development agencies",
+        "Forward-deployed engineers (FDEs)",
+        "Freelancers",
+        "Founders",
+      ],
+    },
     author: { "@type": "Person", name: "Saad Kamal" },
     publisher: { "@type": "Organization", name: "Haxo Pty Ltd" },
     license: "https://www.gnu.org/licenses/agpl-3.0.html",

@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s · POCX",
   },
   description:
-    "Put a digital NDA on your demo, prototype or proof of concept (PoC): viewers verify their identity and e-sign your terms before the first screen — with a PDF certificate and full audit trail. Open source, or hosted at pocx.dev.",
+    "Put a digital NDA on your demo, prototype or proof of concept (PoC): viewers verify their identity and e-sign your terms before the first screen — with a PDF certificate and full audit trail. Built for consultants, dev shops and forward-deployed engineers (FDEs). Open source, or hosted at pocx.dev.",
   keywords: [
     "digital NDA",
     "NDA gate",
@@ -43,6 +43,9 @@ export const metadata: Metadata = {
     "prototype access control",
     "e-signature terms of access",
     "gated demo",
+    "forward deployed engineer",
+    "FDE prototype protection",
+    "client demo protection",
   ],
   applicationName: "POCX",
   authors: [{ name: "Saad Kamal" }],

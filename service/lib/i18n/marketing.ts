@@ -21,7 +21,7 @@ const en = {
   meta: {
     landingTitle: "POCX — The digital NDA gate for demos, prototypes & PoCs",
     landingDescription:
-      "Put a digital NDA on your demo, prototype or proof of concept (PoC): viewers verify their identity and e-sign your terms before the first screen — with a PDF certificate and full audit trail. Open source — self-host free, or start on the cloud.",
+      "Put a digital NDA on your demo, prototype or proof of concept (PoC): viewers verify their identity and e-sign your terms before the first screen — with a PDF certificate and full audit trail. Built for consultants, dev shops and forward-deployed engineers (FDEs). Open source — self-host free, or start on the cloud.",
     pricingTitle: "Pricing",
     pricingDescription:
       "POCX pricing — protect demos free with up to 3 viewer seats each, go Pro for unlimited seats and a full audit trail, or self-host the open-source version for free.",
@@ -60,7 +60,8 @@ const en = {
   },
 
   hero: {
-    eyebrow: "For consultants, dev shops & everyone who pitches with demos",
+    eyebrow:
+      "For consultants, dev shops, forward-deployed engineers & everyone who pitches with demos",
     titleMain: "Your best pitch is a working demo. ",
     titleAccent: "Protect it.",
     subtitle:
@@ -73,6 +74,7 @@ const en = {
     audience: [
       "Consultancies",
       "Dev shops",
+      "Forward-deployed engineers",
       "Agencies",
       "Freelancers",
       "Founders",
@@ -382,6 +384,10 @@ const en = {
         a: "Each signature records the signer’s typed full name, their email identity (verified by a one-time code), a timestamp, IP address and user agent, plus a SHA-256 hash of the exact terms text shown — and a signed PDF certificate is emailed to the signer. That’s standard electronic-signature evidence. (This is product information, not legal advice.)",
       },
       {
+        q: "I'm a forward-deployed engineer (FDE) — is POCX for me?",
+        a: "Especially. FDEs prototype inside other people's buildings: you build fast, demo early, and your work is seen by exactly the people best placed to rebuild it without you. POCX gives every field prototype its own gate — verified identity and an NDA-grade e-signature before the first screen — plus the audit trail and PDF evidence to point to if a client's team ships your idea after the engagement ends.",
+      },
+      {
         q: "Can I bring fully custom terms?",
         a: "Yes. Use the standard protective template with {{variables}} for your company, demo and purpose — or replace it entirely with your own text. Bumping the version forces every viewer to re-accept.",
       },
@@ -406,7 +412,7 @@ const ja: MarketingStrings = {
   meta: {
     landingTitle: "POCX — デモ・プロトタイプ・PoCのためのデジタルNDAゲート",
     landingDescription:
-      "デモ・プロトタイプ・PoC（概念実証）にデジタルNDAを。閲覧者は本人確認を行い、最初の画面の前にあなたの規約へ電子署名します — PDF証明書と完全な監査ログ付き。オープンソース — 自分で無料ホスト、またはクラウドで開始。",
+      "デモ・プロトタイプ・PoC（概念実証）にデジタルNDAを。閲覧者は本人確認を行い、最初の画面の前にあなたの規約へ電子署名します — PDF証明書と完全な監査ログ付き。コンサルタント・開発会社・FDE（フォワードデプロイドエンジニア）のために。オープンソース — 自分で無料ホスト、またはクラウドで開始。",
     pricingTitle: "料金プラン",
     pricingDescription:
       "POCXの料金 — デモごとに閲覧者3名まで無料で保護。無制限のシートと完全な監査ログが必要ならPro、あるいはオープンソース版を自分で無料ホスト。",
@@ -444,7 +450,8 @@ const ja: MarketingStrings = {
   },
 
   hero: {
-    eyebrow: "デモで仕事を勝ち取る、コンサルタント・開発会社のために",
+    eyebrow:
+      "デモで仕事を勝ち取る、コンサルタント・開発会社・FDEのために",
     titleMain: "最強の提案は、動くデモ。",
     titleAccent: "だから、守る。",
     subtitle:
@@ -457,6 +464,7 @@ const ja: MarketingStrings = {
     audience: [
       "コンサルティング会社",
       "開発会社",
+      "フォワードデプロイドエンジニア",
       "エージェンシー",
       "フリーランス",
       "起業家",
@@ -771,6 +779,10 @@ const ja: MarketingStrings = {
       {
         q: "署名には法的な意味がありますか?",
         a: "各署名には、署名者が入力した氏名、ワンタイムコードで確認済みのメールアドレス、タイムスタンプ、IPアドレス、ユーザーエージェント、さらに表示された規約本文そのもののSHA-256ハッシュが記録され、署名済みPDF証明書が署名者にメール送付されます。これは電子署名の標準的な証拠要件に沿ったものです。(本記載は製品情報であり、法的助言ではありません。)",
+      },
+      {
+        q: "FDE（フォワードデプロイドエンジニア）ですが、POCXは自分に合っていますか?",
+        a: "むしろ最適です。FDEは他社のオフィスの中でプロトタイプをつくる仕事です。速くつくり、早く見せる — そしてその成果物を目にするのは、あなた抜きでそれを再現できる立場の人たちです。POCXは現場のプロトタイプ一つひとつにゲートを与えます。最初の画面の前に本人確認とNDA級の電子署名を求め、エンゲージメント終了後にクライアントのチームがあなたのアイデアを製品化した場合に示せる、監査ログとPDF証拠を残します。",
       },
       {
         q: "完全に独自の規約を使うことはできますか?",
