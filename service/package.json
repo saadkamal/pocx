@@ -1,6 +1,6 @@
 {
   "name": "pocx-service",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "private": true,
   "description": "POCX service — hosted access gates for demos, prototypes and PoCs: invite-only email-code login, typed-name e-signed Terms of Access, revocable sessions and an audit trail.",
   "license": "AGPL-3.0-only",

@@ -264,6 +264,25 @@ const en = {
     },
   },
 
+  testimonials: {
+    eyebrow: "From the field",
+    title: "Built for people who ship demos for a living.",
+    items: [
+      {
+        quote:
+          "I told Claude to add POCX and it did the whole thing off their llms.txt — vendored the single file, wired it as edge middleware, done. Ten lines and three env vars.",
+        role: "Forward-deployed engineer",
+        context: "client PoCs on Vercel",
+      },
+      {
+        quote:
+          "I didn’t want to run extra infrastructure just to protect a proof of concept, so I used the hosted version. It looks great — every client demo goes out behind the gate now.",
+        role: "Independent product consultant",
+        context: "prototype-led sales",
+      },
+    ],
+  },
+
   openSource: {
     eyebrow: "Open source",
     title: "Don’t want to pay? Run it yourself.",
@@ -659,6 +678,25 @@ const ja: MarketingStrings = {
       ip: "IPアドレス",
       footnote: "PDF証明書は署名者へ自動でメール送付されます。",
     },
+  },
+
+  testimonials: {
+    eyebrow: "現場の声",
+    title: "デモで生計を立てる人のために。",
+    items: [
+      {
+        quote:
+          "Claudeに「POCXを入れて」と頼んだら、llms.txtを読んで全部やってくれました — 単一ファイルを取り込み、エッジミドルウェアに配線して完了。10行と環境変数3つだけ。",
+        role: "フォワードデプロイドエンジニア",
+        context: "VercelでクライアントPoCを構築",
+      },
+      {
+        quote:
+          "PoCを守るためだけに追加のインフラを立てたくなかったので、ホスティング版を使いました。仕上がりも上々で、今はすべてのクライアントデモをゲートの内側から共有しています。",
+        role: "独立系プロダクトコンサルタント",
+        context: "プロトタイプ起点の提案",
+      },
+    ],
   },
 
   openSource: {

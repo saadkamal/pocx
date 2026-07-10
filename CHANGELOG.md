@@ -3,6 +3,12 @@
 All notable changes to POCX. Semver: patch = fixes, minor = features,
 major = breaking changes to the SDK contract or self-host setup.
 
+## [0.4.4] — 2026-07-10
+
+- Landing testimonials: a "from the field" section with two field
+  quotes (agent-first install off llms.txt; hosted over self-managed
+  infra), en + ja
+
 ## [0.4.3] — 2026-07-10
 
 NDA positioning + SEO.

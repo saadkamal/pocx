@@ -137,6 +137,7 @@ export default async function LandingPage({
       <SeeItInAction locale={locale} t={t} />
       <FeaturesGrid t={t} />
       <WhySection t={t} />
+      <Testimonials t={t} />
       <OpenSourceSection locale={locale} t={t} />
       <PricingTeaser locale={locale} t={t} />
       <FinalCta locale={locale} t={t} />
@@ -551,6 +552,49 @@ function HowItWorks({ t }: { t: MarketingStrings }) {
           <StepBlock eyebrow={t.how.step3.eyebrow} title={t.how.step3.title}>
             {t.how.step3.body}
           </StepBlock>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 7.5 — Testimonials (from the field)                                 */
+/* ------------------------------------------------------------------ */
+
+function Testimonials({ t }: { t: MarketingStrings }) {
+  return (
+    <section className="rule bg-ink-50">
+      <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
+        <Reveal className="max-w-2xl">
+          <p className="eyebrow">{t.testimonials.eyebrow}</p>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
+            {t.testimonials.title}
+          </h2>
+        </Reveal>
+
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {t.testimonials.items.map((item, i) => (
+            <Reveal key={i} delay={i * 80}>
+              <figure className="flex h-full flex-col rounded-2xl border border-ink-200 bg-white p-7 shadow-card sm:p-8">
+                <span
+                  className="font-serif text-5xl leading-none text-brand"
+                  aria-hidden
+                >
+                  &ldquo;
+                </span>
+                <blockquote className="mt-2 flex-1 text-lg leading-relaxed text-ink-800">
+                  {item.quote}
+                </blockquote>
+                <figcaption className="mt-6 border-t border-ink-100 pt-4">
+                  <p className="text-sm font-semibold text-ink-900">
+                    {item.role}
+                  </p>
+                  <p className="mt-0.5 text-sm text-ink-500">{item.context}</p>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
