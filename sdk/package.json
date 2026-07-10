@@ -1,6 +1,6 @@
 {
   "name": "pocx",
-  "version": "0.1.0",
+  "version": "0.4.1",
   "description": "POCX client SDK — protect a proof-of-concept app with a hosted gate (email OTP allowlist, e-signed Terms of Access, revocable sessions). One zero-dependency TypeScript file that runs in Node and edge runtimes.",
   "type": "module",
   "main": "./src/index.ts",
@@ -23,6 +23,12 @@
     "edge"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saadkamal/pocx.git",
+    "directory": "sdk"
+  },
+  "bugs": "https://github.com/saadkamal/pocx/issues",
   "author": "Saad Kamal <pocx@haxo.com.au> (https://haxo.com.au)",
   "homepage": "https://pocx.dev",
   "peerDependencies": {}

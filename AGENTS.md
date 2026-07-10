@@ -57,7 +57,7 @@ npm run build       # must stay green
 
 - All DB access goes through `lib/db/repo.ts`; plan limits through
   `lib/plans.ts`; dashboard mutations are server actions in
-  `app/dashboard/actions.ts` (every action re-authenticates and re-proves
+  `app/[locale]/dashboard/actions.ts` (every action re-authenticates and re-proves
   PoC ownership — keep it that way).
 - Email: real via `RESEND_API_KEY`, otherwise mock (rows in
   `outbound_emails`, OTP codes printed to the server console).

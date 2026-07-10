@@ -1,8 +1,15 @@
 {
   "name": "pocx-service",
-  "version": "0.1.0",
+  "version": "0.4.1",
   "private": true,
+  "description": "POCX service — hosted access gates for demos, prototypes and PoCs: invite-only email-code login, typed-name e-signed Terms of Access, revocable sessions and an audit trail.",
   "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saadkamal/pocx.git",
+    "directory": "service"
+  },
+  "bugs": "https://github.com/saadkamal/pocx/issues",
   "author": "Saad Kamal <pocx@haxo.com.au> (https://haxo.com.au)",
   "homepage": "https://pocx.dev",
   "scripts": {

@@ -31,7 +31,15 @@ export const runtime = "nodejs";
 const DB_PATH = process.env.POCX_DB_PATH ?? ".data/pocx.db";
 
 const BodySchema = z
-  .object({ name: z.string().trim().min(2).max(120) })
+  .object({
+    // Strip control chars (incl. bidi overrides) so the stored signature,
+    // PDF and audit rows stay tidy, then re-check the visible length.
+    name: z
+      .string()
+      .max(120)
+      .transform((s) => s.replace(/\p{C}/gu, "").trim())
+      .pipe(z.string().min(2).max(120)),
+  })
   .strict();
 
 export async function POST(

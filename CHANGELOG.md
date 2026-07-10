@@ -3,6 +3,21 @@
 All notable changes to POCX. Semver: patch = fixes, minor = features,
 major = breaking changes to the SDK contract or self-host setup.
 
+## [0.4.2] — 2026-07-09
+
+Open-source pre-publication hardening (full history + code audit passed).
+
+- **Self-hosters:** `POCX_ADMIN_EMAILS` no longer has a default — with it
+  unset, the `/admin` ops console is simply disabled (fail closed).
+  Set it explicitly to use `/admin`
+- Inbound-mail loop guard now compares bare addresses (the old substring
+  check could silently drop legitimate support mail)
+- Signer names are stripped of control/bidi characters before storage;
+  Resend API path segments are URL-encoded (defense in depth)
+- Plain `.env` added to .gitignore; package versions aligned with this
+  changelog; `repository`/`bugs` metadata added for npm; doc fixes
+  (README proxy snippet, Overview-tab wording, stale path in AGENTS.md)
+
 ## [0.4.1] — 2026-07-09
 
 Typed-name signatures + demo-flow fixes.

@@ -25,6 +25,10 @@ import {
  *      · en → rewrite to /en/… (URLs stay clean for the default locale)
  *  - APIs, llms.txt/agents.md, /sdk assets and static files bypass all of it.
  *
+ * NOTE if a CDN is ever put in front: unprefixed HTML varies on the locale
+ * cookie + Accept-Language, so it must send `Vary: Cookie, Accept-Language`
+ * or bypass the cache — today there is no shared cache, so nothing to do.
+ *
  * Auth gating runs on the locale-stripped path:
  *  1. /dashboard, /api/dashboard → operator session required.
  *  2. /gate/[slug] + /api/gate   → per-PoC checks inside pages/handlers.

@@ -27,8 +27,7 @@ source: TypeScript ≥ 5 consumers import it as-is; there is no build step).
 
 ## Quickstart
 
-Set three environment variables (from your PoC's **Integration** tab in the
-POCX dashboard):
+Set three environment variables (from your PoC's **Integration** section of the PoC's **Overview** tab):
 
 ```bash
 POCX_URL=https://YOUR-POCX-HOST        # your POCX instance origin

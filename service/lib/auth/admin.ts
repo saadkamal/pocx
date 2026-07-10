@@ -17,7 +17,9 @@ export const ADMIN_TTL_HOURS = 12;
 export const ADMIN_IDLE_HOURS = 2;
 
 export function adminEmails(): string[] {
-  return (process.env.POCX_ADMIN_EMAILS ?? "saad@haxo.com.au")
+  // No default: with POCX_ADMIN_EMAILS unset the ops console is simply
+  // inaccessible (fail closed) — a self-hosted instance must opt in.
+  return (process.env.POCX_ADMIN_EMAILS ?? "")
     .split(",")
     .map((e) => normalizeEmail(e))
     .filter((e) => e.includes("@"));

@@ -68,6 +68,13 @@ export function verifySvixSignature(
   return false;
 }
 
+/** Bare lowercase address from "Name <a@b>" or "a@b" (empty if none). */
+export function extractAddress(sender: string): string {
+  const angled = sender.match(/<([^<>\s]+@[^<>\s]+)>/);
+  const bare = angled?.[1] ?? sender.trim();
+  return /^[^\s@<>]+@[^\s@<>]+$/.test(bare) ? bare.toLowerCase() : "";
+}
+
 export type ReceivedEmailEvent = {
   email_id: string;
   from: string;
@@ -104,7 +111,7 @@ async function fetchAttachments(
   apiKey: string,
 ): Promise<{ attachments: MailAttachment[]; skipped: string[] }> {
   const list = (await resendGet(
-    `/emails/receiving/${emailId}/attachments`,
+    `/emails/receiving/${encodeURIComponent(emailId)}/attachments`,
     apiKey,
   )) as { data?: ReceivedAttachment[] };
 
@@ -139,11 +146,13 @@ export async function forwardReceivedEmail(
   event: ReceivedEmailEvent,
 ): Promise<boolean> {
   // Loop guard: never forward mail that (claims to) come from the inbox we
-  // forward to, or from our own sending identity.
-  const from = event.from.toLowerCase();
-  const selfSender = (process.env.POCX_MAIL_FROM ?? "POCX <access@pocx.dev>")
-    .toLowerCase();
-  if (from.includes(SUPPORT_INBOX.toLowerCase()) || selfSender.includes(from)) {
+  // forward to, or from our own sending identity. Compare bare addresses —
+  // substring checks against the display form can false-drop real senders.
+  const from = extractAddress(event.from);
+  const selfSender = extractAddress(
+    process.env.POCX_MAIL_FROM ?? "POCX <access@pocx.dev>",
+  );
+  if (!from || from === selfSender || from === SUPPORT_INBOX.toLowerCase()) {
     console.warn(`[pocx inbound] loop guard dropped mail from ${event.from}`);
     return false;
   }
@@ -154,7 +163,7 @@ export async function forwardReceivedEmail(
   let skipped: string[] = [];
   if (apiKey) {
     full = (await resendGet(
-      `/emails/receiving/${event.email_id}`,
+      `/emails/receiving/${encodeURIComponent(event.email_id)}`,
       apiKey,
     )) as ReceivedEmail;
     ({ attachments, skipped } = await fetchAttachments(event.email_id, apiKey));

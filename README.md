@@ -94,9 +94,13 @@ npm run build
 
 ```ts
 import { createPocxGate } from "./lib/pocx";
+
 const gate = createPocxGate();
-export const proxy = gate.nextProxy();
-export const config = { matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"] };
+export default gate.nextProxy();
+
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon\\.ico).*)"],
+};
 ```
 
 …or paste this into a coding agent:

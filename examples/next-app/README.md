@@ -26,7 +26,7 @@ curl -o lib/pocx.ts https://YOUR-POCX-HOST/sdk/pocx.ts
 
    ```bash
    cp .env.example .env.local
-   # paste the PoC's pocx_pk_… / pocx_sk_… from the Integration tab
+   # paste the PoC's pocx_pk_… / pocx_sk_… from the Integration section of the PoC's Overview tab
    ```
 
 4. **Run it:**
