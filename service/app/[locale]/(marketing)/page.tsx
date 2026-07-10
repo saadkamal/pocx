@@ -50,6 +50,16 @@ export async function generateMetadata({
       title: t.meta.landingTitle,
       description: t.meta.landingDescription,
       url: locale === "ja" ? "/ja" : "/",
+      // Page-level openGraph replaces the layout's (shallow merge), so
+      // the image must be repeated here.
+      images: [
+        {
+          url: "/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: "POCX — Show the work. Keep the idea.",
+        },
+      ],
     },
   };
 }

@@ -62,12 +62,24 @@ export const metadata: Metadata = {
     title: "POCX — The digital NDA gate for demos, prototypes & PoCs",
     description:
       "Viewers verify their identity and e-sign your terms before the first screen of your demo — with a PDF certificate and full audit trail. Open source, or hosted at pocx.dev.",
+    // Explicit: the generated /opengraph-image route lives at the app
+    // root (outside the [locale] segment), so the file convention does
+    // not auto-inject the tag for localized pages.
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "POCX — Show the work. Keep the idea.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "POCX — The digital NDA gate for demos, prototypes & PoCs",
     description:
       "Show the work. Keep the idea. An NDA-grade e-signature gate in front of any demo, prototype or PoC — open source, or hosted at pocx.dev.",
+    images: ["/opengraph-image"],
   },
 };
 
