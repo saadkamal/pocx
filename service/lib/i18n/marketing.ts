@@ -89,6 +89,7 @@ const en = {
   trustChips: [
     "Every viewer verified by email code",
     "An NDA-grade signature before the first screen",
+    "One prompt — your coding agent installs it",
     "Open source — self-host free",
   ],
 
@@ -139,7 +140,7 @@ const en = {
     step2: {
       eyebrow: "02 — Drop in",
       title: "Drop in the gate",
-      body: "One file, three env vars. The SDK is a single TypeScript file with zero dependencies:",
+      body: "One file, three env vars — or hand this whole step to your coding agent. The SDK is a single TypeScript file with zero dependencies:",
     },
     step3: {
       eyebrow: "03 — Send the link",
@@ -229,10 +230,14 @@ const en = {
   },
 
   agent: {
-    eyebrow: "Zero-effort integration",
-    title: "Tell your coding agent to do it.",
-    caption:
-      "POCX ships llms.txt + a single-file SDK, so Claude Code, Codex or Cursor can integrate it end-to-end. Paste, done.",
+    eyebrow: "Agent-first",
+    title: "Vibe-coding your prototype? Then you already know how to install POCX.",
+    body: "POCX ships llms.txt and a single-file, zero-dependency SDK, built so a coding agent can do the entire integration. Create your gate in the dashboard, then paste one prompt — your agent downloads the SDK, wires the middleware and asks you for the three keys from your PoC's Overview tab.",
+    promptLabel: "paste into your agent",
+    honesty:
+      "That's genuinely it — one file, three env vars, nothing added to package.json. (Prefer doing it by hand? It's four lines — see the docs.)",
+    worksWith: "Works with",
+    agents: ["Claude Code", "Codex", "Cursor", "Windsurf", "any agent that can read a URL"],
   },
 
   why: {
@@ -469,6 +474,7 @@ const ja: MarketingStrings = {
   trustChips: [
     "閲覧者は全員メールコードで本人確認",
     "最初の画面の前に、NDA級の署名を",
+    "プロンプト1つで、エージェントが導入",
     "オープンソース — 自分でホストすれば無料",
   ],
 
@@ -519,7 +525,7 @@ const ja: MarketingStrings = {
     step2: {
       eyebrow: "02 — 組み込み",
       title: "ゲートを組み込む",
-      body: "ファイル1つ、環境変数3つ。SDKは依存関係ゼロの単一TypeScriptファイルです。",
+      body: "ファイル1つ、環境変数3つ — このステップはコーディングエージェントに丸ごと任せることもできます。SDKは依存関係ゼロの単一TypeScriptファイルです。",
     },
     step3: {
       eyebrow: "03 — リンク送信",
@@ -609,10 +615,20 @@ const ja: MarketingStrings = {
   },
 
   agent: {
-    eyebrow: "導入の手間はゼロ",
-    title: "あとはコーディングエージェントに任せるだけ。",
-    caption:
-      "POCXはllms.txtと単一ファイルSDKを提供しているため、Claude Code、Codex、Cursorがエンドツーエンドで導入を完了できます。貼り付ければ、それで完了です。",
+    eyebrow: "エージェントファースト",
+    title: "プロトタイプをバイブコーディングで？ なら、POCXの導入方法はもうご存じです。",
+    body: "POCXは、コーディングエージェントが導入を丸ごと完了できるように、llms.txtと依存関係ゼロの単一ファイルSDKを提供しています。ダッシュボードでゲートを作成したら、プロンプトを1つ貼り付けるだけ — エージェントがSDKをダウンロードし、ミドルウェアを配線し、PoCのOverviewタブにある3つのキーをあなたに尋ねます。",
+    promptLabel: "エージェントに貼り付け",
+    honesty:
+      "本当にこれだけです — ファイル1つ、環境変数3つ、package.jsonへの追加はゼロ。（手動で導入したい場合も4行です — ドキュメントをご覧ください。）",
+    worksWith: "対応エージェント",
+    agents: [
+      "Claude Code",
+      "Codex",
+      "Cursor",
+      "Windsurf",
+      "URLを読めるエージェントなら何でも",
+    ],
   },
 
   why: {

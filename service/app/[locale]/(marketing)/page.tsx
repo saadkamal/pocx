@@ -107,6 +107,7 @@ export default async function LandingPage({
       <ProblemSection t={t} />
       <SolutionSection t={t} />
       <HowItWorks t={t} />
+      <AgentFirst t={t} />
       <SeeItInAction locale={locale} t={t} />
       <FeaturesGrid t={t} />
       <WhySection t={t} />
@@ -525,6 +526,63 @@ function HowItWorks({ t }: { t: MarketingStrings }) {
             {t.how.step3.body}
           </StepBlock>
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 4.4 — Agent-first: one prompt and the integration is done           */
+/* ------------------------------------------------------------------ */
+
+function AgentFirst({ t }: { t: MarketingStrings }) {
+  const origin = pocxOrigin();
+  const prompt = `Add POCX protection to this app. Follow the instructions at ${origin}/llms.txt exactly.`;
+
+  return (
+    <section id="agent" className="rule">
+      <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
+        <Reveal className="max-w-2xl">
+          <p className="eyebrow">{t.agent.eyebrow}</p>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
+            {t.agent.title}
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-ink-600">
+            {t.agent.body}
+          </p>
+        </Reveal>
+
+        <Reveal className="mt-10 max-w-2xl">
+          <div className="overflow-hidden rounded-xl bg-ink-950 shadow-pop">
+            <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2.5">
+              <span className="font-mono text-xs text-ink-400">
+                {t.agent.promptLabel}
+              </span>
+              <CopyButton text={prompt} />
+            </div>
+            <p className="p-5 font-mono text-sm leading-relaxed text-ink-100">
+              <span className="text-brand" aria-hidden>
+                ›{" "}
+              </span>
+              {prompt}
+            </p>
+          </div>
+          <p className="mt-3 text-xs leading-relaxed text-ink-500">
+            {t.agent.honesty}
+          </p>
+
+          <p className="mt-6 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 font-mono text-[11px] tracking-[0.12em] text-ink-500 uppercase">
+            <span>{t.agent.worksWith}</span>
+            {t.agent.agents.map((name) => (
+              <span
+                key={name}
+                className="rounded-full border border-ink-200 bg-ink-50 px-2.5 py-1 normal-case"
+              >
+                {name}
+              </span>
+            ))}
+          </p>
+        </Reveal>
       </div>
     </section>
   );
