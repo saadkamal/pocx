@@ -22,7 +22,30 @@ export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
 }
 
-export const metadata: Metadata = {
+/** Locale-aware OG card URL + alt ("/opengraph-image?locale=ja" for ja). */
+function ogImage(locale: string) {
+  const ja = locale === "ja";
+  return [
+    {
+      url: ja ? "/opengraph-image?locale=ja" : "/opengraph-image",
+      width: 2400,
+      height: 1260,
+      alt: ja
+        ? "POCX — 見せる。でも、渡さない。"
+        : "POCX — Show the work. Keep the idea.",
+    },
+  ];
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale: raw } = await params;
+  const locale = isLocale(raw) ? raw : "en";
+
+  return {
   metadataBase: new URL(pocxOrigin()),
   title: {
     default: "POCX — The digital NDA gate for demos, prototypes & PoCs",
@@ -57,31 +80,25 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: "POCX",
     type: "website",
-    locale: "en_US",
-    alternateLocale: "ja_JP",
+    locale: locale === "ja" ? "ja_JP" : "en_US",
+    alternateLocale: locale === "ja" ? "en_US" : "ja_JP",
     title: "POCX — The digital NDA gate for demos, prototypes & PoCs",
     description:
       "Viewers verify their identity and e-sign your terms before the first screen of your demo — with a PDF certificate and full audit trail. Open source, or hosted at pocx.dev.",
     // Explicit: the generated /opengraph-image route lives at the app
     // root (outside the [locale] segment), so the file convention does
     // not auto-inject the tag for localized pages.
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: "POCX — Show the work. Keep the idea.",
-      },
-    ],
+    images: ogImage(locale),
   },
   twitter: {
     card: "summary_large_image",
     title: "POCX — The digital NDA gate for demos, prototypes & PoCs",
     description:
       "Show the work. Keep the idea. An NDA-grade e-signature gate in front of any demo, prototype or PoC — open source, or hosted at pocx.dev.",
-    images: ["/opengraph-image"],
+    images: [ogImage(locale)[0].url],
   },
-};
+  };
+}
 
 export default async function RootLayout({
   children,

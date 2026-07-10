@@ -54,10 +54,16 @@ export async function generateMetadata({
       // the image must be repeated here.
       images: [
         {
-          url: "/opengraph-image",
-          width: 1200,
-          height: 630,
-          alt: "POCX — Show the work. Keep the idea.",
+          url:
+            locale === "ja"
+              ? "/opengraph-image?locale=ja"
+              : "/opengraph-image",
+          width: 2400,
+          height: 1260,
+          alt:
+            locale === "ja"
+              ? "POCX — 見せる。でも、渡さない。"
+              : "POCX — Show the work. Keep the idea.",
         },
       ],
     },
