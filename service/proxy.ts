@@ -68,6 +68,7 @@ export function proxy(req: NextRequest) {
     rawPath.startsWith("/api/") ||
     rawPath === "/llms.txt" ||
     rawPath === "/agents.md" ||
+    rawPath === "/opengraph-image" ||
     rawPath.startsWith("/sdk/") ||
     rawPath.startsWith("/_next/") ||
     STATIC_FILE.test(rawPath);

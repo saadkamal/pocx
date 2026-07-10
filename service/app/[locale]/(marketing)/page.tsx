@@ -42,7 +42,55 @@ export async function generateMetadata({
   return {
     title: { absolute: t.meta.landingTitle },
     description: t.meta.landingDescription,
+    alternates: {
+      canonical: locale === "ja" ? "/ja" : "/",
+      languages: { en: "/", ja: "/ja" },
+    },
+    openGraph: {
+      title: t.meta.landingTitle,
+      description: t.meta.landingDescription,
+      url: locale === "ja" ? "/ja" : "/",
+    },
   };
+}
+
+/** Static structured data for search engines — no user input flows in. */
+function JsonLd() {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "POCX",
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    url: "https://pocx.dev",
+    description:
+      "The digital NDA gate for demos, prototypes and proofs of concept: viewers verify their identity and e-sign Terms of Access before the first screen, with a PDF certificate and full audit trail.",
+    offers: [
+      {
+        "@type": "Offer",
+        name: "Free",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      {
+        "@type": "Offer",
+        name: "Pro",
+        price: String(PRO_PRICE_USD),
+        priceCurrency: "USD",
+      },
+    ],
+    author: { "@type": "Person", name: "Saad Kamal" },
+    publisher: { "@type": "Organization", name: "Haxo Pty Ltd" },
+    license: "https://www.gnu.org/licenses/agpl-3.0.html",
+    sameAs: ["https://github.com/saadkamal/pocx"],
+  };
+  return (
+    <script
+      type="application/ld+json"
+      // Static literal above — nothing user-controlled is serialized.
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
 }
 
 export default async function LandingPage({
@@ -54,6 +102,7 @@ export default async function LandingPage({
   const t = marketingDict[locale];
   return (
     <>
+      <JsonLd />
       <Hero locale={locale} t={t} />
       <ProblemSection t={t} />
       <SolutionSection t={t} />

@@ -3,6 +3,17 @@
 All notable changes to POCX. Semver: patch = fixes, minor = features,
 major = breaking changes to the SDK contract or self-host setup.
 
+## [0.4.3] — 2026-07-10
+
+NDA positioning + SEO.
+
+- Landing copy now leads with the "digital NDA that enforces itself"
+  framing and names proofs of concept (PoCs) explicitly, en + ja
+- Full SEO pass: NDA/PoC-keyword titles and descriptions, generated
+  1200×630 Open Graph card, `sitemap.xml` + `robots.txt` (private
+  surfaces disallowed), canonical + hreflang alternates, JSON-LD
+  SoftwareApplication schema, `noindex` on customer gates
+
 ## [0.4.2] — 2026-07-09
 
 Open-source pre-publication hardening (full history + code audit passed).

@@ -1,6 +1,6 @@
 {
   "name": "pocx",
-  "version": "0.4.1",
+  "version": "0.4.3",
   "description": "POCX client SDK — protect a proof-of-concept app with a hosted gate (email OTP allowlist, e-signed Terms of Access, revocable sessions). One zero-dependency TypeScript file that runs in Node and edge runtimes.",
   "type": "module",
   "main": "./src/index.ts",

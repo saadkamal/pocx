@@ -19,9 +19,9 @@ import {
 
 const en = {
   meta: {
-    landingTitle: "POCX — Protect the demos that win you clients",
+    landingTitle: "POCX — The digital NDA gate for demos, prototypes & PoCs",
     landingDescription:
-      "Consultants and dev shops win work by showing demos — and AI can rebuild one from a screenshot overnight. POCX gates your demo behind verified identity and e-signed terms, so showing your work no longer means giving it away. Open source — self-host free, or start on the cloud.",
+      "Put a digital NDA on your demo, prototype or proof of concept (PoC): viewers verify their identity and e-sign your terms before the first screen — with a PDF certificate and full audit trail. Open source — self-host free, or start on the cloud.",
     pricingTitle: "Pricing",
     pricingDescription:
       "POCX pricing — protect demos free with up to 3 viewer seats each, go Pro for unlimited seats and a full audit trail, or self-host the open-source version for free.",
@@ -40,7 +40,7 @@ const en = {
 
   footer: {
     tagline:
-      "Protection for the demos, prototypes and mockups that win you clients — verified entry, e-signed terms, every view on the record.",
+      "Protection for the demos, prototypes and proofs of concept that win you clients — verified entry, NDA-grade e-signed terms, every view on the record.",
     product: "Product",
     forAgents: "For agents",
     account: "Account",
@@ -88,7 +88,7 @@ const en = {
 
   trustChips: [
     "Every viewer verified by email code",
-    "Terms signed before the first screen",
+    "An NDA-grade signature before the first screen",
     "Open source — self-host free",
   ],
 
@@ -125,7 +125,7 @@ const en = {
   solution: {
     eyebrow: "What POCX does",
     title: "Show the work. Keep the idea.",
-    body: "POCX doesn’t hide your demo — it makes seeing it accountable. Before anyone reaches a single screen, they prove their identity and sign your Terms of Access. A screenshot is no longer anonymous: it’s tied to a named person who agreed, in writing, not to build on your work without you.",
+    body: "POCX doesn’t hide your demo — it makes seeing it accountable. Think of it as a digital NDA that enforces itself: before anyone reaches a single screen of your prototype or proof of concept, they prove who they are and e-sign your Terms of Access. A screenshot is no longer anonymous — it’s tied to a named person who agreed, in writing, not to build on your work without you.",
   },
 
   how: {
@@ -199,7 +199,7 @@ const en = {
     eyebrow: "Features",
     title: "The whole front door, handled.",
     subtitle:
-      "Identity, terms, sessions, evidence. POCX handles who gets in and on what conditions — your demo stays exactly as you built it.",
+      "Identity, terms, sessions, evidence. POCX decides who gets into your demo, prototype or proof of concept (PoC) — and on what conditions. Your app stays exactly as you built it.",
     items: [
       {
         title: "Invite-only + email codes",
@@ -239,7 +239,8 @@ const en = {
     eyebrow: "Why it holds up",
     title: "A login wall is not protection. A signature is.",
     p1: "Your demo embodies your thinking — the designs, the workflows, the idea your prospect is evaluating. A password keeps strangers out. It does nothing when the people you invited take what they saw and build it without you.",
-    p2Before: "POCX’s standard Terms of Access include the clause that matters: ",
+    p2Before:
+      "POCX’s standard Terms of Access work like an NDA — but signed at the door instead of filed in a drawer, and with the clause NDAs forget: ",
     p2Em: "if you build on this work, you engage us",
     p2After:
       ". Every viewer e-signs it before they see a single screen — and every signature is recorded with the SHA-256 hash of the exact text they agreed to, their verified email, IP, and timestamp, sealed in a PDF certificate.",
@@ -398,9 +399,9 @@ export type MarketingStrings = typeof en;
 
 const ja: MarketingStrings = {
   meta: {
-    landingTitle: "POCX — 受注を勝ち取るデモを、守る",
+    landingTitle: "POCX — デモ・プロトタイプ・PoCのためのデジタルNDAゲート",
     landingDescription:
-      "コンサルタントや開発会社は、デモを見せて仕事を勝ち取ります。しかしAIは、スクリーンショット1枚からそのデモを一晩で再現できます。POCXは本人確認と電子署名付き規約でデモをゲートし、「見せること」が「渡すこと」にならないようにします。オープンソース — 自分で無料ホスト、またはクラウドで開始。",
+      "デモ・プロトタイプ・PoC（概念実証）にデジタルNDAを。閲覧者は本人確認を行い、最初の画面の前にあなたの規約へ電子署名します — PDF証明書と完全な監査ログ付き。オープンソース — 自分で無料ホスト、またはクラウドで開始。",
     pricingTitle: "料金プラン",
     pricingDescription:
       "POCXの料金 — デモごとに閲覧者3名まで無料で保護。無制限のシートと完全な監査ログが必要ならPro、あるいはオープンソース版を自分で無料ホスト。",
@@ -419,7 +420,7 @@ const ja: MarketingStrings = {
 
   footer: {
     tagline:
-      "受注を勝ち取るデモ・プロトタイプ・モックアップのための保護 — 本人確認済みの入場、電子署名付き規約、すべての閲覧を記録。",
+      "受注を勝ち取るデモ・プロトタイプ・PoCのための保護 — 本人確認済みの入場、NDA級の電子署名付き規約、すべての閲覧を記録。",
     product: "プロダクト",
     forAgents: "エージェント向け",
     account: "アカウント",
@@ -467,7 +468,7 @@ const ja: MarketingStrings = {
 
   trustChips: [
     "閲覧者は全員メールコードで本人確認",
-    "最初の画面の前に規約へ署名",
+    "最初の画面の前に、NDA級の署名を",
     "オープンソース — 自分でホストすれば無料",
   ],
 
@@ -504,7 +505,7 @@ const ja: MarketingStrings = {
   solution: {
     eyebrow: "POCXの役割",
     title: "見せる。でも、渡さない。",
-    body: "POCXはデモを隠しません — 見ることに責任を持たせます。誰かが最初の画面にたどり着く前に、本人確認を行い、あなたの利用規約に署名します。スクリーンショットはもう匿名ではありません。それは、あなたの成果物を無断で流用しないと書面で同意した、名前のある人物に紐づきます。",
+    body: "POCXはデモを隠しません — 見ることに責任を持たせます。いわば「自ら執行するデジタルNDA」です。プロトタイプやPoCの最初の画面にたどり着く前に、閲覧者は本人確認を行い、あなたのアクセス規約に電子署名します。スクリーンショットはもう匿名ではありません。それは、あなたの成果物を無断で流用しないと書面で同意した、名前のある人物に紐づきます。",
   },
 
   how: {
@@ -578,7 +579,7 @@ const ja: MarketingStrings = {
     eyebrow: "機能",
     title: "アプリの玄関口を、まるごと引き受けます。",
     subtitle:
-      "本人確認、規約、セッション、証跡。誰が、どんな条件で入れるかはPOCXが管理します — あなたのデモには一切手を加えません。",
+      "本人確認、規約、セッション、証跡。デモ・プロトタイプ・PoC（概念実証）に誰が、どんな条件で入れるかはPOCXが管理します — あなたのアプリには一切手を加えません。",
     items: [
       {
         title: "招待制 + メールコード",
@@ -618,7 +619,8 @@ const ja: MarketingStrings = {
     eyebrow: "なぜ効くのか",
     title: "ログイン画面は保護ではありません。署名こそが保護です。",
     p1: "デモには、あなたの思考が詰まっています — デザイン、ワークフロー、そして見込み客が評価しているアイデアそのもの。パスワードは部外者を締め出せても、招待した相手が見たものを持ち帰り、あなた抜きで作ってしまうことは防げません。",
-    p2Before: "POCXの標準利用規約には、核心となる条項が含まれています — ",
+    p2Before:
+      "POCXの標準アクセス規約はNDAのように機能します — ただし引き出しにしまわれるのではなく、入口で署名され、多くのNDAが忘れている核心条項も含みます — ",
     p2Em: "この成果物を基に開発する場合は、当方と契約すること",
     p2After:
       "。すべての閲覧者は、画面を1つ見る前にこの規約に電子署名します。そして各署名には、同意した規約本文のSHA-256ハッシュ、確認済みメールアドレス、IPアドレス、タイムスタンプが記録され、PDF証明書として保全されます。",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Inter, JetBrains_Mono, Noto_Sans_JP } from "next/font/google";
 import { isLocale, LOCALES } from "@/lib/i18n/locales";
+import { pocxOrigin } from "@/lib/utils";
 import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -22,27 +23,48 @@ export function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(pocxOrigin()),
   title: {
-    default: "POCX — Protect your proof of concept",
+    default: "POCX — The digital NDA gate for demos, prototypes & PoCs",
     template: "%s · POCX",
   },
   description:
-    "POCX puts an access gate in front of your proof of concept: email OTP login, enforceable Terms of Access with electronic signatures, session control and a full audit trail. Add it to any app in minutes.",
+    "Put a digital NDA on your demo, prototype or proof of concept (PoC): viewers verify their identity and e-sign your terms before the first screen — with a PDF certificate and full audit trail. Open source, or hosted at pocx.dev.",
+  keywords: [
+    "digital NDA",
+    "NDA gate",
+    "NDA software",
+    "sign NDA online",
+    "NDA before demo",
+    "click-wrap NDA",
+    "demo protection",
+    "protect proof of concept",
+    "PoC protection",
+    "prototype access control",
+    "e-signature terms of access",
+    "gated demo",
+  ],
+  applicationName: "POCX",
+  authors: [{ name: "Saad Kamal" }],
+  creator: "Haxo Pty Ltd",
+  publisher: "Haxo Pty Ltd",
   alternates: {
     languages: { en: "/", ja: "/ja" },
   },
   openGraph: {
     siteName: "POCX",
     type: "website",
-    title: "POCX — Protect your proof of concept",
+    locale: "en_US",
+    alternateLocale: "ja_JP",
+    title: "POCX — The digital NDA gate for demos, prototypes & PoCs",
     description:
-      "An identity-verified gate, e-signed Terms of Access and a complete audit trail in front of any proof of concept — in one file and three env vars.",
+      "Viewers verify their identity and e-sign your terms before the first screen of your demo — with a PDF certificate and full audit trail. Open source, or hosted at pocx.dev.",
   },
   twitter: {
-    card: "summary",
-    title: "POCX — Protect your proof of concept",
+    card: "summary_large_image",
+    title: "POCX — The digital NDA gate for demos, prototypes & PoCs",
     description:
-      "An identity-verified gate, e-signed Terms of Access and a complete audit trail in front of any proof of concept.",
+      "Show the work. Keep the idea. An NDA-grade e-signature gate in front of any demo, prototype or PoC — open source, or hosted at pocx.dev.",
   },
 };
 

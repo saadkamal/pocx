@@ -13,6 +13,9 @@ import { LocaleSwitcher } from "@/components/locale-switcher";
  * (Pages under this layout re-resolve the PoC themselves — that's fine,
  * the lookup is cheap and layouts can't pass data down.)
  */
+
+// Customer gates are private surfaces — never in search results.
+export const metadata = { robots: { index: false } };
 export default async function GateLayout({
   children,
   params,
