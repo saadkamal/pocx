@@ -270,13 +270,13 @@ const en = {
     items: [
       {
         quote:
-          "I told Claude to add POCX and it did the whole thing off their llms.txt — vendored the single file, wired it as edge middleware, done. Ten lines and three env vars.",
+          "I figured wiring up access control would eat my whole afternoon. Instead I handed Claude the llms.txt link and it just did it — the gate was live before I’d finished my coffee.",
         role: "Forward-deployed engineer",
         context: "client PoCs on Vercel",
       },
       {
         quote:
-          "I didn’t want to run extra infrastructure just to protect a proof of concept, so I used the hosted version. It looks great — every client demo goes out behind the gate now.",
+          "There was no way I was spinning up servers for a throwaway prototype, so the hosted version was an easy yes. Now nothing reaches a client until it’s sitting behind the gate.",
         role: "Independent product consultant",
         context: "prototype-led sales",
       },
@@ -686,13 +686,13 @@ const ja: MarketingStrings = {
     items: [
       {
         quote:
-          "Claudeに「POCXを入れて」と頼んだら、llms.txtを読んで全部やってくれました — 単一ファイルを取り込み、エッジミドルウェアに配線して完了。10行と環境変数3つだけ。",
+          "アクセス制御の実装で午後がまるごと潰れると思っていました。ところがClaudeにllms.txtのURLを渡しただけで片付いて、コーヒーを飲み終わる前にゲートが動いていました。",
         role: "フォワードデプロイドエンジニア",
         context: "VercelでクライアントPoCを構築",
       },
       {
         quote:
-          "PoCを守るためだけに追加のインフラを立てたくなかったので、ホスティング版を使いました。仕上がりも上々で、今はすべてのクライアントデモをゲートの内側から共有しています。",
+          "使い捨てのプロトタイプのためにサーバーを立てる気はまったくなかったので、ホスティング版は即決でした。今はゲートの内側に入れるまで、クライアントには何も見せません。",
         role: "独立系プロダクトコンサルタント",
         context: "プロトタイプ起点の提案",
       },
