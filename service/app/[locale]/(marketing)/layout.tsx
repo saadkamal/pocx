@@ -1,21 +1,10 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import Script from "next/script";
 import { buttonCn } from "@/components/ui";
 import { LocaleSwitcher } from "@/components/locale-switcher";
+import { MonGptWidget } from "@/components/mongpt-widget";
 import { localePath, type Locale } from "@/lib/i18n/locales";
 import { marketingDict } from "@/lib/i18n/marketing";
-
-/**
- * MonGPT support-chat widget — scoped to the marketing pages only (this
- * layout wraps landing/pricing/docs/faq/legal, never the hosted gate,
- * dashboard, admin or /demo). It auto-detects the page language from
- * <html lang>, which the root layout sets per locale, so /ja visitors get
- * Japanese replies. The two origins it touches are allow-listed in the CSP
- * (next.config.ts); chat only, no microphone.
- */
-const MONGPT_TENANT_ID = "a57dad58-2dd1-4436-b40e-16d65c170753";
-const MONGPT_CHATBOT_ID = "21759c02-7e70-4f12-96e3-c554006d6e82";
 
 function Wordmark() {
   return (
@@ -181,13 +170,7 @@ export default async function MarketingLayout({
         </div>
       </footer>
 
-      <Script
-        src="https://pub-914801c5a75d4f30b86c82306e07f5ea.r2.dev/mongpt-widget.iife.js"
-        strategy="afterInteractive"
-      />
-      <Script id="mongpt-init" strategy="afterInteractive">
-        {`MonGPT.init({ tenantId: '${MONGPT_TENANT_ID}', chatbotId: '${MONGPT_CHATBOT_ID}' });`}
-      </Script>
+      <MonGptWidget />
     </div>
   );
 }
