@@ -115,6 +115,10 @@ export function PrivacyContentJa() {
             <>
               <strong>Stripe</strong> — 決済
             </>,
+            <>
+              <strong>MonGPT</strong> —
+              マーケティングページのAIサポートチャット（チャットに入力されたメッセージを処理します。ホスト型ゲートやダッシュボードには設置されていません）。
+            </>,
           ]}
         />
         <P>

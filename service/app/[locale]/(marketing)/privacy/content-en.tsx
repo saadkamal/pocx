@@ -133,6 +133,11 @@ export function PrivacyContentEn() {
             <>
               <strong>Stripe</strong> — payments.
             </>,
+            <>
+              <strong>MonGPT</strong> — the AI support chat on our marketing
+              pages (it processes the messages a visitor types into that
+              chat; it is not present on hosted gates or the dashboard).
+            </>,
           ]}
         />
         <P>

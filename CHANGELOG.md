@@ -3,6 +3,13 @@
 All notable changes to POCX. Semver: patch = fixes, minor = features,
 major = breaking changes to the SDK contract or self-host setup.
 
+## [0.4.5] — 2026-07-10
+
+- MonGPT support-chat widget on the marketing pages only (not on hosted
+  gates, dashboard, admin or /demo). CSP loosened for exactly two MonGPT
+  origins (script + API); microphone stays disabled (chat, no voice).
+  Added MonGPT to the Privacy Policy subprocessor list, en + ja
+
 ## [0.4.4] — 2026-07-10
 
 - Landing testimonials: a "from the field" section with two field

@@ -1,20 +1,28 @@
 import type { NextConfig } from "next";
 
 /**
- * Content-Security-Policy. POCX is self-contained: no third-party scripts,
- * no external images, no cross-origin XHR. Next injects inline bootstrap
- * scripts/styles, so 'unsafe-inline' is required for script/style (a nonce
- * pipeline is the future upgrade). `frame-ancestors 'none'` is the modern
- * clickjacking control and protects the signature-bearing gate + the admin
- * console; connect-src allows Stripe checkout redirects and self.
+ * Content-Security-Policy. POCX is otherwise self-contained. Next injects
+ * inline bootstrap scripts/styles, so 'unsafe-inline' is required for
+ * script/style (a nonce pipeline is the future upgrade). `frame-ancestors
+ * 'none'` is the modern clickjacking control and protects the
+ * signature-bearing gate + the admin console.
+ *
+ * Third-party allowance: the MonGPT support-chat widget, loaded ONLY on the
+ * marketing pages (see app/[locale]/(marketing)/layout.tsx). These two
+ * exact origins are permitted here so the widget's script + API calls
+ * aren't blocked; the CSP still admits nothing else cross-origin, and the
+ * microphone stays disabled (chat only, no voice).
  */
+const MONGPT_SCRIPT = "https://pub-914801c5a75d4f30b86c82306e07f5ea.r2.dev";
+const MONGPT_API = "https://api.dev-mongpt.com";
+
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline' ${MONGPT_SCRIPT}`,
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data:",
+  `img-src 'self' data: ${MONGPT_SCRIPT} ${MONGPT_API}`,
   "font-src 'self' data:",
-  "connect-src 'self'",
+  `connect-src 'self' ${MONGPT_API} wss://api.dev-mongpt.com`,
   "form-action 'self' https://checkout.stripe.com https://billing.stripe.com",
   "frame-ancestors 'none'",
   "object-src 'none'",
