@@ -5,6 +5,8 @@ import { listAcceptances } from "@/lib/db/repo";
 import { EmptyState, Mono, Table, Td, Th } from "@/components/ui";
 import { formatDateTime } from "@/lib/utils";
 import { dashboardDict, resolveLocale } from "@/lib/i18n/dashboard";
+import { isLocale } from "@/lib/i18n/locales";
+import { LOCALE_LABELS } from "@/lib/i18n/pdf";
 
 export default async function SignaturesPage({
   params,
@@ -35,6 +37,7 @@ export default async function SignaturesPage({
               <Th>{t.thVersion}</Th>
               <Th>{t.thAccepted}</Th>
               <Th>{t.thIp}</Th>
+              <Th>{t.thLanguage}</Th>
               <Th>{t.thSignatureId}</Th>
               <Th>{t.thHash}</Th>
               <Th />
@@ -50,6 +53,17 @@ export default async function SignaturesPage({
                 <Td className="text-ink-600">v{a.termsVersion}</Td>
                 <Td className="text-ink-600">{formatDateTime(a.acceptedAt)}</Td>
                 <Td className="text-ink-600">{a.ip}</Td>
+                <Td className="text-ink-600">
+                  <span
+                    title={
+                      isLocale(a.termsLocale)
+                        ? LOCALE_LABELS[a.termsLocale]
+                        : a.termsLocale
+                    }
+                  >
+                    {a.termsLocale.toUpperCase()}
+                  </span>
+                </Td>
                 <Td>
                   <Mono>{a.id}</Mono>
                 </Td>

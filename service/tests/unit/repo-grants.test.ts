@@ -42,6 +42,7 @@ function makePoc(): string {
     secret: ids.newSecret(),
     termsMode: "template",
     termsCustomText: null,
+    termsCustomTextJa: null,
     termsVersion: "1.0",
     sessionTtlHours: 24,
     idleTimeoutHours: 3,

@@ -90,6 +90,17 @@ const en = {
       signatureLabel: "Signature",
       agree: "Sign & continue",
       recording: "Recording your signature…",
+      /** Language switch above the terms body. Buttons stay autonyms. */
+      languageLegend: "Terms language",
+      languageOptionEn: "English",
+      languageOptionJa: "日本語",
+      /** Language names as written in this UI language. */
+      languageNameEn: "English",
+      languageNameJa: "Japanese",
+      signingNotice: (language: string) =>
+        `You are signing the ${language} text shown above.`,
+      noTranslation:
+        "These terms have not been translated into Japanese. The English text above is the version you will sign.",
     },
   },
 
@@ -296,6 +307,15 @@ const ja: GateStrings = {
       signatureLabel: "署名",
       agree: "署名して続行",
       recording: "署名を記録しています…",
+      languageLegend: "規約の言語",
+      languageOptionEn: "English",
+      languageOptionJa: "日本語",
+      languageNameEn: "英語",
+      languageNameJa: "日本語",
+      signingNotice: (language: string) =>
+        `上記の${language}の規約本文に署名します。`,
+      noTranslation:
+        "この規約には日本語訳がありません。上記の英語の本文が署名の対象となります。",
     },
   },
 

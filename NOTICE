@@ -11,6 +11,13 @@ Licensing:
   (see sdk/LICENSE) — so it can be vendored into any application,
   proprietary or otherwise, without copyleft obligations.
 
+Bundled fonts:
+- service/assets/fonts/NotoSansJP-{Regular,Bold}-subset.otf and
+  service/assets/noto-sans-jp-700-subset.woff are subsets of Noto Sans JP,
+  Copyright 2014-2021 Adobe (https://adobe.com/), licensed under the SIL
+  Open Font License, Version 1.1 (https://openfontlicense.org). They are
+  embedded in generated PDFs and social images; the OFL permits this.
+
 Trademark: "POCX" and the POCX logo are trademarks of Haxo Pty Ltd and
 identify the official project and the hosted service at https://pocx.dev.
 You may self-host and modify the software under the AGPL, but you may not

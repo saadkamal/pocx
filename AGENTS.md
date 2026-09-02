@@ -45,6 +45,26 @@ past engagements in product surfaces.
   `gateRequestLocale(req)`. Server-action result messages and audit data
   are intentionally English.
 
+### Terms of Access are translated too, and the language is evidence
+
+- The standard template lives in `DEFAULT_TERMS_TEMPLATES` (`lib/terms.ts`),
+  one entry per locale. `renderTerms(poc, locale)` resolves it; the
+  `*_CLAUSE` composites and the fallback purpose are localized, while
+  operator-written values (entity names, a custom `purpose`) are used
+  verbatim — POCX never machine-translates legal wording.
+- Custom-terms PoCs have a second column, `termsCustomTextJa`. When it is
+  empty `resolveTermsLocale` falls back to English and the gate says so,
+  rather than showing a half-translated contract.
+- An evaluator signs the text on screen, so `acceptances.termsLocale`
+  records which language that was and `termsHash` covers that exact string.
+  The gate posts its displayed locale to `accept-terms`, which re-resolves
+  it server-side — a client can never select text the operator did not
+  write.
+- The signed PDF is rendered in the signed language. That needs an embedded
+  CJK face (`assets/fonts/`, see its README) and CJK line breaking
+  (`lib/pdf/cjk-linebreak.ts`) — @react-pdf otherwise hyphenates Japanese
+  mid-sentence. English certificates are untouched by both.
+
 ## Working on the service
 
 ```bash

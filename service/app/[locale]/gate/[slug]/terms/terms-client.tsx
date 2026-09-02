@@ -3,43 +3,67 @@
 import { useState } from "react";
 import { Loader2, ScrollText } from "lucide-react";
 import { buttonCn } from "@/components/ui";
+import { cn } from "@/lib/utils";
 import { localePath, type Locale } from "@/lib/i18n/locales";
 import { gateDict } from "@/lib/i18n/gate";
 
 /**
  * Terms-of-Access consent: scrollable terms, explicit e-signature
  * acknowledgement, then POST accept-terms and continue onward.
- * (The terms text itself is the operator's resolved legal text — it is
- * rendered verbatim, whatever language the operator wrote it in.)
+ *
+ * The terms body is the operator's resolved legal text. Where a PoC has it
+ * in more than one language the evaluator can switch between them freely —
+ * every version was rendered server-side, and the one on screen at the
+ * moment of signing is what gets hashed, stored and reproduced in the PDF.
+ * Switching therefore clears the agreement checkbox: consent is to a
+ * specific text, not to the idea of the terms.
  */
 export default function TermsClient({
   locale,
   slug,
   returnTo,
-  paragraphs,
+  paragraphsByLocale,
+  termsLocales,
+  initialTermsLocale,
   brandColor,
   pocName,
 }: {
   locale: Locale;
   slug: string;
   returnTo: string | null;
-  paragraphs: string[];
+  paragraphsByLocale: Partial<Record<Locale, string[]>>;
+  termsLocales: Locale[];
+  initialTermsLocale: Locale;
   brandColor: string;
   pocName: string;
 }) {
   const t = gateDict[locale].gate.terms;
   const errs = gateDict[locale].errors;
 
+  const [termsLocale, setTermsLocale] = useState<Locale>(initialTermsLocale);
   const [agreed, setAgreed] = useState(false);
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const nameOk = name.trim().length >= 2;
+  const paragraphs = paragraphsByLocale[termsLocale] ?? [];
+  const canSwitch = termsLocales.length > 1;
+  // The reader asked for Japanese but this PoC's terms only exist in English.
+  const untranslated = locale === "ja" && !termsLocales.includes("ja");
+
+  const languageName =
+    termsLocale === "ja" ? t.languageNameJa : t.languageNameEn;
 
   const rtQuery = returnTo
     ? `?return_to=${encodeURIComponent(returnTo)}`
     : "";
+
+  function switchTerms(next: Locale) {
+    if (next === termsLocale) return;
+    setTermsLocale(next);
+    setAgreed(false); // consent is to the text that was on screen
+  }
 
   async function acceptTerms() {
     if (!agreed || !nameOk || loading) return;
@@ -49,7 +73,7 @@ export default function TermsClient({
       const res = await fetch(`/api/gate/${slug}/accept-terms`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim() }),
+        body: JSON.stringify({ name: name.trim(), locale: termsLocale }),
       });
       if (res.ok) {
         window.location.assign(
@@ -89,7 +113,46 @@ export default function TermsClient({
         </div>
       </div>
 
-      <div className="mt-4 max-h-72 overflow-y-auto rounded-lg border border-ink-200 bg-ink-50 p-4">
+      {canSwitch ? (
+        <div className="mt-4 flex items-center justify-end gap-2">
+          <span className="text-xs text-ink-500">{t.languageLegend}</span>
+          <div
+            className="inline-flex items-center gap-1 font-mono text-xs text-ink-500"
+            role="group"
+            aria-label={t.languageLegend}
+          >
+            {termsLocales.map((l, i) => (
+              <span key={l} className="inline-flex items-center gap-1">
+                {i > 0 && <span className="text-ink-300">/</span>}
+                <button
+                  type="button"
+                  onClick={() => switchTerms(l)}
+                  disabled={loading}
+                  aria-pressed={l === termsLocale}
+                  className={cn(
+                    "rounded px-1 py-0.5 transition-colors disabled:opacity-50",
+                    l === termsLocale
+                      ? "font-semibold text-ink-900"
+                      : "hover:text-ink-900",
+                  )}
+                >
+                  {l === "ja" ? t.languageOptionJa : t.languageOptionEn}
+                </button>
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      <div
+        // Re-mount on switch so the reader starts at the top of the new text.
+        key={termsLocale}
+        lang={termsLocale}
+        className={cn(
+          "max-h-72 overflow-y-auto rounded-lg border border-ink-200 bg-ink-50 p-4",
+          canSwitch ? "mt-2" : "mt-4",
+        )}
+      >
         {paragraphs.map((paragraph, i) =>
           i === 0 ? (
             <p key={i} className="text-sm font-semibold text-ink-900">
@@ -105,6 +168,10 @@ export default function TermsClient({
           ),
         )}
       </div>
+
+      <p className="mt-2 text-xs text-ink-500">
+        {untranslated ? t.noTranslation : t.signingNotice(languageName)}
+      </p>
 
       {/* Typed-name signature — the visible, human part of the record. */}
       <div className="mt-4">

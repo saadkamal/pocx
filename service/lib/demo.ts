@@ -89,6 +89,7 @@ export function ensureDemoPoc(): PocRow {
     secret: newSecret(),
     termsMode: "template",
     termsCustomText: null,
+    termsCustomTextJa: null,
     termsVersion: DEMO_TERMS_VERSION,
     sessionTtlHours: 24,
     idleTimeoutHours: 3,
