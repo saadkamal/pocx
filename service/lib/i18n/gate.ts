@@ -464,10 +464,20 @@ export type { GateStrings };
  * Accept-Language header, then English. Typed structurally so this module
  * stays importable from client components (no next/server dependency).
  */
-export function gateRequestLocale(req: {
-  cookies: { get(name: string): { value: string } | undefined };
-  headers: { get(name: string): string | null };
-}): Locale {
+export function gateRequestLocale(
+  req: {
+    cookies: { get(name: string): { value: string } | undefined };
+    headers: { get(name: string): string | null };
+  },
+  /**
+   * The locale the gate page was actually rendered in. An evaluator sent a
+   * /ja/gate/… link reads a Japanese page, but their browser may well
+   * report Accept-Language: en and carry no cookie — without this they get
+   * a Japanese screen and an English email.
+   */
+  rendered?: unknown,
+): Locale {
+  if (isLocale(rendered)) return rendered;
   const cookie = req.cookies.get(LOCALE_COOKIE)?.value;
   if (isLocale(cookie)) return cookie;
   return detectLocale(req.headers.get("accept-language"));

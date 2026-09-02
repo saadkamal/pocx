@@ -24,15 +24,27 @@ import { sendMail } from "@/lib/mail/send";
 export const runtime = "nodejs";
 
 const BodySchema = z
-  .object({ email: z.string().trim().min(3).max(254).email() })
+  .object({
+    email: z.string().trim().min(3).max(254).email(),
+    /** Language of the gate page the evaluator is looking at. */
+    locale: z.enum(["en", "ja"]).optional(),
+  })
   .strict();
+
+/** The page language the client reported, if any — validated downstream. */
+function reportedLocale(body: unknown): unknown {
+  return body && typeof body === "object"
+    ? (body as { locale?: unknown }).locale
+    : undefined;
+}
 
 export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
-  const t = gateDict[gateRequestLocale(req)];
+  const body = await req.json().catch(() => null);
+  const t = gateDict[gateRequestLocale(req, reportedLocale(body))];
   const poc = resolveGatePoc(slug);
   if (!poc) {
     return NextResponse.json({ error: "Unknown PoC" }, { status: 404 });
@@ -44,7 +56,6 @@ export async function POST(
   const ip = clientIp(req.headers);
   const userAgent = req.headers.get("user-agent") ?? "unknown";
 
-  const body = await req.json().catch(() => null);
   const parsed = BodySchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });

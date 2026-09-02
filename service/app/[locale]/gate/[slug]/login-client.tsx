@@ -74,7 +74,7 @@ export default function LoginClient({
       const res = await fetch(`/api/gate/${slug}/request-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, locale }),
       });
       const data = (await res.json().catch(() => null)) as {
         ok?: boolean;
@@ -121,7 +121,7 @@ export default function LoginClient({
       const res = await fetch(`/api/gate/${slug}/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, code }),
+        body: JSON.stringify({ email, code, locale }),
       });
       const data = (await res.json().catch(() => null)) as {
         ok?: boolean;
