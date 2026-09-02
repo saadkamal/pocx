@@ -17,14 +17,23 @@ import {
   resolveGatePoc,
 } from "@/lib/gate";
 import { gateDict, gateRequestLocale } from "@/lib/i18n/gate";
-import { renderTerms, termsHash, termsParagraphs } from "@/lib/terms";
+import { DEFAULT_LOCALE, isLocale } from "@/lib/i18n/locales";
+import {
+  renderTerms,
+  resolveTermsLocale,
+  termsHash,
+  termsParagraphs,
+} from "@/lib/terms";
 import { SignaturePdf } from "@/lib/pdf/signature-pdf";
 import { sendMail } from "@/lib/mail/send";
 
 /* Hosted gate — record the terms acceptance + electronic signature.
    Email is derived from the session; the text and hash are resolved
-   server-side. The only client-supplied field is the typed full name —
-   the visible signature — which is validated and stored verbatim. */
+   server-side. The client supplies the typed full name — the visible
+   signature, validated and stored verbatim — and which language it had
+   on screen. The language only *selects* between texts POCX itself
+   rendered, and is re-resolved against the PoC before use, so it can
+   never introduce text the operator did not write. */
 
 export const runtime = "nodejs";
 
@@ -39,6 +48,8 @@ const BodySchema = z
       .max(120)
       .transform((s) => s.replace(/\p{C}/gu, "").trim())
       .pipe(z.string().min(2).max(120)),
+    // Which language the evaluator was reading when they signed.
+    locale: z.enum(["en", "ja"]).optional(),
   })
   .strict();
 
@@ -70,6 +81,13 @@ export async function POST(
     return NextResponse.json({ error: t.api.nameRequired }, { status: 400 });
   }
   const signerName = parsed.data.name;
+  // Fall back to the request's own language, then re-resolve: a custom-terms
+  // PoC with no Japanese text can only ever be signed in English.
+  const requested = parsed.data.locale ?? gateRequestLocale(req);
+  const termsLocale = resolveTermsLocale(
+    poc,
+    isLocale(requested) ? requested : DEFAULT_LOCALE,
+  );
 
   // Idempotent: if this version is already accepted, return the record.
   const existing = getLatestAcceptance(poc.id, email, poc.termsVersion);
@@ -78,7 +96,7 @@ export async function POST(
   }
 
   const signatureId = newSignatureId();
-  const resolvedText = renderTerms(poc); // server-side truth
+  const resolvedText = renderTerms(poc, termsLocale); // server-side truth
   const hash = termsHash(resolvedText);
   const acceptedAt = new Date();
 
@@ -90,6 +108,7 @@ export async function POST(
     termsVersion: poc.termsVersion,
     termsHash: hash,
     termsText: resolvedText,
+    termsLocale,
     ip,
     userAgent,
   });
@@ -100,7 +119,7 @@ export async function POST(
     email,
     sessionId: check.session.id,
     event: "gate_terms_accepted",
-    detail: `v${poc.termsVersion} · signed "${signerName}"`,
+    detail: `v${poc.termsVersion} · ${termsLocale} · signed "${signerName}"`,
     source: "gate",
     ip,
     userAgent,
@@ -124,6 +143,7 @@ export async function POST(
         termsVersion: poc.termsVersion,
         termsHashHex: hash,
         termsParagraphs: termsParagraphs(resolvedText),
+        termsLocale,
       }),
     );
 

@@ -64,6 +64,7 @@ export const pocs = sqliteTable("pocs", {
   secret: text("secret").notNull(), // pocx_sk_… (signs SDK tokens)
   termsMode: text("terms_mode").notNull().default("template"), // template | custom
   termsCustomText: text("terms_custom_text"),
+  termsCustomTextJa: text("terms_custom_text_ja"), // JA counterpart, optional
   termsVersion: text("terms_version").notNull().default("1.0"),
   sessionTtlHours: integer("session_ttl_hours").notNull().default(24),
   idleTimeoutHours: integer("idle_timeout_hours").notNull().default(3),
@@ -135,6 +136,7 @@ export const acceptances = sqliteTable("acceptances", {
   signerName: text("signer_name"), // typed full name (the visible signature)
   termsVersion: text("terms_version").notNull(),
   termsHash: text("terms_hash").notNull(), // sha256 of the exact text shown
+  termsLocale: text("terms_locale").notNull().default("en"), // language signed in
   termsText: text("terms_text").notNull().default(""), // the exact text shown
   ip: text("ip").notNull(),
   userAgent: text("user_agent").notNull(),

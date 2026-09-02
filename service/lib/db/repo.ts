@@ -208,6 +208,7 @@ export type PocUpdate = Partial<
     | "callbackPath"
     | "termsMode"
     | "termsCustomText"
+    | "termsCustomTextJa"
     | "termsVersion"
     | "sessionTtlHours"
     | "idleTimeoutHours"
@@ -516,6 +517,7 @@ export function insertAcceptance(input: {
   termsVersion: string;
   termsHash: string;
   termsText: string;
+  termsLocale: string;
   ip: string;
   userAgent: string;
 }): void {

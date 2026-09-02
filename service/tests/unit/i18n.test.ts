@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { gateRequestLocale } from "@/lib/i18n/gate";
 import {
   detectLocale,
   localePath,
@@ -34,5 +35,44 @@ describe("Accept-Language detection", () => {
     expect(detectLocale("fr-FR,de;q=0.8")).toBe("en"); // unsupported → default
     expect(detectLocale(null)).toBe("en");
     expect(detectLocale("")).toBe("en");
+  });
+});
+
+const req = (opts: { cookie?: string; acceptLanguage?: string }) => ({
+  cookies: {
+    get: (name: string) =>
+      name === "pocx_locale" && opts.cookie
+        ? { value: opts.cookie }
+        : undefined,
+  },
+  headers: {
+    get: (name: string) =>
+      name === "accept-language" ? (opts.acceptLanguage ?? null) : null,
+  },
+});
+
+describe("gateRequestLocale", () => {
+  it("falls back to Accept-Language, then English", () => {
+    expect(gateRequestLocale(req({ acceptLanguage: "ja,en;q=0.8" }))).toBe("ja");
+    expect(gateRequestLocale(req({}))).toBe("en");
+  });
+
+  it("prefers the cookie over Accept-Language", () => {
+    expect(
+      gateRequestLocale(req({ cookie: "ja", acceptLanguage: "en" })),
+    ).toBe("ja");
+  });
+
+  it("lets the page the evaluator is actually reading win", () => {
+    // The /ja/gate/… link case: Japanese page, English browser, no cookie.
+    expect(gateRequestLocale(req({ acceptLanguage: "en-US" }), "ja")).toBe("ja");
+    expect(gateRequestLocale(req({ cookie: "ja" }), "en")).toBe("en");
+  });
+
+  it("ignores junk from the client and re-resolves normally", () => {
+    for (const junk of [undefined, null, "th", "", 42, { locale: "ja" }]) {
+      expect(gateRequestLocale(req({ cookie: "ja" }), junk)).toBe("ja");
+      expect(gateRequestLocale(req({ acceptLanguage: "en" }), junk)).toBe("en");
+    }
   });
 });

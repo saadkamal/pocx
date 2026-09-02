@@ -7,6 +7,7 @@ import {
   type ActionResult,
 } from "@/app/[locale]/dashboard/actions";
 import { Card, CardTitle, Label, Mono, buttonCn, inputCn } from "@/components/ui";
+import { cn } from "@/lib/utils";
 import type { Locale } from "@/lib/i18n/locales";
 import { dashboardDict } from "@/lib/i18n/dashboard";
 
@@ -24,24 +25,32 @@ export function TermsEditor({
   pocId,
   termsMode,
   termsCustomText,
+  termsCustomTextJa,
   termsVersion,
-  defaultTemplate,
+  defaultTemplates,
   locale,
 }: {
   pocId: string;
   termsMode: "template" | "custom";
   termsCustomText: string | null;
+  termsCustomTextJa: string | null;
   termsVersion: string;
-  defaultTemplate: string;
+  /** The standard template per language, used to seed a blank editor. */
+  defaultTemplates: Record<Locale, string>;
   locale: Locale;
 }) {
   const router = useRouter();
   const t = dashboardDict[locale].poc.terms;
   const [mode, setMode] = useState<"template" | "custom">(termsMode);
-  // Start from the saved custom text, else the standard template.
+  // Start from the saved custom text, else the standard template. English
+  // seeds itself; Japanese stays deliberately blank until the operator
+  // writes it, because an empty JA field is what makes the gate fall back
+  // to English instead of showing an untranslated contract.
   const [customText, setCustomText] = useState(
-    termsCustomText?.trim() ? termsCustomText : defaultTemplate,
+    termsCustomText?.trim() ? termsCustomText : defaultTemplates.en,
   );
+  const [customTextJa, setCustomTextJa] = useState(termsCustomTextJa ?? "");
+  const [tab, setTab] = useState<Locale>("en");
   const [result, setResult] = useState<ActionResult | null>(null);
   const [pending, startTransition] = useTransition();
 
@@ -108,13 +117,65 @@ export function TermsEditor({
 
           {mode === "custom" ? (
             <div>
+              <div
+                className="mb-2 flex items-center gap-3"
+                role="group"
+                aria-label={t.languageLegend}
+              >
+                {(["en", "ja"] as const).map((l) => (
+                  <button
+                    key={l}
+                    type="button"
+                    onClick={() => setTab(l)}
+                    aria-pressed={l === tab}
+                    className={cn(
+                      "border-b-2 pb-1 text-sm transition-colors",
+                      l === tab
+                        ? "border-ink-900 font-semibold text-ink-900"
+                        : "border-transparent text-ink-500 hover:text-ink-900",
+                    )}
+                  >
+                    {l === "ja" ? t.languageJa : t.languageEn}
+                  </button>
+                ))}
+                {customTextJa.trim() ? (
+                  <span className="ml-auto text-xs text-success">
+                    {t.customJaPresent}
+                  </span>
+                ) : (
+                  <span className="ml-auto text-xs text-ink-400">
+                    {t.customJaMissing}
+                  </span>
+                )}
+              </div>
+
+              {/* Both languages always post; only the active one is shown. */}
               <textarea
                 name="termsCustomText"
                 rows={18}
                 value={customText}
                 onChange={(e) => setCustomText(e.target.value)}
-                className={`${inputCn} font-mono text-xs leading-relaxed`}
+                className={cn(
+                  `${inputCn} font-mono text-xs leading-relaxed`,
+                  tab === "en" ? "" : "hidden",
+                )}
               />
+              <textarea
+                name="termsCustomTextJa"
+                rows={18}
+                lang="ja"
+                value={customTextJa}
+                placeholder={defaultTemplates.ja}
+                onChange={(e) => setCustomTextJa(e.target.value)}
+                className={cn(
+                  `${inputCn} font-mono text-xs leading-relaxed`,
+                  tab === "ja" ? "" : "hidden",
+                )}
+              />
+
+              {tab === "ja" ? (
+                <p className="mt-2 text-xs text-ink-500">{t.customJaNote}</p>
+              ) : null}
               <p className="mt-2 text-xs text-ink-500">
                 {t.placeholdersNote}{" "}
                 {PLACEHOLDERS.map((p, i) => (
@@ -126,8 +187,16 @@ export function TermsEditor({
               </p>
             </div>
           ) : (
-            // Keep the drafted custom text through a template save.
-            <input type="hidden" name="termsCustomText" value={customText} />
+            <>
+              {/* Keep the drafted custom text through a template save. */}
+              <input type="hidden" name="termsCustomText" value={customText} />
+              <input
+                type="hidden"
+                name="termsCustomTextJa"
+                value={customTextJa}
+              />
+              <p className="text-xs text-ink-500">{t.templateBilingualNote}</p>
+            </>
           )}
         </fieldset>
 

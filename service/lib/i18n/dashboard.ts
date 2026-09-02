@@ -366,6 +366,7 @@ const en = {
       thVersion: "Terms version",
       thAccepted: "Accepted",
       thIp: "IP",
+      thLanguage: "Language",
       thSignatureId: "Signature id",
       thHash: "Hash",
       downloadPdf: "Download PDF",
@@ -430,6 +431,16 @@ const en = {
       previewTitle: "Live preview",
       previewDesc:
         "Exactly what evaluators see — and sign — at the gate right now.",
+      /** Language tabs over the custom-text editor and the preview. */
+      languageLegend: "Language",
+      languageEn: "English",
+      languageJa: "日本語",
+      templateBilingualNote:
+        "The standard template is maintained in English and Japanese. Evaluators are shown it in their own language automatically.",
+      customJaNote:
+        "Optional. Leave this empty and Japanese evaluators will be shown your English text instead — POCX will not machine-translate your legal wording.",
+      customJaMissing: "No Japanese text",
+      customJaPresent: "Japanese text saved",
     },
 
     settings: {
@@ -836,6 +847,7 @@ const ja: DashboardStrings = {
       thVersion: "規約バージョン",
       thAccepted: "同意日時",
       thIp: "IP",
+      thLanguage: "言語",
       thSignatureId: "署名ID",
       thHash: "ハッシュ",
       downloadPdf: "PDFをダウンロード",
@@ -901,6 +913,15 @@ const ja: DashboardStrings = {
       previewTitle: "ライブプレビュー",
       previewDesc:
         "現在ゲートで評価者に表示され、署名される内容そのままです。",
+      languageLegend: "言語",
+      languageEn: "English",
+      languageJa: "日本語",
+      templateBilingualNote:
+        "標準テンプレートは英語と日本語で用意されています。評価者にはそれぞれの言語で自動的に表示されます。",
+      customJaNote:
+        "任意項目です。空欄のままにすると、日本語の評価者にも英語の本文が表示されます。POCXが法的文言を機械翻訳することはありません。",
+      customJaMissing: "日本語の本文なし",
+      customJaPresent: "日本語の本文を保存済み",
     },
 
     settings: {

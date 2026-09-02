@@ -122,6 +122,7 @@ export async function createPocAction(formData: FormData): Promise<ActionResult>
     secret: newSecret(),
     termsMode: "template",
     termsCustomText: null,
+    termsCustomTextJa: null,
     termsVersion: "1.0",
     sessionTtlHours: 24,
     idleTimeoutHours: 3,
@@ -203,6 +204,7 @@ export async function updatePocAction(
 const TermsSchema = z.object({
   termsMode: z.enum(["template", "custom"]),
   termsCustomText: z.string().max(20_000).optional(),
+  termsCustomTextJa: z.string().max(20_000).optional(),
   termsVersion: z.string().trim().min(1).max(20),
   revokeSessions: z.enum(["yes", "no"]).default("no"),
 });
@@ -219,6 +221,7 @@ export async function updateTermsAction(
   const parsed = TermsSchema.safeParse({
     termsMode: formData.get("termsMode"),
     termsCustomText: formData.get("termsCustomText") ?? undefined,
+    termsCustomTextJa: formData.get("termsCustomTextJa") ?? undefined,
     termsVersion: formData.get("termsVersion"),
     revokeSessions: formData.get("revokeSessions") ?? "no",
   });
@@ -236,6 +239,11 @@ export async function updateTermsAction(
   updatePoc(poc.id, {
     termsMode: parsed.data.termsMode,
     termsCustomText: parsed.data.termsCustomText ?? null,
+    // Blank means "no Japanese version" — evaluators then fall back to
+    // English rather than being shown a half-translated contract.
+    termsCustomTextJa: parsed.data.termsCustomTextJa?.trim()
+      ? parsed.data.termsCustomTextJa
+      : null,
     termsVersion: parsed.data.termsVersion,
   });
 

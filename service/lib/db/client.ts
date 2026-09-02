@@ -55,6 +55,7 @@ function createTables(sqlite: Database.Database) {
       secret TEXT NOT NULL,
       terms_mode TEXT NOT NULL DEFAULT 'template',
       terms_custom_text TEXT,
+      terms_custom_text_ja TEXT,
       terms_version TEXT NOT NULL DEFAULT '1.0',
       session_ttl_hours INTEGER NOT NULL DEFAULT 24,
       idle_timeout_hours INTEGER NOT NULL DEFAULT 3,
@@ -115,6 +116,7 @@ function createTables(sqlite: Database.Database) {
       signer_name TEXT,
       terms_version TEXT NOT NULL,
       terms_hash TEXT NOT NULL,
+      terms_locale TEXT NOT NULL DEFAULT 'en',
       terms_text TEXT NOT NULL DEFAULT '',
       ip TEXT NOT NULL,
       user_agent TEXT NOT NULL,
@@ -190,6 +192,8 @@ function createTables(sqlite: Database.Database) {
     `ALTER TABLE workspaces ADD COLUMN current_period_end INTEGER`,
     `ALTER TABLE workspaces ADD COLUMN retention_offer_redeemed_at INTEGER`,
     `ALTER TABLE acceptances ADD COLUMN signer_name TEXT`,
+    `ALTER TABLE pocs ADD COLUMN terms_custom_text_ja TEXT`,
+    `ALTER TABLE acceptances ADD COLUMN terms_locale TEXT NOT NULL DEFAULT 'en'`,
   ]) {
     try {
       sqlite.exec(stmt);

@@ -41,6 +41,7 @@ export async function GET(
         ownerEntity: poc.ownerEntity,
         signatureId: acceptance.id,
         email: acceptance.email,
+        signerName: acceptance.signerName,
         acceptedAtUtc: acceptance.acceptedAt.toISOString(),
         ip: acceptance.ip,
         userAgent: acceptance.userAgent,
@@ -49,6 +50,8 @@ export async function GET(
         termsParagraphs: acceptance.termsText
           ? termsParagraphs(acceptance.termsText)
           : ["(Terms text was not stored for this early record.)"],
+        // Re-render the certificate in the language that was signed.
+        termsLocale: acceptance.termsLocale,
       }),
     );
   }
