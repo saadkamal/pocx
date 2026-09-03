@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { buttonCn } from "@/components/ui";
 import { LocaleSwitcher } from "@/components/locale-switcher";
-import { MonGptWidget } from "@/components/mongpt-widget";
 import { localePath, type Locale } from "@/lib/i18n/locales";
 import { marketingDict } from "@/lib/i18n/marketing";
 
@@ -169,8 +168,6 @@ export default async function MarketingLayout({
           </div>
         </div>
       </footer>
-
-      <MonGptWidget />
     </div>
   );
 }
