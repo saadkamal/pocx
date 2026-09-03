@@ -3,6 +3,36 @@
 All notable changes to POCX. Semver: patch = fixes, minor = features,
 major = breaking changes to the SDK contract or self-host setup.
 
+## [0.5.1] — 2026-09-03
+
+- Removed the MonGPT support-chat widget — the service has retired. The
+  CSP is same-origin again for every fetch directive (`form-action` for
+  Stripe Checkout/Billing is the only off-origin allowance left), and
+  MonGPT is no longer listed as a Privacy Policy subprocessor, en + ja
+
+## [0.5.0] — 2026-09-02
+
+Japanese Terms of Access — the terms content itself, not just the chrome
+around it.
+
+- The standard Terms of Access template is now maintained in English and
+  Japanese. Evaluators read and e-sign it in their own language, with a
+  language switch on the terms panel itself
+- Custom-terms PoCs take an optional Japanese text. Left empty, the gate
+  falls back to English *and says so*, rather than showing a
+  half-translated contract. Operator-written wording is never
+  machine-translated
+- The signed language is evidence: `acceptances.termsLocale` records
+  which language was on screen and the terms hash covers that exact
+  string. The gate reports its displayed locale and the server
+  re-resolves it, so a client cannot select text the operator did not
+  write
+- Signed PDF certificates render in the signed language, which needed an
+  embedded CJK face and Japanese line breaking. English certificates are
+  unchanged apart from a new "Language signed" row
+- Evaluator emails follow the language of the page being read, not only
+  the browser's `Accept-Language`
+
 ## [0.4.5] — 2026-07-10
 
 - MonGPT support-chat widget on the marketing pages only (not on hosted
